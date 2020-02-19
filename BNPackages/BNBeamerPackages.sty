@@ -1,0 +1,339 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Identification
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{BNPackages/BNBeamerPackages}[2019/07/19 BN Beamer Packages]
+
+% Changes 2019/07/20
+% * Dark mode for markC added: markDC
+% Changes 2019/06/29
+% * markC by node name extended
+% [] TODO: other mark types need to be extended in the same way
+% Changes 2019/06/28
+% * command visible on for pgfplots added
+% Changes 2019/04/11
+% * Alt command adapted, error with usebox0
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Preliminary declarations
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{shadows}
+\usetikzlibrary{shadows.blur}
+\usetikzlibrary{shapes.symbols}
+% \usetikzlibrary{decorations.pathmorphing}
+% \usetikzlibrary{decorations.markings}
+\usetikzlibrary{calc,chains,positioning,fit,plotmarks}
+\usetikzlibrary{fadings}
+\usetikzlibrary{patterns}
+% \usetikzlibrary{decorations.fractals,decorations.pathmorphing}
+\usetikzlibrary{decorations}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.text}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{tikzmark} %place anchors with \tikzmark{mark1} 
+% use subnode{mark}{content} inside nodes
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=newest}
+\pgfplotsset{plot coordinates/math parser=false}
+
+
+\RequirePackage{xparse}
+\RequirePackage{BNPackages/BNMathMacros}
+\RequirePackage{BNPackages/BNBeamer/BNBoxes}
+\RequirePackage{BNPackages/BNBeamer/BNSensorNetworks}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Options
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifBNBeamer@compat
+\newif\ifBNBeamer@static
+\newif\ifBNBeamer@novideo
+\DeclareOption{compat}{\BNBeamer@compattrue}
+% \DeclareOption{static}{\BNBeamer@statictrue}
+% \DeclareOption{novideo}{\BNBeamer@statictrue}
+\DeclareOption{draft}{%
+    \BNBeamer@statictrue%
+	\PassOptionsToPackage{draft}{media9}%
+	\PassOptionsToPackage{draft}{animate}%
+}
+% \DeclareOption{static}{\PassOptionsToPackage{draft}{media9}}
+\DeclareOption{novideo}{\PassOptionsToPackage{draft}{media9}}
+\DeclareOption*{\PackageWarning{BNPackages}{Unknown ‘\CurrentOption’}}
+\ProcessOptions\relax
+
+% muss be loaded after package options have been declared
+\RequirePackage{media9}
+\RequirePackage{animate}
+
+\ifBNBeamer@compat
+\RequirePackage{BNPackages/BNBeamer/BNBoxesDeprecated}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   More declarations
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%\definecolor{ISASblue}{rgb}{0.396,0.384,0.675} % 101/255 98/255 172/255
+%\definecolor{ISASLogoblue}{rgb}{0.557,0.589,0.757} % 142/255 150/255 193/255
+%%Blockfarben
+%% \definecolor{BlockYellow}{rgb}{0.9451,0.9137,0.7373}
+%\definecolor{BlockYellow}{rgb}{1,0.8,0.33}
+%% \definecolor{BlockRed}{rgb}{0.9176,0.8392,0.9020}
+%\definecolor{BlockRed}{rgb}{0.925,0.5,0.5}
+%\definecolor{BlockBlue}{rgb}{.86,.86,.925}
+%\definecolor{BlockGreen}{rgb}{0.5,0.8,0.5}
+%\definecolor{DarkGreen}{rgb}{0.2,0.5,0.2}
+%\definecolor{ISASLblue}{rgb}{0.61961,0.61961,0.675} % 158/255 158/255 172/255
+%\definecolor{Black}{rgb}{0,0,0} % 158/255 158/255 172/255
+%\definecolor{DarkBlue}{rgb}{0,0,0.4} % 158/255 158/255 172/255
+%\definecolor{DarkRed}{rgb}{0.4,0,0}
+
+
+
+\tikzstyle{filtermark}=[anchor=base, inner sep=1pt, outer sep=0pt, rounded corners=2pt]%
+\definecolor{cStoc}{RGB}{171,176,216}%
+\definecolor{cSet}{RGB}{151,198,154}%
+\colorlet{colorMarkBlue}{blue!30}
+\colorlet{colorMarkGreen}{black!50!green!30}
+\colorlet{colorMarkRed}{red!30}
+
+% no jumping boxes
+\newcommand<>\Alt[2]{{%
+		\sbox1{$\displaystyle #1$}%
+		\sbox2{$\displaystyle #2$}%
+		\alt#3%
+		{\rlap{\usebox1}\vphantom{\usebox2}\hphantom{\ifnum\wd1>\wd2 \usebox1\else\usebox2\fi}}%
+		{\rlap{\usebox2}\vphantom{\usebox1}\hphantom{\ifnum\wd1>\wd2 \usebox1\else\usebox2\fi}}%
+}}
+
+\NewDocumentCommand\markC{D<>{.-} O{colorMarkBlue} d() m}{
+	\alt<#1>{%
+		\tikz[remember picture,baseline]{\node[filtermark, fill=#2, text width={}](#3){$#4$};}}%
+		{\tikz[remember picture,baseline]{\node[filtermark, text width={}](#3){$#4$};}}%
+}
+
+% for dark colors
+\NewDocumentCommand\markDC{D<>{.-} O{ISASblue} d() m}{
+	\markC<#1>[#2](#3){\textcolor{white}{#4}}
+}
+
+\NewDocumentCommand\markBlue{D<>{.-} m}{
+	\markC<#1>[colorMarkBlue]{#2}
+}
+
+\NewDocumentCommand\markGreen{D<>{.-} m}{
+	\markC<#1>[colorMarkGreen]{#2}
+}
+
+\NewDocumentCommand\markRed{D<>{.-} m}{
+\markC<#1>[colorMarkRed]{#2}
+}
+
+\NewDocumentCommand\markBlack{D<>{.-} m}{
+	\markC<#1>[black]{\textcolor{white}{#2}}
+}
+
+\NewDocumentCommand\markStoc{D<>{.-} m}{
+	\markC<#1>[cStoc]{#2}
+}
+
+\NewDocumentCommand\markSet{D<>{.-} m}{
+	\markC<#1>[cSet]{#2}
+}
+
+\NewDocumentCommand\markTrans{D<>{.-} m}{
+	\markC<#1>[none]{#2}
+}
+
+% option "visible on = <...>" added, can be used for plots
+\tikzset{
+    invisible/.style={opacity=0},
+    visible on/.style={alt={#1{}{invisible}}},
+    alt/.code args={<#1>#2#3}{%
+      \alt<#1>{\pgfkeysalso{#2}}{\pgfkeysalso{#3}} % \pgfkeysalso doesn't change the path
+    },
+  }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Framed Images
+%% 	 https://tex.stackexchange.com/questions/222849/including-an-image-with-a-faded-border
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tikzfading[name=fade l,left color=transparent!100,right color=transparent!0]
+\tikzfading[name=fade r,right color=transparent!100,left color=transparent!0]
+\tikzfading[name=fade d,bottom color=transparent!100,top color=transparent!0]
+\tikzfading[name=fade u,top color=transparent!100,bottom color=transparent!0]
+
+% this "frames" a rectangle node
+\newcommand<>\fadenode[2][10pt]{
+	\only#3{%
+	\fill[white,path fading=fade u] (#2.south west) rectangle ($(#2.south east)+(0, #1)$);
+	\fill[white,path fading=fade d] (#2.north west) rectangle ($(#2.north east)+(0,-#1)$);
+	\fill[white,path fading=fade l] (#2.south east) rectangle ($(#2.north east)+(-#1,0)$);
+	\fill[white,path fading=fade r] (#2.south west) rectangle ($(#2.north west)+( #1,0)$);
+	}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Include Movies (with media9)
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ffmpeg -i Sample.mp4 -vframes 1 -f image2 -vf scale=320:-1 Sample.jpg
+% ffmpeg -i Sample.avi -vcodec libx264 -vf scale=320:-1 Sample.mp4
+%
+% ffmpeg -i Sample.mp4 -vframes 1 -f image2  Sample.jpg
+% ffmpeg -i Sample.avi -vcodec libx264 Sample.mp4
+
+% \NewDocumentCommand{\includemovie}{m m m}{
+% 	\ifBNBeamer@static
+% 		\includegraphics[width=#1,height=#2]{#3.jpg}
+% 	\else
+% 		\includemedia[
+% 			% activate=pageopen,
+% 			% deactivate=onclick,
+% 			% deactivate=pageclose,
+% 			activate=pagevisible,
+% 			deactivate=pageinvisible,
+% 			%scale=2,
+% 			width=#1,
+% 			height=#2,
+% 			%keepaspectratio,
+% 			addresource=#3.mp4,
+% 			flashvars={%
+% 				% source=#3.flv% same path as in addresource!
+% 				src=#3.mp4% for StrobeMediaPlayback.swf
+% 				&autoPlay=true%    % optional configuration
+% 				&loop=true%        % variables
+% 				&scaleMode=none
+% 				&volume=0.0
+% 		}
+% 		]{\includegraphics[width=#1,height=#2]{#3.jpg}}{StrobeMediaPlayback.swf}%{VPlayer.swf}%{VPlayer9.swf}
+% 	\fi
+% }
+
+\NewDocumentCommand{\includemovie}{D<>{1-} m m m O{} O{}}{%
+	\alt<#1>{% draft kann nicht direkt zugewiesen werden 	
+		\includemedia[
+			activate=pageopen,
+			% deactivate=onclick,
+			deactivate=pageclose,
+			% activate=pagevisible,
+			% deactivate=pageinvisible, 
+			%scale=2,
+			% draft,
+			width=#2,
+			height=#3,
+			%keepaspectratio,
+			addresource=#4.mp4,
+			#5
+			flashvars={%
+				source=#4.mp4% same path as in addresource! for VPlayer.swf
+				% src=#4.mp4% for StrobeMediaPlayback.swf
+				&autoPlay=true%    % optional configuration
+				&loop=true%        % variables
+				% &scaleMode=none
+				&scaleMode=stretch %letterbox?
+				&volume=0.0
+				#6
+		}
+		]{\includegraphics[width=#2,height=#3]{#4.jpg}}{VPlayer9.swf}%{StrobeMediaPlayback.swf}%{VPlayer.swf}%{VPlayer9.swf}
+		% CHANGE PLAYER, ALSO CHANGE SRC
+		% VPlayer9 seams to be most stable with respect to autoplay
+	}%
+	{% if no star
+			\includemedia[
+			% activate=pageopen,
+			% deactivate=onclick,
+			% deactivate=pageclose,
+			activate=pagevisible,
+			deactivate=pageinvisible, 
+			draft,
+			%scale=2,
+			width=#2,
+			height=#3,
+			%keepaspectratio,
+			addresource=#4.mp4,
+			flashvars={%
+				% source=#3.flv% same path as in addresource!
+				src=#4.mp4% for StrobeMediaPlayback.swf
+				&autoPlay=true%    % optional configuration
+				&loop=true%        % variables
+				% &scaleMode=none
+				&scaleMode=stretch %letterbox?
+				&volume=0.0
+		}
+		]{\includegraphics[width=#2,height=#3]{#4.jpg}}{StrobeMediaPlayback.swf}%{VPlayer.swf}%{VPlayer9.swf}
+	}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Itemize Colors
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{proenv}{\only{\setbeamercolor{local structure}{fg=green}}}{}
+\newenvironment{conenv}{\only{\setbeamercolor{local structure}{fg=red}}}{}
+\newenvironment{orangeenv}{\only{\setbeamercolor{local structure}{fg=orange!90!black}}}{}
+\newenvironment{ISASgreenenv}{\only{\setbeamercolor{local structure}{fg=ISASgreen}}}{}
+\newenvironment{ISASredenv}{\only{\setbeamercolor{local structure}{fg=ISASred}}}{}
+\newenvironment{ISASblueenv}{\only{\setbeamercolor{local structure}{fg=ISASblue}}}{}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Tools
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\NewDocumentCommand{\slideDraft} { m m }{
+	\subsection{#1}
+	\begin{frame}
+		\frametitle{\insertsubsectionhead}
+		\begin{center}
+			\begin{minipage}{0.8\slidewidth}
+				\large #2
+			\end{minipage}
+		\end{center}
+	\end{frame}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Specific Colors
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Deprecated
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\definecolor{innerset}{RGB}{151,198,154} % previous color scheme
+\definecolor{innerstoc}{RGB}{178,176,216} %
+
+\definecolor{outerset}{RGB}{0,102,51} % previous color scheme
+\definecolor{outerstoc}{RGB}{43,75,155} %

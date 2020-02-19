@@ -1,0 +1,138 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Identification
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{BNPackages/BNPackages}[2019/11/04 BN Packages]
+
+% 04.11.2019: helper option and command \lengthinfo added
+% 02.11.2019: same packages for ifacconf deactivated
+% 18.11.2018: cite and siunitx have been deactived due to incompatibility with elsarticle !
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   conditionals
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newif\ifBNPackages@flushend % for option flushend to load acc. pack.
+\newif\ifBNPackages@helpers
+
+\newif\ifBNPackages@elsarticle
+\@ifclassloaded{elsarticle}{%
+ \BNPackages@elsarticletrue%
+ \typeout{Documentclass is elsarticle, some packages will not be loaded}%
+}{%
+ \BNPackages@elsarticlefalse%
+}
+
+\@ifclassloaded{ifacconf}{% same behavior as for elsarticle
+ \BNPackages@elsarticletrue%
+ \typeout{Documentclass is ifacconf, some packages will not be loaded}%
+}{%
+ \BNPackages@elsarticlefalse%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   General
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{xspace}
+\usepackage{enumerate}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   only tagging of referenced equations
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{mathtools}
+\mathtoolsset{showonlyrefs=true,showmanualtags=true}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   SI Units
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ifBNPackages@elsarticle\else
+ \RequirePackage{siunitx}
+\fi
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Plots / Figures
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\ifBNPackages@elsarticle\else
+ \RequirePackage{cite}
+\fi
+% \RequirePackage{subcaption}
+\RequirePackage{wrapfig}
+
+\RequirePackage{mathtools}
+\mathtoolsset{showonlyrefs=true,showmanualtags=true}
+
+\RequirePackage{tikz}
+
+\RequirePackage{pgfplots}
+\pgfplotsset{compat=newest}
+\pgfplotsset{plot coordinates/math parser=false}
+
+
+\newlength\figureheight
+\newlength\figurewidth
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   text commands
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\newcommand{\hairsp}{\leavevmode\kern1pt }% hair space
+\newcommand{\hairsp}{{\ifmmode\mskip1mu\else\kern0.08em\fi}}% hair space
+\newcommand{\ie}{i.\hairsp{}e.}
+\newcommand{\eg}{e.\hairsp{}g.}
+\newcommand{\myemdash}{\hairsp\textemdash\hairsp}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Option flushend: Balancing last page
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\DeclareOption{flushend}{\BNPackages@flushendtrue}
+%\DeclareOption{flushend}{
+%	\PassOptionsToPackage{\CurrentOption}{paxcommands}
+%	\RequirePackage[keeplastbox]{flushend}
+%}
+
+\DeclareOption{helpers}{\BNPackages@helperstrue}%
+% \RequirePackage{printlen}%
+% \newcommand{\lengthinfo}{%
+% Column Width: \uselengthunit{cm}\printlength{\columnwidth}\\%
+% Text: Width: \uselengthunit{cm}\printlength{\columnwidth}%
+% }%
+% }
+
+\DeclareOption*{\PackageWarning{BNPackages}{Unknown ‘\CurrentOption’}}
+
+\ProcessOptions\relax
+
+\ifBNPackages@flushend
+ \RequirePackage[keeplastbox]{flushend}
+\fi
+\ifBNPackages@helpers
+ \RequirePackage{printlen}%
+ \newcommand{\lengthinfo}{%
+ Column Width: \uselengthunit{cm}\printlength{\columnwidth}\\%
+ Text Width: \uselengthunit{cm}\printlength{\textwidth}\\%
+ Text Height: \uselengthunit{cm}\printlength{\textheight}%
+ }%
+\fi

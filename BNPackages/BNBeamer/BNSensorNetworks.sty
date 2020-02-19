@@ -1,0 +1,85 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Identification
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{BNPackages/BNBeamer/BNSensorNetworks}[2017/05/07 BN Sensor Networks]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Preliminary declarations
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\RequirePackage{package}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Sensor Nodes
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%% Sensor Network
+
+\tikzstyle{sensornode} = [regular polygon,regular polygon sides=5, rounded corners=1mm, 
+	text centered, anchor=south west, text=white, draw=blue!50!black,shade,top color={rgb,255:red,46; green,73; blue,146},
+	bottom color={rgb,255:red,105; green,119; blue,185}, text width=0.8cm, scale = 0.9, inner sep=-4pt, outer sep=5pt,font=\bf\sffamily\footnotesize]	
+
+\tikzstyle{greensensornode} = [sensornode, draw=green!50!black,shade,top color={rgb,255:red,57; green,175; blue,75}, bottom color={rgb,255:red,137; green,200; blue,119}]
+\tikzstyle{redsensornode} = [sensornode, draw=red!50!black,shade,top color={rgb,255:red,178; green,44; blue,45}, bottom color={rgb,255:red,243; green,126; blue,127}]
+
+%	\tikzstyle{sensornode} = [regular polygon,regular polygon sides=5, rounded corners=1mm, 
+%		text centered, anchor=south west, text=white, draw=blue!50!black,shade,top color=blue!70!black,
+%		bottom color=blue!50, text width=0.8cm, scale = 0.9, inner sep=-4pt, outer sep=5pt,font=\bf\sffamily\footnotesize]
+
+
+
+%\tikzstyle{redsensornode} = [sensornode, draw=red!50!black,shade,top color=red!70!black, bottom color=red!50]
+%\tikzstyle{greensensornode} = [sensornode, draw=green!50!black,shade,top color=green!70!black, bottom color=green!50]
+
+\tikzstyle{centralnode} = [greensensornode,regular polygon,regular polygon sides=5,]
+
+\tikzstyle{topsensornode} = [greensensornode, regular polygon,regular polygon sides=6,text width=1.2cm]
+
+\tikzstyle{asicon} = [anchor=base,xshift=0.2cm,yshift=-0.21cm]
+
+%%% Communication links
+\makeatletter
+\def\SN@comshift{0.5*\shadowsize}
+\def\SN@comshadowstep{0.5pt}
+\def\SN@comshadowopacity{0.2/3}
+
+%\tikzset{
+%	/tikz/render com blur shadow/.code={
+%		\def\SN@comshift{\shadowsize}
+%		\def\SN@comshadowstep{0.5pt}
+%		\def\SN@comopacity{0.2}
+%		\foreach \pgfbs@i in {0,...,3}{
+%%			{transform canvas={shift={(\SN@comshift,-\SN@comshift)}},draw=black,opacity=\SN@comopacity,line width=\pgflinewidth+2*\SN@comshadowstep}
+%	preaction={transform canvas={(5pt,-5pt)}},draw=black, thick,
+%		}
+%	},
+%}
+
+\tikzset{
+	BNshadowLine/.style={
+	preaction={transform canvas={shift={(\SN@comshift,-\SN@comshift)}},draw=black,opacity=\SN@comshadowopacity,line width=\pgflinewidth},
+	preaction={transform canvas={shift={(\SN@comshift,-\SN@comshift)}},draw=black,opacity=\SN@comshadowopacity,line width=\pgflinewidth+\SN@comshadowstep},
+	preaction={transform canvas={shift={(\SN@comshift,-\SN@comshift)}},draw=black,opacity=\SN@comshadowopacity,line width=\pgflinewidth+2*\SN@comshadowstep},
+	}
+}
+
+\tikzset{
+	com/.style={decorate, decoration={snake}, draw=magenta!80,thick, BNshadowLine
+	},
+}
+\makeatother
+
+\tikzstyle{centralnode} = [regular polygon,regular polygon sides=5, rounded corners=1mm, drop shadow,
+	text centered, anchor=center, text=white, draw=red!50!black,shade,top color=red!70!black,
+	bottom color=red!50, text width=1.2cm, scale = 0.8, outer sep=5pt]
+\tikzstyle{topnode} = [regular polygon,regular polygon sides=6, rounded corners=1mm, drop shadow,
+	text centered, anchor=center, text=white, draw=green!50!black,shade,top color=green!70!black,
+	bottom color=green!50, text width=1cm, scale = 0.6, outer sep=5pt,]

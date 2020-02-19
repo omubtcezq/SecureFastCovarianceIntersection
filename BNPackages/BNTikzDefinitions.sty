@@ -1,0 +1,500 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Identification
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{BNPackages/BNTikzDefinitions}[2017/04/26 BN Tikz Definitions]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Preliminary declarations
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{BNPackages/BNMathMacros} 
+\RequirePackage{tikz}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Options
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \usepackage{pgfbaselayers}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{shadows}
+% \usetikzlibrary{decorations.pathmorphing}
+% \usetikzlibrary{decorations.markings}
+\usetikzlibrary{calc,chains,positioning,fit,plotmarks}
+\usetikzlibrary{patterns}
+% \usetikzlibrary{decorations.fractals,decorations.pathmorphing}
+\usetikzlibrary{decorations}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.text}
+\usetikzlibrary{backgrounds}
+\usepackage{pgfplots}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   More declarations
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\definecolor{ISASblue}{rgb}{0.396,0.384,0.675} % 101/255 98/255 172/255
+\definecolor{ISASLogoblue}{rgb}{0.557,0.589,0.757} % 142/255 150/255 193/255
+%Blockfarben
+% \definecolor{BlockYellow}{rgb}{0.9451,0.9137,0.7373}
+\definecolor{BlockYellow}{rgb}{1,0.8,0.33}
+% \definecolor{BlockRed}{rgb}{0.9176,0.8392,0.9020}
+\definecolor{BlockRed}{rgb}{0.925,0.5,0.5}
+\definecolor{BlockBlue}{rgb}{.86,.86,.925}
+\definecolor{BlockGreen}{rgb}{0.5,0.8,0.5}
+\definecolor{DarkGreen}{rgb}{0.2,0.5,0.2}
+\definecolor{ISASLblue}{rgb}{0.61961,0.61961,0.675} % 158/255 158/255 172/255 
+\definecolor{Black}{rgb}{0,0,0} % 158/255 158/255 172/255       
+\definecolor{DarkBlue}{rgb}{0,0,0.4} % 158/255 158/255 172/255
+\definecolor{DarkRed}{rgb}{0.4,0,0}
+
+\newlength{\boxw}
+\newlength{\boxh}
+\newlength{\shadowsize}
+\newlength{\boxroundness}
+\newlength{\tmpa}
+\newsavebox{\shadowblockbox}
+
+\setlength{\shadowsize}{6pt}
+\setlength{\boxroundness}{3pt}
+
+\def\shadownode[#1]#2;{
+\node[scale=1,above,#1]{#2};
+%\node[scale=1,above,#1,xshift=\shadowsize*0.2,yshift=-\shadowsize*0.2, black,opacity=.4]{#2};
+\node[preaction={draw=black,line width=2mm,fill=black,opacity=.5,%
+transform canvas={xshift=1mm,yshift=-1mm}}]{#2};
+%\node[scale=1,above,#1,xshift=\shadowsize*0.2,yshift=-\shadowsize*0.2, black,scope fading=south,opacity=0.4]{#2};
+%% \node[scale=1,above,#1,yscale=-1,
+%% scope fading=south,opacity=0.4]{#2};
+%%   \foreach \x in {0,.05,...,1} % 0.05, opacity=.04
+%     \foreach \x in {0,.05,...,0.5}
+%     {
+%         \setlength{\tmpa}{\shadowsize * \real{\x}}
+% %%         \fill[xshift=\shadowsize - 1pt,yshift=-\shadowsize + 1pt,
+% % %                black,opacity=.04,rounded corners=\boxroundness]
+% %%             (\tmpa, \tmpa) rectangle +(\boxw - \tmpa - \tmpa,
+% % %                \boxh - \tmpa - \tmpa);
+% \node[scale=1,above,#1,xshift=\tmpa,yshift=-\tmpa, black,opacity=.04,]{#2};
+%     }
+}
+
+\newenvironment{shadowblock}[2]%
+{\begin{lrbox}{\shadowblockbox}\begin{minipage}{#1} \par\vspace{-1em} \par\vspace{-1pt} \setbeamertemplate{blocks}[rounded][shadow=false]\begin{block}{#2}}%
+{\end{block}\par\vspace{-5pt}\end{minipage}\end{lrbox}%
+\settowidth{\boxw}{\usebox{\shadowblockbox}}%
+\settodepth{\tmpa}{\usebox{\shadowblockbox}}%
+\settoheight{\boxh}{\usebox{\shadowblockbox}}%
+\addtolength{\boxh}{\tmpa}%
+\begin{tikzpicture}
+    \addtolength{\boxw}{\boxroundness * 2}
+    \addtolength{\boxh}{\boxroundness * 2}
+
+    \foreach \x in {0,.05,...,1} % 0.05, opacity=.04
+ %   \foreach \x in {0,.1,...,1}
+    {
+        \setlength{\tmpa}{\shadowsize * \real{\x}}
+        \fill[xshift=\shadowsize - 1pt,yshift=-\shadowsize + 1pt,
+                black,opacity=.04,rounded corners=\boxroundness]
+            (\tmpa, \tmpa) rectangle +(\boxw - \tmpa - \tmpa,
+                \boxh - \tmpa - \tmpa);
+    }
+%      \filldraw[fill=blue, draw=DarkBlue, rounded corners=\boxroundness]
+%          (0, 0) rectangle (\boxw, \boxh);
+    \draw node[xshift=\boxroundness,yshift=\boxroundness,
+        inner sep=0pt,outer sep=0pt,anchor=south west]
+             (0,0) {\usebox{\shadowblockbox}};
+\end{tikzpicture}
+}
+
+
+\newenvironment{shadowalertblock}[2]%
+{\begin{lrbox}{\shadowblockbox}\begin{minipage}{#1} \par\vspace{-1em} \par\vspace{-1pt} \setbeamertemplate{blocks}[rounded][shadow=false]\begin{alertblock}{#2}}%
+{\end{alertblock}\par\vspace{-5pt}\end{minipage}\end{lrbox}%
+\settowidth{\boxw}{\usebox{\shadowblockbox}}%
+\settodepth{\tmpa}{\usebox{\shadowblockbox}}%
+\settoheight{\boxh}{\usebox{\shadowblockbox}}%
+\addtolength{\boxh}{\tmpa}%
+\begin{tikzpicture}
+    \addtolength{\boxw}{\boxroundness * 2}
+    \addtolength{\boxh}{\boxroundness * 2}
+
+    \foreach \x in {0,.05,...,1} % 0.05, opacity=.04
+ %   \foreach \x in {0,.1,...,1}
+    {
+        \setlength{\tmpa}{\shadowsize * \real{\x}}
+        \fill[xshift=\shadowsize - 1pt,yshift=-\shadowsize + 1pt,
+                black,opacity=.04,rounded corners=\boxroundness]
+            (\tmpa, \tmpa) rectangle +(\boxw - \tmpa - \tmpa,
+                \boxh - \tmpa - \tmpa);
+    }
+%      \filldraw[fill=blue, draw=DarkBlue, rounded corners=\boxroundness]
+%          (0, 0) rectangle (\boxw, \boxh);
+    \draw node[xshift=\boxroundness,yshift=\boxroundness,
+        inner sep=0pt,outer sep=0pt,anchor=south west]
+             (0,0) {\usebox{\shadowblockbox}};
+\end{tikzpicture}
+
+}
+
+\newenvironment{shadowgreenblock}[2]%
+{\begin{lrbox}{\shadowblockbox}\begin{minipage}{#1} \par\vspace{-1em} \par\vspace{-1pt} \setbeamertemplate{blocks}[rounded][shadow=false]\begin{exampleblock}{#2}}%
+{\end{exampleblock}\par\vspace{-5pt}\end{minipage}\end{lrbox}%
+\settowidth{\boxw}{\usebox{\shadowblockbox}}%
+\settodepth{\tmpa}{\usebox{\shadowblockbox}}%
+\settoheight{\boxh}{\usebox{\shadowblockbox}}%
+\addtolength{\boxh}{\tmpa}%
+\begin{tikzpicture}
+    \addtolength{\boxw}{\boxroundness * 2}
+    \addtolength{\boxh}{\boxroundness * 2}
+
+    \foreach \x in {0,.05,...,1} % 0.05, opacity=.04
+ %   \foreach \x in {0,.1,...,1}
+    {
+        \setlength{\tmpa}{\shadowsize * \real{\x}}
+        \fill[xshift=\shadowsize - 1pt,yshift=-\shadowsize + 1pt,
+                black,opacity=.04,rounded corners=\boxroundness]
+            (\tmpa, \tmpa) rectangle +(\boxw - \tmpa - \tmpa,
+                \boxh - \tmpa - \tmpa);
+    }
+%      \filldraw[fill=blue, draw=DarkBlue, rounded corners=\boxroundness]
+%          (0, 0) rectangle (\boxw, \boxh);
+    \draw node[xshift=\boxroundness,yshift=\boxroundness,
+        inner sep=0pt,outer sep=0pt,anchor=south west]
+             (0,0) {\usebox{\shadowblockbox}};
+\end{tikzpicture}
+
+}
+
+% blauer block mit rand
+
+\newenvironment{blueshadowblock}[1]%
+{\begin{lrbox}{\shadowblockbox}\begin{minipage}{#1}}%
+{\end{minipage}\end{lrbox}%
+\settowidth{\boxw}{\usebox{\shadowblockbox}}%
+\settodepth{\tmpa}{\usebox{\shadowblockbox}}%
+\settoheight{\boxh}{\usebox{\shadowblockbox}}%
+\addtolength{\boxh}{\tmpa}%
+\begin{tikzpicture}
+    \addtolength{\boxw}{\boxroundness * 2}
+    \addtolength{\boxh}{\boxroundness * 2}
+
+    \foreach \x in {0,.05,...,1}
+    {
+        \setlength{\tmpa}{\shadowsize * \real{\x}}
+        \fill[xshift=\shadowsize - 1pt,yshift=-\shadowsize + 1pt,
+                black,opacity=.04,rounded corners=\boxroundness]
+            (\tmpa, \tmpa) rectangle +(\boxw - \tmpa - \tmpa,
+                \boxh - \tmpa - \tmpa);
+    }
+
+    \filldraw[shade, top color=white,
+    bottom color=blue!50!black!20, draw=blue!40!black!60, very thick, rounded corners=\boxroundness]
+        (0, 0) rectangle (\boxw, \boxh);
+    \draw node[xshift=\boxroundness,yshift=\boxroundness,
+        inner sep=0pt,outer sep=0pt,anchor=south west]
+             (0,0) {\usebox{\shadowblockbox}};
+\end{tikzpicture}}
+
+% roter block mit rand
+
+\newenvironment{redshadowblock}[1]%
+{\begin{lrbox}{\shadowblockbox}\begin{minipage}{#1}}%
+{\end{minipage}\end{lrbox}%
+\settowidth{\boxw}{\usebox{\shadowblockbox}}%
+\settodepth{\tmpa}{\usebox{\shadowblockbox}}%
+\settoheight{\boxh}{\usebox{\shadowblockbox}}%
+\addtolength{\boxh}{\tmpa}%
+\begin{tikzpicture}
+    \addtolength{\boxw}{\boxroundness * 2}
+    \addtolength{\boxh}{\boxroundness * 2}
+
+    \foreach \x in {0,.05,...,1}
+    {
+        \setlength{\tmpa}{\shadowsize * \real{\x}}
+        \fill[xshift=\shadowsize - 1pt,yshift=-\shadowsize + 1pt,
+                black,opacity=.04,rounded corners=\boxroundness]
+            (\tmpa, \tmpa) rectangle +(\boxw - \tmpa - \tmpa,
+                \boxh - \tmpa - \tmpa);
+    }
+
+    \filldraw[shade, top color=white,
+    bottom color=red!50!black!20, draw=red!40!black!60, very thick, rounded corners=\boxroundness]
+        (0, 0) rectangle (\boxw, \boxh);
+    \draw node[xshift=\boxroundness,yshift=\boxroundness,
+        inner sep=0pt,outer sep=0pt,anchor=south west]
+             (0,0) {\usebox{\shadowblockbox}};
+\end{tikzpicture}}
+
+%gruener block mit rand
+
+\newenvironment{greenshadowblock}[1]%
+{\begin{lrbox}{\shadowblockbox}\begin{minipage}{#1}}%
+{\end{minipage}\end{lrbox}%
+\settowidth{\boxw}{\usebox{\shadowblockbox}}%
+\settodepth{\tmpa}{\usebox{\shadowblockbox}}%
+\settoheight{\boxh}{\usebox{\shadowblockbox}}%
+\addtolength{\boxh}{\tmpa}%
+\begin{tikzpicture}
+    \addtolength{\boxw}{\boxroundness * 2}
+    \addtolength{\boxh}{\boxroundness * 2}
+
+    \foreach \x in {0,.05,...,1}
+    {
+        \setlength{\tmpa}{\shadowsize * \real{\x}}
+        \fill[xshift=\shadowsize - 1pt,yshift=-\shadowsize + 1pt,
+                black,opacity=.04,rounded corners=\boxroundness]
+            (\tmpa, \tmpa) rectangle +(\boxw - \tmpa - \tmpa,
+                \boxh - \tmpa - \tmpa);
+    }
+
+    \filldraw[shade, top color=white,
+    bottom color=green!50!black!20, draw=green!40!black!60, very thick, rounded corners=\boxroundness]
+        (0, 0) rectangle (\boxw, \boxh);
+    \draw node[xshift=\boxroundness,yshift=\boxroundness,
+        inner sep=0pt,outer sep=0pt,anchor=south west]
+             (0,0) {\usebox{\shadowblockbox}};
+\end{tikzpicture}}
+
+\tikzstyle{shadow behind} = [preaction={line width=2pt,%draw=black!20!white,color=black!20!white,%
+draw=black,color=black,opacity=.2,%
+transform canvas={xshift=0.4mm,yshift=-0.4mm}}]
+% \tikzstyle{shadow behind} = [preaction={line width=2pt,%draw=black!20!white,color=black!20!white,%
+% draw=black,color=black,opacity=.3,%
+% transform canvas={xshift=0.5mm,yshift=-0.5mm}}]
+
+% \newenvironment{greenshadowblock2}[1]%
+% {\begin{lrbox}{\shadowblockbox}\begin{minipage}{#1}}%
+% {\end{minipage}\end{lrbox}%
+% \settowidth{\boxw}{\usebox{\shadowblockbox}}%
+% \settodepth{\tmpa}{\usebox{\shadowblockbox}}%
+% \settoheight{\boxh}{\usebox{\shadowblockbox}}%
+% \addtolength{\boxh}{\tmpa}%
+% \begin{tikzpicture}
+%     \addtolength{\boxw}{\boxroundness * 2}
+%     \addtolength{\boxh}{\boxroundness * 2}
+% 
+%     \foreach \x in {0,.05,...,1}
+%     {
+%         \setlength{\tmpa}{\shadowsize * \real{\x}}
+%         \fill[xshift=\shadowsize - 1pt,yshift=-\shadowsize + 1pt,
+%                 black,opacity=.04,rounded corners=\boxroundness, xslant=-1]
+%             (\tmpa, \tmpa) rectangle +(\boxw - \tmpa - \tmpa,
+%                 \boxh - \tmpa - \tmpa);
+%     }
+% 
+%     \filldraw[shade, top color=white,
+%     bottom color=green!50!black!20, draw=green!40!black!60, very thick, rounded corners=\boxroundness]
+%         (0, 0) rectangle (\boxw, \boxh);
+%     \draw node[xshift=\boxroundness,yshift=\boxroundness,
+%         inner sep=0pt,outer sep=0pt,anchor=south west]
+%              (0,0) {\usebox{\shadowblockbox}};
+% \end{tikzpicture}}
+
+
+\def\nodeshadowed[#1]#2;{
+\node[scale=1,above,#1]{#2};
+\node[scale=1,above,#1,yscale=-1,
+scope fading=south,opacity=0.4]{#2};
+}
+
+
+
+
+\definecolor{Red}{rgb}{0.925,0.0,0.0}
+\definecolor{Blue}{rgb}{0.0,0.0,0.925}
+\definecolor{gRed}{rgb}{1,0.1,0.1}
+\definecolor{gBlue}{rgb}{0.0,0.0,0.8}
+\definecolor{gGreen}{rgb}{0.0,0.5,0.0} %0.3
+\definecolor{darkGreen}{rgb}{0.0,0.7,0.0}
+\definecolor{BlockBlue2}{rgb}{.8,.8,.925}
+\definecolor{violet}{rgb}{0.58 0. 0.41}
+\definecolor{ISASgreen}{rgb}{0.396,0.675,0.384}
+
+
+
+%%% Sensor Network
+
+\def\nodesensornetwork[#1]#2;{
+% \node[scale=2,above,#1]{
+% \global\setbox\mybox=\hbox{#2}
+% \copy\mybox};
+% \node[scale=2,above,#1,yscale=-1,
+% scope fading=south,opacity=0.4]{\box\mybox};
+\tikzstyle{sensornode} = [regular polygon,regular polygon sides=5, rounded corners=1mm, drop shadow,
+        text centered, anchor=south west, text=white, draw=blue!50!black,shade,top color=blue!70!black,
+    bottom color=blue!50, text width=0.5cm, scale = 0.6, outer sep=5pt]
+\tikzset{
+    com/.style={decorate, decoration={snake}, draw=magenta!80,line width=0.5pt,},
+}
+% \makeGrid
+
+
+\node[#1]{\begin{tikzpicture}
+           
+
+ 
+% \begin{scope}[#1]
+
+\scalebox{1}{
+
+
+%  \path (1,1) node[anchor=south west, rotate around={45:(1,1)}]{\Huge \textsc{Sensor Network}};
+% \draw[color=black!60, draw =none] (1,2) -- node[sloped, midway] {\Huge \textsc{Decentralized Estimation}} (11,8);
+% \draw[color=black!40, draw =none] (1,2) -- node[sloped, midway] {\Huge \textsc{Sensor Network}} (10,7);
+
+% \coordinate (mark1) at (5,6.4);
+% \draw<1->[rotate around={-55:(mark1)},top color=green!80!black,bottom color=green!20, draw = none,] (mark1) ellipse (10mm and 30mm);
+% \draw<1->[top color=red!80,bottom color=red!20, draw = none,] (6.8,6.5) ellipse (10mm and 20mm);
+% \draw<3->[rotate around={10:(6.8,6.5)},fill=green!50!black!20, draw = none,] (6.8,6.5) ellipse (10mm and 20mm);
+
+% \draw (5.5,6.5) ellipse [x radius=1cm,y radius=.5cm];
+
+\def\n{1}
+\pgfmathsetseed{#2}
+    \foreach \i in {0,1,...,3}
+    \foreach \j in {0,1,...,2}
+    {
+% \pgfmathrandominteger{\a}{\i*20}{\i*20 +20}
+% \pgfmathrandominteger{\b}{0}{90}
+ \pgfmathparse{rnd*2 + \i*3 -0.5}\let\a\pgfmathresult
+ \pgfmathparse{1+(rnd*2 + \j*3)/9*8}\let\b\pgfmathresult
+ \pgfmathtruncatemacro\n{\i + \j*4}
+  \path (\a,\b) node[sensornode] (S\n) {\bf S\n};
+    };
+
+ % \draw [com]  (S0) -- (S1) (S1) -- (S2) (S2) -- (S3) (S4) -- (S5) (S5) -- (S2) (S2) -- (S3);
+
+    \foreach \i in {0,1,...,2}
+    \foreach \j in {0,1,2}
+    {
+  \pgfmathtruncatemacro\n{\i + \j*4}
+  \pgfmathtruncatemacro\nn{\n + 1}
+      \draw [com]  (S\n) -- (S\nn);
+    };
+
+  \draw [com]  (S0) -- (S5) (S4) -- (S8) (S5) -- (S9) (S10) -- (S5) (S2)-- (S7) (S3) -- (S7) (S3) -- (S11) (S6) -- (S10);
+
+%     \foreach \i in {0,1,...,1}
+%     \foreach \j in {0,1,2}
+%     {
+%   \pgfmathtruncatemacro\n{\j + \i*3}
+%   \pgfmathtruncatemacro\nn{\n +4}
+%       \draw [com]  (S\n) -- (S\nn);
+%     };
+
+
+}
+% \end{scope}
+\end{tikzpicture}};
+}
+
+\def\nodesensornetworkh[#1]#2;{
+% \node[scale=2,above,#1]{
+% \global\setbox\mybox=\hbox{#2}
+% \copy\mybox};
+% \node[scale=2,above,#1,yscale=-1,
+% scope fading=south,opacity=0.4]{\box\mybox};
+\tikzstyle{sensornode} = [regular polygon,regular polygon sides=5, rounded corners=1mm, drop shadow,
+        text centered, anchor=south west, text=white, draw=blue!50!black,shade,top color=blue!70!black,
+    bottom color=blue!50, text width=0.8cm, scale = 0.6, outer sep=5pt]
+\tikzset{
+    com/.style={decorate, decoration={snake}, draw=magenta!80,line width=0.5pt,},
+}
+\tikzstyle{centralnode} = [regular polygon,regular polygon sides=5, rounded corners=1mm, drop shadow,
+        text centered, anchor=center, text=white, draw=red!50!black,shade,top color=red!70!black,
+    bottom color=red!50, text width=1.2cm, scale = 0.8, outer sep=5pt]
+\tikzstyle{topnode} = [regular polygon,regular polygon sides=6, rounded corners=1mm, drop shadow,
+        text centered, anchor=center, text=white, draw=green!50!black,shade,top color=green!70!black,
+    bottom color=green!50, text width=1cm, scale = 0.6, outer sep=5pt,]
+% \makeGrid
+
+
+\node[#1]{\begin{tikzpicture}
+           
+\tikzstyle{every node}=[font=\bf\sffamily]
+
+% \begin{scope}[#1]
+
+% \scalebox{1}{
+
+
+%  \path (1,1) node[anchor=south west, rotate around={45:(1,1)}]{\Huge \textsc{Sensor Network}};
+% \draw[color=black!60, draw =none] (1,2) -- node[sloped, midway] {\Huge \textsc{Decentralized Estimation}} (11,8);
+% \draw[color=black!40, draw =none] (1,2) -- node[sloped, midway] {\Huge \textsc{Sensor Network}} (10,7);
+
+% \coordinate (mark1) at (5,6.4);
+% \draw<1->[rotate around={-55:(mark1)},top color=green!80!black,bottom color=green!20, draw = none,] (mark1) ellipse (10mm and 30mm);
+% \draw<1->[top color=red!80,bottom color=red!20, draw = none,] (6.8,6.5) ellipse (10mm and 20mm);
+% \draw<3->[rotate around={10:(6.8,6.5)},fill=green!50!black!20, draw = none,] (6.8,6.5) ellipse (10mm and 20mm);
+
+% \draw (5.5,6.5) ellipse [x radius=1cm,y radius=.5cm];
+
+\def\n{1}
+\pgfmathsetseed{#2}
+    \foreach \i in {0,1,...,3}
+    \foreach \j in {0,1,...,2}
+    {
+% \pgfmathrandominteger{\a}{\i*20}{\i*20 +20}
+% \pgfmathrandominteger{\b}{0}{90}
+ \pgfmathparse{rnd*2 + \i*3 -0.5}\let\a\pgfmathresult
+ \pgfmathparse{1+(rnd*2 + \j*3)/9*8}\let\b\pgfmathresult
+ \pgfmathtruncatemacro\n{\i + \j*4}
+  \path (\a,\b) node[sensornode] (S\n) {S\n};
+    };
+
+ % \draw [com]  (S0) -- (S1) (S1) -- (S2) (S2) -- (S3) (S4) -- (S5) (S5) -- (S2) (S2) -- (S3);
+
+    \foreach \i in {0,1,...,2}
+    \foreach \j in {0,1,2}
+    {
+  \pgfmathtruncatemacro\n{\i + \j*4}
+  \pgfmathtruncatemacro\nn{\n + 1}
+      \draw [com]  (S\n) -- (S\nn);
+    };
+
+  \draw [com]  (S0) -- (S5) (S4) -- (S8) (S4) -- (S9) (S2)-- (S7) (S3) -- (S7) (S7) -- (S11) (S6) -- (S10) (S1) -- (S5) (S1) -- (S7) (S7) -- (S5);
+
+  \draw (S5) node[centralnode] (CS) {Center};
+  \draw (S4) node[topnode] (T4) {S4};
+  \draw (S1) node[topnode] (T1) {\S1};
+  \draw (S7) node[topnode] (T7) {S7};
+%     \foreach \i in {0,1,...,1}
+%     \foreach \j in {0,1,2}
+%     {
+%   \pgfmathtruncatemacro\n{\j + \i*3}
+%   \pgfmathtruncatemacro\nn{\n +4}
+%       \draw [com]  (S\n) -- (S\nn);
+%     };
+
+
+% }
+% \end{scope}
+\end{tikzpicture}};
+}
+
+%%%%%%%%%%%%%%%%ITEMIZE%%%%%%%%%%%%%%%%%%
+
+\newenvironment{proenv}{\only{\setbeamercolor{local structure}{fg=green}}}{}
+\newenvironment{conenv}{\only{\setbeamercolor{local structure}{fg=red}}}{}
+\newenvironment{orangeenv}{\only{\setbeamercolor{local structure}{fg=orange!90!black}}}{}
+\newenvironment{ISASgreenenv}{\only{\setbeamercolor{local structure}{fg=ISASgreen}}}{}
+\newenvironment{ISASredenv}{\only{\setbeamercolor{local structure}{fg=ISASred}}}{}
+\newenvironment{ISASblueenv}{\only{\setbeamercolor{local structure}{fg=ISASblue}}}{}
+
+%%%%%%%%%%%%%%% FURTHER COLORS %%%%%%%%
+
+\definecolor{innerset}{RGB}{151,198,154} % previous color scheme
+\definecolor{innerstoc}{RGB}{178,176,216} %
+
+\definecolor{outerset}{RGB}{0,102,51} % previous color scheme
+\definecolor{outerstoc}{RGB}{43,75,155} %
+

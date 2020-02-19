@@ -1,0 +1,64 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Identification
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{BNPackages/BNPlots}[2019/03/07 BN Colors]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%
+%%   Preliminary declarations
+%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RequirePackage{BNPackages/BNColors}
+\RequirePackage{pgfplots}
+
+%------------------------------------------------------------
+% Matlab colors
+% see https://de.mathworks.com/help/matlab/graphics_transition/why-are-plot-lines-different-colors.html
+%------------------------------------------------------------
+
+\definecolor{cMatlab1}{rgb}{ 0, 0.4470, 0.7410}			% blau
+\definecolor{cMatlab2}{rgb}{ 0.8500, 0.3250, 0.0980}	% orange
+\definecolor{cMatlab3}{rgb}{ 0.9290, 0.6940, 0.1250}	% gelb
+\definecolor{cMatlab4}{rgb}{ 0.4940, 0.1840, 0.5560}	% lila
+\definecolor{cMatlab5}{rgb}{ 0.4660, 0.6740, 0.1880}	% grün
+\definecolor{cMatlab6}{rgb}{ 0.3010, 0.7450, 0.9330}	% hellblau
+\definecolor{cMatlab7}{rgb}{ 0.6350, 0.0780, 0.1840}	% dunkelrot
+
+\pgfplotscreateplotcyclelist{colors matlab}{
+{cMatlab1},
+{cMatlab2},
+{cMatlab3},
+{cMatlab4},
+{cMatlab5},
+{cMatlab6},
+{cMatlab7},
+}
+
+\pgfplotscreateplotcyclelist{colors reordered matlab}{
+{cMatlab1},
+{cMatlab2},
+{cMatlab5},
+{cMatlab4},
+{cMatlab7},
+{cMatlab6},
+{cMatlab3},
+}
+
+\pgfplotsset{
+   BNplotstyle/.style={
+      every axis plot/.append style={line width=0.8pt},
+      every axis/.append style={cycle list name=colors reordered matlab},
+      label style={font=\footnotesize},
+      legend style={font=\footnotesize},
+      tick label style={font=\footnotesize},
+      grid,
+      grid style={dotted}
+   }
+}
+
+% activate setting for all plots
+\AtBeginDocument{\pgfplotsset{BNplotstyle}}
