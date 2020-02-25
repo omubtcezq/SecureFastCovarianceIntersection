@@ -24,11 +24,9 @@
 %\usepackage{amsmath} % assumes amsmath package installed
 %\usepackage{amssymb}  % assumes amsmath package installed
 
-% The following cause issues with equation numbering (disabled for time being)
-%\usepackage{BNPackages/BNPackages}
-%\usepackage{BNPackages/BNMathMacros}% typical math macros
-% the following might not be useful in this context
-%\usepackage{BNPackages/BNMathEstimation}% math macros for estimation
+% ISAS conventions. Underlined vectors, random vectors etc.
+\usepackage{ISASmacros/isasmathmacros}
+%\usepackage{ISASmacros/isastextmacros}
 
 \title{\LARGE \bf
 Secure Third-party Fast Covariance Intersection using Partially Homomorphic and Order Revealing Encryption Schemes
@@ -73,18 +71,168 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \subsection{Notation}
 
 \section{Covariance Intersection and Approximations}
+\begin{gather}
+   \mP^{-1}=\sum_{i=0}^{n}\omega_i \mP_i \\
+   \mP^{-1} \mean{\vec{x}} =\sum_{i=0}^{n}\omega_i \mP_i \mean{\vec{x}}_i \\
+   \omega_0 + \omega_1 + \cdots + \omega_n = 1 \\
+   0 \leq \omega_i \leq 1 \\
+   \argmin_{\omega_0,\dots,\omega_n} \{\tr(\mP)\} = \argmin_{\omega_0,\dots,\omega_n} \{\tr((\sum_{i=0}^{n}\omega_i \mP_i)^{-1})\}
+\end{gather}
 \subsection{Fast Covariance intersection}
+\begin{gather}
+   \omega_0 + \omega_1 = 1 \\
+   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \\
+   \omega_0 = \frac{\tr(\mP_1)}{\tr(\mP_0)+\tr(\mP_1)},\ \omega_1 = \frac{\tr(\mP_0)}{\tr(\mP_0)+\tr(\mP_1)} \\
+   \omega_i \tr(\mP_i) - \omega_j \tr(\mP_j) = 0,\ (i,j=1,2,\dots,n)\\
+   \omega_i \tr(\mP_i) - \omega_{i+1} \tr(\mP_{i+1}) = 0,\ (i=1,2,\dots,n)\\
+   \mathcal{P}_i = \tr(\mP_i) \\
+   \begin{bmatrix}
+      \mathcal{P}_0 & -\mathcal{P}_1 & 0 & \cdots & 0 \\
+      0 & \mathcal{P}_1 & -\mathcal{P}_2 & \cdots & 0 \\
+      \vdots & \vdots & \vdots & \ddots & \vdots & \\
+      0 & \cdots & 0 & \mathcal{P}_{n-1} & -\mathcal{P}_n \\
+      1 & \cdots & 1 & 1 & 1 &
+   \end{bmatrix}
+   \begin{bmatrix}
+      \omega_0 \\
+      \omega_0 \\
+      \vdots \\
+      \omega_{n-1} \\
+      \omega_n
+   \end{bmatrix}
+   =
+   \begin{bmatrix}
+      0 \\
+      0 \\
+      \vdots \\
+      0 \\
+      1
+   \end{bmatrix}
+\end{gather}
 
 \section{Homomorphic and Order Revealing Encryption}
+\begin{gather}
+   \mathcal{E}(a) \oplus \mathcal{E}(b) = \mathcal{E}(a+b) \\
+   f(\mathcal{E}(a), \mathcal{E}(b)) = cmp(a, b)
+\end{gather}
 \subsection{Additive Partially Homomorphic Encryption}
+\begin{gather}
+   \mathcal{E}(a)\mathcal{E}(b) \pmod{N} = \mathcal{E}(a + b \pmod{N}) \\
+   c \in \mathbb{Z}_N \\
+   \mathcal{E}(a)^c \pmod{N} = \mathcal{E}(ca \pmod{N})
+\end{gather}
 \subsection{Real Number Encoding for Homomorphic Encryption}
+\begin{gather}
+   e = \floor{2^b a}
+\end{gather}
 \subsection{Left-Right Order Revealing Encryption}
+% Consider not needing at least the comparison equations below as it probably won't be used again and can be explained in words
+\begin{gather}
+   encrypt^L_{ORE}(sk, x) = \mathcal{E}^L_{ORE}(x) \\
+   encrypt^R_{ORE}(sk, y) = \mathcal{E}^R_{ORE}(y) \\
+   compare_{ORE}(\mathcal{E}^L_{ORE}(x),\ \mathcal{E}^R_{ORE}(y)) = cmp(x, y)
+\end{gather}
 
 \section{Secure Fast Covariance Intersection with 2 Sensors}
+\begin{gather}
+   \mathcal{E}(\mP) = \mathcal{E}(\mP_0)^{\omega_0}\mathcal{E}(\mP_1)^{(1 -\omega_0)} \\
+   \mathcal{E}(\mP\mean{\vec{x}}) = \mathcal{E}(\mP_0\mean{\vec{x}}_0)^{\omega_0}\mathcal{E}(\mP_1\mean{\vec{x}}_1)^{(1 - \omega_0)} \\
+   [\mathcal{E}^L_{ORE}(\omega\tr(\mP^{-1}_0)),\ \omega \in [0,0+s,\dots,1-s,1]]
+\end{gather}
+
+\begin{figure}[h]
+   \centering
+   \caption{Approximation of $\omega_0$ with discretisation step size $s=0.1$. Only comparisons of the ordered values sent from either estimator are used.}
+\end{figure}
+
+\begin{gather}
+   \omega_0'=\frac{1}{2}(a + b),\ \omega_1' = (1-\omega_0)
+\end{gather}
 
 \section{Multi-sensor Secure Fast Covariance Intersection}
+\begin{gather}
+   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \label{3-sensor-partial-sol-1}
+\end{gather}
+
+\begin{figure}[h]
+   \centering
+   \caption{Partial solution from equation \ref{3-sensor-partial-sol-1} plotted on the plane of all possible values of $\omega_0$, $\omega_1$, and $\omega_2$.}
+\end{figure}
+
+\begin{gather}
+   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0 \label{3-sensor-partial-sol-2}
+\end{gather}
+
+\begin{figure}[h]
+   \centering
+   \caption{Partial solutions from equations \ref{3-sensor-partial-sol-1} and \ref{3-sensor-partial-sol-2} plotted on the plane of all possible values of $\omega_0$, $\omega_1$, and $\omega_2$.}
+   \label{3-sensor-partial-sols}
+\end{figure}
+
+\begin{figure}[h]
+   \centering
+   \caption{Partial solutions from figure \ref{3-sensor-partial-sols} plotted as planes perpendicular to the plane of possible solutions. Intersection point gives solution values of $\omega_i$ for Fast Covariance Intersection.}
+\end{figure}
+
+\begin{gather}
+   a_0x + a_1y +a_2z + d = 0 \\
+   \begin{bmatrix}
+      a_0^0 & a_1^0 & a_2^0 \\
+      a_0^1 & a_1^1 & a_2^1 \\
+      1 & 1 & 1
+   \end{bmatrix}
+   \begin{bmatrix}
+      \omega_0 \\
+      \omega_1 \\
+      \omega_2
+   \end{bmatrix}
+   =
+   \begin{bmatrix}
+      d^0 \\
+      d^1 \\
+      1
+   \end{bmatrix} \\
+   \begin{bmatrix}
+      a_0^0 & a_1^0 & \cdots & a_n^0 \\
+      a_0^1 & a_1^1 & \cdots & a_n^1 \\
+      \vdots & \vdots & \ddots & \vdots \\
+      a_0^n & a_1^n & \cdots & a_n^{n-1} \\
+      1 & 1 & \cdots & 1
+   \end{bmatrix}
+   \begin{bmatrix}
+      \omega_0 \\
+      \omega_1 \\
+      \vdots \\
+      \omega_{n-1} \\
+      \omega_n
+   \end{bmatrix}
+   =
+   \begin{bmatrix}
+      d^0 \\
+      d^1 \\
+      \vdots \\
+      d^{n-1} \\
+      1
+   \end{bmatrix} \\
+   [\mathcal{E}^L_{ORE}(\omega\tr(\mP^{-1}_i)),\ \omega \in [0,0+s,\dots,1-s,1]],\ i\text{ is even} \\
+   [\mathcal{E}^R_{ORE}(\omega\tr(\mP^{-1}_i)),\ \omega \in [0,0+s,\dots,1-s,1]],\ i\text{ is odd}
+\end{gather}
 
 \section{Simulation Results}
+\begin{figure}[h]
+   \centering
+   \caption{Tracking simulation comparing Fast Covariance Intersection and our Secure Fast Covariance Intersection fusion methods.}
+\end{figure}
+
+\begin{figure}[h]
+   \centering
+   \caption{Plot showing the fused estimate covariance trace over the course of a tracking simulation, for both Fast Covariance Intersection and our Secure Fast Covariance Intersection}
+\end{figure}
+
+\begin{figure}[h]
+   \centering
+   \caption{Plot showing the difference in $\omega_i$ values between Fast Covariance Intersection and our Secure Fast Covariance Intersection, over the course of a tracking simulation.}
+\end{figure}
 
 \section{Conclusion}
 
