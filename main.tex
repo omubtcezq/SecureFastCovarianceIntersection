@@ -43,8 +43,6 @@ Secure Third-party Fast Covariance Intersection using Partially Homomorphic and 
 
 \begin{document}
 
-
-
 \maketitle
 \thispagestyle{empty}
 \pagestyle{empty}
@@ -143,7 +141,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
    [\mathcal{E}^L_{ORE}(\omega\tr(\mP^{-1}_0)),\ \omega \in [0,0+s,\dots,1-s,1]]
 \end{gather}
 
-\begin{figure}[h]
+\begin{figure}[htb]
    \begin{center}
       \input{images/2_sensors.pgf}
    \end{center}
@@ -159,7 +157,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
    \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \label{3-sensor-partial-sol-1}
 \end{gather}
 
-\begin{figure}[h]
+\begin{figure}[htb]
    \begin{center}
       \input{images/partial_sol1.pgf}
    \end{center}
@@ -170,7 +168,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
    \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0 \label{3-sensor-partial-sol-2}
 \end{gather}
 
-\begin{figure}[h]
+\begin{figure}[htb]
    \begin{center}
       \input{images/partial_sols.pgf}
    \end{center}
@@ -178,7 +176,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
    \label{3-sensor-partial-sols}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htb]
    \begin{center}
       \input{images/partial_sol_planes.pgf}
    \end{center}
@@ -230,18 +228,24 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \end{gather}
 
 \section{Simulation Results}
-\begin{figure}[h]
-   \centering
+\begin{figure}[htb]
+   \begin{center}
+      \input{images/fci_secfci_cmp.pgf}
+   \end{center}
    \caption{Tracking simulation comparing Fast Covariance Intersection and our Secure Fast Covariance Intersection fusion methods.}
 \end{figure}
 
-\begin{figure}[h]
-   \centering
+\begin{figure}[htb]
+   \begin{center}
+      \input{images/traces_cmp.pgf}
+   \end{center}
    \caption{Plot showing the fused estimate covariance trace over the course of a tracking simulation, for both Fast Covariance Intersection and our Secure Fast Covariance Intersection}
 \end{figure}
 
-\begin{figure}[h]
-   \centering
+\begin{figure}[htb]
+   \begin{center}
+      \input{images/omegas_cmp.pgf}
+   \end{center}
    \caption{Plot showing the difference in $\omega_i$ values between Fast Covariance Intersection and our Secure Fast Covariance Intersection, over the course of a tracking simulation.}
 \end{figure}
 
