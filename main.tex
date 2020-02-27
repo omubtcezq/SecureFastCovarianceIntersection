@@ -28,6 +28,9 @@
 \usepackage{ISASmacros/isasmathmacros}
 %\usepackage{ISASmacros/isastextmacros}
 
+% Needed to display images generated with matplotlib nicely
+\usepackage{pgf}
+
 \title{\LARGE \bf
 Secure Third-party Fast Covariance Intersection using Partially Homomorphic and Order Revealing Encryption Schemes
 }
@@ -141,7 +144,9 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \end{gather}
 
 \begin{figure}[h]
-   \centering
+   \begin{center}
+      \input{images/2_sensors.pgf}
+   \end{center}
    \caption{Approximation of $\omega_0$ with discretisation step size $s=0.1$. Only comparisons of the ordered values sent from either estimator are used.}
 \end{figure}
 
@@ -155,7 +160,9 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \end{gather}
 
 \begin{figure}[h]
-   \centering
+   \begin{center}
+      \input{images/partial_sol1.pgf}
+   \end{center}
    \caption{Partial solution from equation \ref{3-sensor-partial-sol-1} plotted on the plane of all possible values of $\omega_0$, $\omega_1$, and $\omega_2$.}
 \end{figure}
 
@@ -164,13 +171,17 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \end{gather}
 
 \begin{figure}[h]
-   \centering
+   \begin{center}
+      \input{images/partial_sols.pgf}
+   \end{center}
    \caption{Partial solutions from equations \ref{3-sensor-partial-sol-1} and \ref{3-sensor-partial-sol-2} plotted on the plane of all possible values of $\omega_0$, $\omega_1$, and $\omega_2$.}
    \label{3-sensor-partial-sols}
 \end{figure}
 
 \begin{figure}[h]
-   \centering
+   \begin{center}
+      \input{images/partial_sol_planes.pgf}
+   \end{center}
    \caption{Partial solutions from figure \ref{3-sensor-partial-sols} plotted as planes perpendicular to the plane of possible solutions. Intersection point gives solution values of $\omega_i$ for Fast Covariance Intersection.}
 \end{figure}
 
