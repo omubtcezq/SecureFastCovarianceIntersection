@@ -24,11 +24,11 @@
 %\usepackage{amsmath} % assumes amsmath package installed
 %\usepackage{amssymb}  % assumes amsmath package installed
 
-% ISAS conventions. Underlined vectors, random vectors etc.
+% ISAS conventions. Underlined vectors, random vectors, etc.
 \usepackage{ISASmacros/isasmathmacros}
 %\usepackage{ISASmacros/isastextmacros}
 
-% Needed to display images generated with matplotlib nicely
+% Needed to display images generated with Matplotlib nicely
 \usepackage{pgf}
 
 \title{\LARGE \bf
@@ -61,32 +61,97 @@ Secure Third-party Fast Covariance Intersection using Partially Homomorphic and 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-Fast covariance intersection is a widespread technique for state estimate fusion in sensor networks when cross correlations are not known and fast computations are desired. The common requirement of sending estimates from one party to another during fusion means they do not remain private to their producing party. Current secure fusion algorithms have a reliance on encryption schemes that do not provide sufficient flexibility and as a result require, often undesired, excess communication between estimate producers. We propose a novel method of homomorphically computing the fast covariance intersection algorithm on estimates encrypted with a combination of encryption schemes. Using order revealing encryption we show how approximate solutions to the fast covariance intersection coefficients can be computed and combined with partially homomorphic encryptions of estimates, to compute an encryption of the fused result. The described approach allows the secure fusion of any number of private estimates, making third-party cloud processing a viable option when working with sensitive state estimates, or when performing estimation over insecure networks.
+Fast covariance intersection is a widespread technique for state estimate fusion in sensor networks when cross-correlations are not known and fast computations are desired. The common requirement of sending estimates from one party to another during fusion means they do not remain private to their producing party. Current secure fusion algorithms have a reliance on encryption schemes that do not provide sufficient flexibility and as a result require, often undesired, excess communication between estimate producers. We propose a novel method of homomorphically computing the fast covariance intersection algorithm on estimates encrypted with a combination of encryption schemes. Using order revealing encryption we show how to approximate solutions to the fast covariance intersection coefficients can be computed and combined with partially homomorphic encryptions of estimates, to compute an encryption of the fused result. The described approach allows the secure fusion of any number of private estimates, making third-party cloud processing a viable option when working with sensitive state estimates, or when performing estimation over insecure networks.
 
 \end{abstract}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% 8888888          888
+%   888            888
+%   888            888
+%   888   88888b.  888888 888d888 .d88b.
+%   888   888 "88b 888    888P"  d88""88b
+%   888   888  888 888    888    888  888
+%   888   888  888 Y88b.  888    Y88..88P
+% 8888888 888  888  "Y888 888     "Y88P"
+
+
+
 \section{Introduction}
+\begin{itemize}
+   \item 
+   \item Describe what will be in each following section and how the paper structure makes sense
+\end{itemize}
 \subsection{Notation}
+\begin{itemize}
+   \item Brief overview of ISAS vector and random vector notation
+   \item Encryption notation, keys omitted where it's obvious from context
+   \item Encryption of matrices and vectors is element-wise
+   \item Real number encoding assumed in all encryption notation, all numbers are real
+\end{itemize}
+
+%  .d8888b. 8888888
+% d88P  Y88b  888
+% 888    888  888
+% 888         888
+% 888         888
+% 888    888  888
+% Y88b  d88P  888
+%  "Y8888P" 8888888
+
+
 
 \section{Covariance Intersection and Approximations}
+\begin{itemize}
+   \item Covariance intersection (CI) is a method for fusing state estimations for different sources when models and cross-correlations are not known
+   \item The fused estimate and estimate covariance are commuted by \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate}
+   \item Note that the estimate and estimate covariance depicted in \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate} are in the Information filter form of the popular Kalman Filter as this simplifies computation.
+\end{itemize}
 \begin{gather}
-   \mP^{-1}=\sum_{i=0}^{n}\omega_i \mP_i \\
-   \mP^{-1} \mean{\vec{x}} =\sum_{i=0}^{n}\omega_i \mP_i \mean{\vec{x}}_i \\
-   \omega_0 + \omega_1 + \cdots + \omega_n = 1 \\
-   0 \leq \omega_i \leq 1 \\
-   \argmin_{\omega_0,\dots,\omega_n} \{\tr(\mP)\} = \argmin_{\omega_0,\dots,\omega_n} \{\tr((\sum_{i=0}^{n}\omega_i \mP_i)^{-1})\}
+   \mP^{-1}=\sum_{i=0}^{n}\omega_i \mP_i^{-1} \label{eqn:ci_cov}\\
+   \mP^{-1} \mean{\vec{x}} =\sum_{i=0}^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i \label{eqn:ci_estimate}\\
 \end{gather}
-\subsection{Fast Covariance intersection}
+\begin{itemize}
+   \item Where values $\omega_i$ satisfy \eqref{eqn:ci_omega_sum} and \eqref{eqn:ci_omega_bound} and are chosen in a way to minimise a property of the resulting fused estimate. 
+   \item For example minimising the resulting trace would require solving \eqref{eqn:ci_trace_min}
+\end{itemize}
 \begin{gather}
-   \omega_0 + \omega_1 = 1 \\
-   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \\
-   \omega_0 = \frac{\tr(\mP_1)}{\tr(\mP_0)+\tr(\mP_1)},\ \omega_1 = \frac{\tr(\mP_0)}{\tr(\mP_0)+\tr(\mP_1)} \\
-   \omega_i \tr(\mP_i) - \omega_j \tr(\mP_j) = 0,\ (i,j=1,2,\dots,n)\\
-   \omega_i \tr(\mP_i) - \omega_{i+1} \tr(\mP_{i+1}) = 0,\ (i=1,2,\dots,n)\\
-   \mathcal{P}_i = \tr(\mP_i) \\
+   \omega_0 + \omega_1 + \cdots + \omega_n = 1 \label{eqn:ci_omega_sum}\\
+   0 \leq \omega_i \leq 1 \label{eqn:ci_omega_bound}\\
+   \argmin_{\omega_0,\dots,\omega_n} \{\tr(\mP)\} = \argmin_{\omega_0,\dots,\omega_n} \{\tr((\sum_{i=0}^{n}\omega_i \mP_i)^{-1})\} \label{eqn:ci_trace_min}
+\end{gather}
+\begin{itemize}
+   \item Minimising a given non linear cost function such as \eqref{eqn:ci_trace_min} can be very costly computationally and has led to the development of non-iterative approximation techniques \cite{niehsenInformationFusionBased2002}, \cite{frankenImprovedFastCovariance2005}, \cite{congOrderInsensitiveSequential2016}
+\end{itemize}
+
+\subsection{Fast Covariance intersection}
+\begin{itemize}
+   \item The fast covariance intersection (FCI) algorithm described in \cite{niehsenInformationFusionBased2002} is a common method used for approximating the solution to \eqref{eqn:ci_trace_min} by defining a new constraint on $\omega_i$ and solving that instead.
+   \item In the 2 sensor case, \eqref{eqn:ci_omega_sum} now becomes \eqref{eqn:fci_2sen_omega_sum}, and the additional requirement of \eqref{eqn:fci_2sen_eq} is also defined. Solutions are defined analytically and shown in \eqref{eqn:fci_2sen_sol}
+\end{itemize}
+\begin{gather}
+   \omega_0 + \omega_1 = 1 \label{eqn:fci_2sen_omega_sum}\\
+   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \label{eqn:fci_2sen_eq}\\
+   \omega_0 = \frac{\tr(\mP_1)}{\tr(\mP_0)+\tr(\mP_1)},\ \omega_1 = \frac{\tr(\mP_0)}{\tr(\mP_0)+\tr(\mP_1)} \label{eqn:fci_2sen_sol}
+\end{gather}
+\begin{itemize}
+   \item When extending to any number of sensors, restriction \eqref{eqn:fci_2sen_eq} is generalised to \eqref{eqn:fci_eq_big}
+\end{itemize}
+\begin{gather}
+   \omega_i \tr(\mP_i) - \omega_j \tr(\mP_j) = 0,\ (i,j=1,2,\dots,n) \label{eqn:fci_eq_big}
+\end{gather}
+\begin{itemize}
+   \item Equation \eqref{eqn:fci_eq_big} is highly redundant and its largest linearly independent subset can be represented with \eqref{eqn:fci_eq}.
+\end{itemize}
+\begin{gather}
+   \omega_i \tr(\mP_i) - \omega_{i+1} \tr(\mP_{i+1}) = 0,\ (i=1,2,\dots,n) \label{eqn:fci_eq}
+\end{gather}
+\begin{itemize}
+   \item The solution to \eqref{eqn:fci_eq} and \eqref{eqn:ci_omega_sum} can be represented as the simultaneous equations problem shown in \eqref{eqn:fci_eq_sys} where $\mathcal{P}_i = \tr(\mP_i)$
+\end{itemize}
+\begin{gather}
    \begin{bmatrix}
       \mathcal{P}_0 & -\mathcal{P}_1 & 0 & \cdots & 0 \\
       0 & \mathcal{P}_1 & -\mathcal{P}_2 & \cdots & 0 \\
@@ -108,25 +173,79 @@ Fast covariance intersection is a widespread technique for state estimate fusion
       \vdots \\
       0 \\
       1
-   \end{bmatrix}
+   \end{bmatrix} \label{eqn:fci_eq_sys}
 \end{gather}
+\begin{itemize}
+   \item Our goal for secure fusion is to solve \eqref{eqn:ci_cov}, \eqref{eqn:ci_estimate} and \eqref{eqn:fci_eq_sys} using only encryptions from each sensor $i$.
+\end{itemize}
+
+% 8888888b.  888    888 8888888888       .d8888b.            .d88888b.  8888888b.  8888888888
+% 888   Y88b 888    888 888             d88P  "88b          d88P" "Y88b 888   Y88b 888
+% 888    888 888    888 888             Y88b. d88P          888     888 888    888 888
+% 888   d88P 8888888888 8888888          "Y8888P"           888     888 888   d88P 8888888
+% 8888888P"  888    888 888             .d88P88K.d88P       888     888 8888888P"  888
+% 888        888    888 888             888"  Y888P"        888     888 888 T88b   888
+% 888        888    888 888             Y88b .d8888b        Y88b. .d88P 888  T88b  888
+% 888        888    888 8888888888       "Y8888P" Y88b       "Y88888P"  888   T88b 8888888888
+
+
 
 \section{Homomorphic and Order Revealing Encryption}
+\begin{itemize}
+   \item To achieve a secure solution to the FCI fusion problem, we have focused on two types of function providing encryption schemes. 
+   \item Additive partially homomorphic encryption (PHE) schemes such ones defined in \cite{paillierPublicKeyCryptosystemsBased1999} and \cite{goldwasserProbabilisticEncryption1984a} provide a homomorphic addition operation as shown in \eqref{eqn:phe_eq}.
+   \item Order revealing encryption (ORE) schemes such as those in \cite{chenettePracticalOrderRevealingEncryption2016} and \cite{lewiOrderRevealingEncryptionNew2016} provide a function which allows the comparison of encrypted values as shown in \eqref{eqn:ore_eq}
+\end{itemize}
 \begin{gather}
-   \mathcal{E}(a) \oplus \mathcal{E}(b) = \mathcal{E}(a+b) \\
-   f(\mathcal{E}(a), \mathcal{E}(b)) = cmp(a, b)
+   \mathcal{E}(a) \oplus \mathcal{E}(b) = \mathcal{E}(a+b) \label{eqn:phe_eq}\\
+   f(\mathcal{E}(a), \mathcal{E}(b)) = cmp(a, b) \label{eqn:ore_eq}
 \end{gather}
+
 \subsection{Additive Partially Homomorphic Encryption}
+\begin{itemize}
+   \item We have used the Paillier encryption scheme described in \cite{paillierPublicKeyCryptosystemsBased1999} for the computation of the FCI due to its speed and implementation simplicity.
+   \item The Paillier encryption scheme is a public key scheme, where encryptions are made with a public key but only the secret key holder can decrypt them.
+   \item It provides two homomorphic operations on encrypted data, shown in \eqref{paillier_add} and \eqref{paillier_mult}. The modulus $N$ is computed as a product of 2 large primes which are part of the secret key.
+\end{itemize}
 \begin{gather}
-   \mathcal{E}(a)\mathcal{E}(b) \pmod{N} = \mathcal{E}(a + b \pmod{N}) \\
-   c \in \mathbb{Z}_N \\
-   \mathcal{E}(a)^c \pmod{N} = \mathcal{E}(ca \pmod{N})
+   \mathcal{E}(a)\mathcal{E}(b) \pmod{N} = \mathcal{E}(a + b \pmod{N}) \label{paillier_add}\\
+   \mathcal{E}(a)^c \pmod{N} = \mathcal{E}(ca \pmod{N}),\ c \in \mathbb{Z}_N \label{paillier_mult}
 \end{gather}
+\begin{itemize}
+   \item Encrypted numbers must be less than $N$, and negative numbers can be handled by storing integers in ``two's complement'' binary form, that is taking $[0, \frac{N}{2})$ as all possible positive numbers, and $[\frac{N}{2}, N)$ as the decreasing negative integers.
+\end{itemize}
+
 \subsection{Real Number Encoding for Homomorphic Encryption}
+\begin{itemize}
+   \item The Paillier encryption scheme can only encrypt, add, and multiply with integers. Due to the prevalence of real number values in sensor outputs and estimation processes, some form of encoding is required for these numbers to be encrypted.
+   \item Real numbers, typically stored as floating-point numbers in sensor hardware, are converted to integers using the ``Q'' number format. A real number $a$ can be encoded to an integer $e$ using \eqref{eqn:qmn}, where the largest encodable real number has an integer part of $i$ bits. Integer bits $i$ and fractional bits $f$ are chosen such that the largest encoded value can still be encrypted.
+\end{itemize}
 \begin{gather}
-   e = \floor{2^b a}
+   e = 
+   \begin{cases}
+      \floor{2^f a} & a<2^i\\
+      \floor{2^f (2^i - a)} & a\geq 2^i\\
+   \end{cases}\label{eqn:qmn}
 \end{gather}
+\begin{itemize}
+   \item While the encoded real numbers are consistent under addition, multiplication by constants requires that a factor of $\frac{1}{2^f}$ be removed. 
+   \item Since division is not supported under the encryption scheme, the number of multiplications performed on an encrypted value must be bounded and handled when decoding. This also decreases the size of the largest encodable real number that can be decoded correctly.
+   \item In our case, only a single multiplication is required, and decoding of an integer $e$ to a real number $f$ is performed by \eqref{eqn:qmn_mult_decode}.
+\end{itemize}
+\begin{gather}
+   a = 
+   \begin{cases}
+      \frac{e}{2^f} & e<2^{(i+f)}\\
+      \frac{e}{2^{2f}} & e\geq 2^{(i+f)}\\
+   \end{cases}\label{eqn:qmn_mult_decode}
+\end{gather}
+
 \subsection{Left-Right Order Revealing Encryption}
+\begin{itemize}
+   \item For the ORE scheme we have considered in particular the Left-Right encryption scheme described in \cite{lewiOrderRevealingEncryptionNew2016} which will help in preventing information leakage as described in section \ref{sec:secfci}.
+   \item The key difference between this scheme and others is how numbers are compared. Left-Right encryption allows any number to be encrypted as either a ``Left'' or ``Right'' encryption, but only a ``Left'' encryption can be compared with a ``Right'' encryption.
+   \item The ORE scheme described requires a single symmetric key for the encryption of either ``Left'' or ``Right'' encryptions, which can be compared without any key.
+\end{itemize}
 % Consider not needing at least the comparison equations below as it probably won't be used again and can be explained in words
 \begin{gather}
    encrypt^L_{ORE}(sk, x) = \mathcal{E}^L_{ORE}(x) \\
@@ -134,7 +253,18 @@ Fast covariance intersection is a widespread technique for state estimate fusion
    compare_{ORE}(\mathcal{E}^L_{ORE}(x),\ \mathcal{E}^R_{ORE}(y)) = cmp(x, y)
 \end{gather}
 
-\section{Secure Fast Covariance Intersection with 2 Sensors}
+%  .d8888b.                    8888888888 .d8888b. 8888888
+% d88P  Y88b                   888       d88P  Y88b  888
+% Y88b.                        888       888    888  888
+%  "Y888b.    .d88b.   .d8888b 8888888   888         888
+%     "Y88b. d8P  Y8b d88P"    888       888         888
+%       "888 88888888 888      888       888    888  888
+% Y88b  d88P Y8b.     Y88b.    888       Y88b  d88P  888
+%  "Y8888P"   "Y8888   "Y8888P 888        "Y8888P" 8888888
+
+
+
+\section{Secure Fast Covariance Intersection with 2 Sensors} \label{sec:secfci}
 \begin{gather}
    \mathcal{E}(\mP) = \mathcal{E}(\mP_0)^{\omega_0}\mathcal{E}(\mP_1)^{(1 -\omega_0)} \\
    \mathcal{E}(\mP\mean{\vec{x}}) = \mathcal{E}(\mP_0\mean{\vec{x}}_0)^{\omega_0}\mathcal{E}(\mP_1\mean{\vec{x}}_1)^{(1 - \omega_0)} \\
@@ -154,33 +284,33 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 
 \section{Multi-sensor Secure Fast Covariance Intersection}
 \begin{gather}
-   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \label{3-sensor-partial-sol-1}
+   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \label{eqn:3-sensor-partial-sol-1}
 \end{gather}
 
 \begin{figure}[htb]
    \begin{center}
       \input{images/partial_sol1.pgf}
    \end{center}
-   \caption{Partial solution from equation \ref{3-sensor-partial-sol-1} plotted on the plane of all possible values of $\omega_0$, $\omega_1$, and $\omega_2$.}
+   \caption{Partial solution from equation \eqref{eqn:3-sensor-partial-sol-1} plotted on the plane of all possible values of $\omega_0$, $\omega_1$, and $\omega_2$.}
 \end{figure}
 
 \begin{gather}
-   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0 \label{3-sensor-partial-sol-2}
+   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0 \label{eqn:3-sensor-partial-sol-2}
 \end{gather}
 
 \begin{figure}[htb]
    \begin{center}
       \input{images/partial_sols.pgf}
    \end{center}
-   \caption{Partial solutions from equations \ref{3-sensor-partial-sol-1} and \ref{3-sensor-partial-sol-2} plotted on the plane of all possible values of $\omega_0$, $\omega_1$, and $\omega_2$.}
-   \label{3-sensor-partial-sols}
+   \caption{Partial solutions from equations \eqref{eqn:3-sensor-partial-sol-1} and \eqref{eqn:3-sensor-partial-sol-2} plotted on the plane of all possible values of $\omega_0$, $\omega_1$, and $\omega_2$.}
+   \label{fig:3-sensor-partial-sols}
 \end{figure}
 
 \begin{figure}[htb]
    \begin{center}
       \input{images/partial_sol_planes.pgf}
    \end{center}
-   \caption{Partial solutions from figure \ref{3-sensor-partial-sols} plotted as planes perpendicular to the plane of possible solutions. Intersection point gives solution values of $\omega_i$ for Fast Covariance Intersection.}
+   \caption{Partial solutions from figure \ref{fig:3-sensor-partial-sols} plotted as planes perpendicular to the plane of possible solutions. Intersection point gives solution values of $\omega_i$ for Fast Covariance Intersection.}
 \end{figure}
 
 \begin{gather}
@@ -227,6 +357,17 @@ Fast covariance intersection is a widespread technique for state estimate fusion
    [\mathcal{E}^R_{ORE}(\omega\tr(\mP^{-1}_i)),\ \omega \in [0,0+s,\dots,1-s,1]],\ i\text{ is odd}
 \end{gather}
 
+% 8888888b.                            888 888
+% 888   Y88b                           888 888
+% 888    888                           888 888
+% 888   d88P .d88b.  .d8888b  888  888 888 888888 .d8888b
+% 8888888P" d8P  Y8b 88K      888  888 888 888    88K
+% 888 T88b  88888888 "Y8888b. 888  888 888 888    "Y8888b.
+% 888  T88b Y8b.          X88 Y88b 888 888 Y88b.       X88
+% 888   T88b "Y8888   88888P'  "Y88888 888  "Y888  88888P'
+
+
+
 \section{Simulation Results}
 \begin{figure}[htb]
    \begin{center}
@@ -239,18 +380,28 @@ Fast covariance intersection is a widespread technique for state estimate fusion
    \begin{center}
       \input{images/traces_cmp.pgf}
    \end{center}
-   \caption{Plot showing the fused estimate covariance trace over the course of a tracking simulation, for both Fast Covariance Intersection and our Secure Fast Covariance Intersection}
+   \caption{Plot showing the fused estimate covariance trace throughout a tracking simulation, for both Fast Covariance Intersection and our Secure Fast Covariance Intersection}
 \end{figure}
 
 \begin{figure}[htb]
    \begin{center}
       \input{images/omegas_cmp.pgf}
    \end{center}
-   \caption{Plot showing the difference in $\omega_i$ values between Fast Covariance Intersection and our Secure Fast Covariance Intersection, over the course of a tracking simulation.}
+   \caption{Plot showing the difference in $\omega_i$ values between Fast Covariance Intersection and our Secure Fast Covariance Intersection, throughout a tracking simulation.}
 \end{figure}
 
-\section{Conclusion}
+%  .d8888b.
+% d88P  Y88b
+% 888    888
+% 888         .d88b.  88888b.   .d8888b
+% 888        d88""88b 888 "88b d88P"
+% 888    888 888  888 888  888 888
+% Y88b  d88P Y88..88P 888  888 Y88b.    d8b
+%  "Y8888P"   "Y88P"  888  888  "Y8888P Y8P
 
+
+
+\section{Conclusion}
 
 
 
@@ -434,17 +585,20 @@ The authors gratefully acknowledge the contribution of National Research Organiz
 
 References are important to the reader; therefore, each citation must be complete and correct. If at all possible, references should be commonly available publications.
 
-\begin{thebibliography}{99}
+\bibliography{BibTeX/secure_FCI_cdc2020}
+\bibliographystyle{ieeetr}
 
-\bibitem{c1}
-J.G.F. Francis, The QR Transformation I, {\it Comput. J.}, vol. 4, 1961, pp 265-271.
+% \begin{thebibliography}{99}
 
-\bibitem{c2}
-H. Kwakernaak and R. Sivan, {\it Modern Signals and Systems}, Prentice Hall, Englewood Cliffs, NJ; 1991.
+% \bibitem{c1}
+% J.G.F. Francis, The QR Transformation I, {\it Comput. J.}, vol. 4, 1961, pp 265-271.
 
-\bibitem{c3}
-D. Boley and R. Maier, "A Parallel QR Algorithm for the Non-Symmetric Eigenvalue Algorithm", {\it in Third SIAM Conference on Applied Linear Algebra}, Madison, WI, 1988, pp. A20.
+% \bibitem{c2}
+% H. Kwakernaak and R. Sivan, {\it Modern Signals and Systems}, Prentice Hall, Englewood Cliffs, NJ; 1991.
 
-\end{thebibliography}
+% \bibitem{c3}
+% D. Boley and R. Maier, "A Parallel QR Algorithm for the Non-Symmetric Eigenvalue Algorithm", {\it in Third SIAM Conference on Applied Linear Algebra}, Madison, WI, 1988, pp. A20.
+
+% \end{thebibliography}
 
 \end{document}
