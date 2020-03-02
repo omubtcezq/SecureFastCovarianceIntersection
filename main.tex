@@ -205,11 +205,11 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \begin{itemize}
    \item We have used the Paillier encryption scheme described in \cite{paillierPublicKeyCryptosystemsBased1999} for the computation of the FCI due to its speed and implementation simplicity.
    \item The Paillier encryption scheme is a public key scheme, where encryptions are made with a public key but only the secret key holder can decrypt them.
-   \item It provides two homomorphic operations on encrypted data, shown in \eqref{paillier_add} and \eqref{paillier_mult}. The modulus $N$ is computed as a product of 2 large primes which are part of the secret key.
+   \item It provides two homomorphic operations on encrypted data, shown in \eqref{eqn:paillier_add} and \eqref{eqn:paillier_mult}. The modulus $N$ is computed as a product of 2 large primes which are part of the secret key.
 \end{itemize}
 \begin{gather}
-   \mathcal{E}(a)\mathcal{E}(b) \pmod{N} = \mathcal{E}(a + b \pmod{N}) \label{paillier_add}\\
-   \mathcal{E}(a)^c \pmod{N} = \mathcal{E}(ca \pmod{N}),\ c \in \mathbb{Z}_N \label{paillier_mult}
+   \mathcal{E}(a)\mathcal{E}(b) \pmod{N} = \mathcal{E}(a + b \pmod{N}) \label{eqn:paillier_add}\\
+   \mathcal{E}(a)^c \pmod{N} = \mathcal{E}(ca \pmod{N}),\ c \in \mathbb{Z}_N \label{eqn:paillier_mult}
 \end{gather}
 \begin{itemize}
    \item Encrypted numbers must be less than $N$, and negative numbers can be handled by storing integers in ``two's complement'' binary form, that is taking $[0, \frac{N}{2})$ as all possible positive numbers, and $[\frac{N}{2}, N)$ as the decreasing negative integers.
@@ -243,11 +243,11 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \subsection{Left-Right Order Revealing Encryption}
 \begin{itemize}
    \item For the ORE scheme we have considered in particular the Left-Right encryption scheme described in \cite{lewiOrderRevealingEncryptionNew2016} which will help in preventing information leakage as described in section \ref{sec:secfci}.
-   \item The key difference between this scheme and others is how numbers are compared. Left-Right encryption allows any number to be encrypted as either a ``Left'' or ``Right'' encryption, but only a ``Left'' encryption can be compared with a ``Right'' encryption.
+   \item The key difference between this scheme and others is how numbers are compared. Left-Right encryption allows any number to be encrypted as either a ``Left'' or ``Right'' encryption, but only a ``Left'' encryption can be compared with a ``Right'' encryption. The provided function of the encryption scheme are shown in \eqref{eqn:lewi_eqs}
    \item The ORE scheme described requires a single symmetric key for the encryption of either ``Left'' or ``Right'' encryptions, which can be compared without any key.
 \end{itemize}
 % Consider not needing at least the comparison equations below as it probably won't be used again and can be explained in words
-\begin{gather}
+\begin{gather} \label{eqn:lewi_eqs}
    encrypt^L_{ORE}(sk, x) = \mathcal{E}^L_{ORE}(x) \\
    encrypt^R_{ORE}(sk, y) = \mathcal{E}^R_{ORE}(y) \\
    compare_{ORE}(\mathcal{E}^L_{ORE}(x),\ \mathcal{E}^R_{ORE}(y)) = cmp(x, y)
@@ -265,24 +265,47 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 
 
 \section{Secure Fast Covariance Intersection with 2 Sensors} \label{sec:secfci}
+\begin{itemize}
+   \item First we will consider the 2 sensor case of secure FCI (SecFCI), before extending it to any number of sensors in section \ref{sec:multi_secfci}. We consider sensor 0 which produces the estimate $\mean{\vec{x}_0}$ and covariance $\mP_0$, and similarly sensor 1 producing $\mean{\vec{x}}_1$ and $\mP_1$.
+   \item From \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate} we can see that CI is particularly suited to PHE schemes. Sensor encrypted estimates and covariances can be combined additively using \eqref{eqn:paillier_add} and \eqref{eqn:paillier_mult}. The equations using the Paillier encrtyption systems to compute CI are given in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}.
+\end{itemize}
 \begin{gather}
-   \mathcal{E}(\mP) = \mathcal{E}(\mP_0)^{\omega_0}\mathcal{E}(\mP_1)^{(1 -\omega_0)} \\
-   \mathcal{E}(\mP\mean{\vec{x}}) = \mathcal{E}(\mP_0\mean{\vec{x}}_0)^{\omega_0}\mathcal{E}(\mP_1\mean{\vec{x}}_1)^{(1 - \omega_0)} \\
-   [\mathcal{E}^L_{ORE}(\omega\tr(\mP^{-1}_0)),\ \omega \in [0,0+s,\dots,1-s,1]]
+   \mathcal{E}(\mP) = \mathcal{E}(\mP_0)^{\omega_0}\mathcal{E}(\mP_1)^{(1 -\omega_0)} \label{eqn:paillier_ci_cov}\\
+   \mathcal{E}(\mP\mean{\vec{x}}) = \mathcal{E}(\mP_0\mean{\vec{x}}_0)^{\omega_0}\mathcal{E}(\mP_1\mean{\vec{x}}_1)^{(1 - \omega_0)} \label{eqn:paillier_ci_estimate}\\
 \end{gather}
-
+\begin{itemize}
+   \item What remains is the computation of the parameter $\omega$. The FCI solutions for the 2 sensor case given by \eqref{eqn:fci_2sen_sol}, cannot be computed with PHE encryptions due to the required division.
+   \item Instead we discretise $\omega$ to steps of some size $s<1$ such that $s$ divides 1, and use the ORE scheme to compute \eqref{eqn:fci_2sen_eq}. Each sensor discretises $\omega$ and multiplies each discretisation with $\tr(\mP^{-1})$ of its current coveriance $\mP$. Each result is then encrypted with the Left-Right ORE scheme.
+   \item Sensor 0 encrypts using the Left scheme as shown in \eqref{eqn:sen0_ore_list} and similarly for sensor 1 using Right encryption in \eqref{eqn:sen1_ore_list}.
+\end{itemize}
+\begin{gather}
+   [\mathcal{E}^L_{ORE}(\omega\tr(\mP^{-1}_0)),\ \omega \in [0,0+s,\dots,1-s,1]] \label{eqn:sen0_ore_list} \\
+   [\mathcal{E}^R_{ORE}(\omega\tr(\mP^{-1}_1)),\ \omega \in [0,0+s,\dots,1-s,1]] \label{eqn:sen1_ore_list}
+\end{gather}
+\begin{itemize}
+   \item The two ordered encrypted lists \eqref{eqn:sen0_ore_list} and \eqref{eqn:sen1_ore_list} are recieved at the fusion center, and used to estimate $\omega$.
+   \item To compute the FCI value for $\omega$ we want the intersection between the two lines described by $\tr(\mP_0)\omega$ and $\tr(\mP_1)(1-\omega)$. Note that in the 2 sensor case, the discretised list of $\tr(\mP_i)(1-\omega)$ can be obtained by simply reversing the list for $\tr(\mP_i)\omega$.
+   \item Fig. \ref{fig:2_sensor_sol} shows the list from sensor 0 and the reversed list of sensor 1 plotted over $\omega$ with a step size $s=0.1$. Since values from one list can be compared with those from the other using the ORE operations described in \eqref{eqn:lewi_eqs}, the exact intersection can be approximated in $O(log(\frac{1}{s}))$ steps by performing a binary search.
+\end{itemize}
 \begin{figure}[htb]
    \begin{center}
       \input{images/2_sensors.pgf}
    \end{center}
    \caption{Approximation of $\omega_0$ with discretisation step size $s=0.1$. Only comparisons of the ordered values sent from either estimator are used.}
+   \label{fig:2_sensor_sol}
 \end{figure}
-
+\begin{itemize}
+   \item Once the two consecutive differing comparisons from vertically aligned points in \ref{fig:2_sensor_sol} are found, the FCI $\omega$ can be approximated by taking the middle value between the two bounds. This is computed simply with \eqref{eqn:secfci_2sen_omega}.
+   \item In the case where the comparison function from the ORE scheme returns an exact equality, the exact value of $\omega$ is known and can be taken as the approximation.
+\end{itemize}
 \begin{gather}
-   \omega_0'=\frac{1}{2}(a + b),\ \omega_1' = (1-\omega_0)
+   \omega_0'=\frac{1}{2}(a + b),\ \omega_1' = (1-\omega_0) \label{eqn:secfci_2sen_omega}
 \end{gather}
 
-\section{Multi-sensor Secure Fast Covariance Intersection}
+\section{Multi-sensor Secure Fast Covariance Intersection} \label{sec:multi_secfci}
+\begin{itemize}
+   \item 
+\end{itemize}
 \begin{gather}
    \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \label{eqn:3-sensor-partial-sol-1}
 \end{gather}
@@ -310,7 +333,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
    \begin{center}
       \input{images/partial_sol_planes.pgf}
    \end{center}
-   \caption{Partial solutions from figure \ref{fig:3-sensor-partial-sols} plotted as planes perpendicular to the plane of possible solutions. Intersection point gives solution values of $\omega_i$ for Fast Covariance Intersection.}
+   \caption{Partial solutions from fig. \ref{fig:3-sensor-partial-sols} plotted as planes perpendicular to the plane of possible solutions. Intersection point gives solution values of $\omega_i$ for Fast Covariance Intersection.}
 \end{figure}
 
 \begin{gather}
