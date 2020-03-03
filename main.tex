@@ -295,7 +295,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
    \item To compute the FCI value for $\omega$ we want the intersection between the two lines described by $\tr(\mP_0)\omega$ and $\tr(\mP_1)(1-\omega)$. Note that in the 2 sensor case, the discretised list of $\tr(\mP_i)(1-\omega)$ can be obtained by simply reversing the list for $\tr(\mP_i)\omega$.
    \item Fig. \ref{fig:2_sensor_sol} shows the list from sensor 0 and the reversed list of sensor 1 plotted over $\omega$ with a step size $s=0.1$. Since values from one list can be compared with those from the other using the ORE operations described in \eqref{eqn:lewi_eqs}, the exact intersection can be approximated in $O(log(\frac{1}{s}))$ steps by performing a binary search.
 \end{itemize}
-\begin{figure}[htb]
+\begin{figure}[tb]
    \begin{center}
       \input{images/2_sensors.pgf}
    \end{center}
@@ -483,13 +483,13 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 
 
 
-% \section{Conclusion}
-% \begin{itemize}
-%    \item Fast Covariance Intesection is a commonly used method for the approximation of the non-linear optimisation problem of Covariance Intersection fusion, but requires the sharing of local sensor estimates with each other, or a centralised fusion server. We have proposed an approximation to the FCI which can be computed given only encrypted estimate and estimate covariance information from each sensor.
-%    \item Uses for a secure fusion algorithm can be found in various security critical applications, or with untrusted networks and fusion centers.
-%    \item In future work, we would like to assess the estimate data leakage implications of ORE encrypted covariance information, and produce security assumptions and proofs for the signal processing technique.
-%    \item We are also interested in how the computational performance of SecFCi may compare with alternative FHE and real number encoding techniques.
-% \end{itemize}
+\section{Conclusion}
+\begin{itemize}
+   \item Fast Covariance Intesection is a commonly used method for the approximation of the non-linear optimisation problem of Covariance Intersection fusion, but requires the sharing of local sensor estimates with each other, or a centralised fusion server. We have proposed an approximation to the FCI which can be computed given only encrypted estimate and estimate covariance information from each sensor.
+   \item Uses for a secure fusion algorithm can be found in various security critical applications, or with untrusted networks and fusion centers.
+   \item In future work, we would like to assess the estimate data leakage implications of ORE encrypted covariance information, and produce security assumptions and proofs for the signal processing technique.
+   \item We are also interested in how the computational performance of SecFCi may compare with alternative FHE and real number encoding techniques.
+\end{itemize}
 
 
 % \vspace{2cm}

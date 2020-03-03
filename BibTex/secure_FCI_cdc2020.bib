@@ -1,4 +1,21 @@
 
+@article{acarSurveyHomomorphicEncryption2018,
+  title = {A {{Survey}} on {{Homomorphic Encryption Schemes}}: {{Theory}} and {{Implementation}}},
+  shorttitle = {A {{Survey}} on {{Homomorphic Encryption Schemes}}},
+  author = {Acar, Abbas and Aksu, Hidayet and Uluagac, A. Selcuk and Conti, Mauro},
+  year = {2018},
+  month = jul,
+  volume = {51},
+  pages = {79:1--79:35},
+  issn = {0360-0300},
+  doi = {10.1145/3214303},
+  abstract = {Legacy encryption systems depend on sharing a key (public or private) among the peers involved in exchanging an encrypted message. However, this approach poses privacy concerns. The users or service providers with the key have exclusive rights on the data. Especially with popular cloud services, control over the privacy of the sensitive data is lost. Even when the keys are not shared, the encrypted material is shared with a third party that does not necessarily need to access the content. Moreover, untrusted servers, providers, and cloud operators can keep identifying elements of users long after users end the relationship with the services. Indeed, Homomorphic Encryption (HE), a special kind of encryption scheme, can address these concerns as it allows any third party to operate on the encrypted data without decrypting it in advance. Although this extremely useful feature of the HE scheme has been known for over 30 years, the first plausible and achievable Fully Homomorphic Encryption (FHE) scheme, which allows any computable function to perform on the encrypted data, was introduced by Craig Gentry in 2009. Even though this was a major achievement, different implementations so far demonstrated that FHE still needs to be improved significantly to be practical on every platform. Therefore, this survey focuses on HE and FHE schemes. First, we present the basics of HE and the details of the well-known Partially Homomorphic Encryption (PHE) and Somewhat Homomorphic Encryption (SWHE), which are important pillars for achieving FHE. Then, the main FHE families, which have become the base for the other follow-up FHE schemes, are presented. Furthermore, the implementations and recent improvements in Gentry-type FHE schemes are also surveyed. Finally, further research directions are discussed. This survey is intended to give a clear knowledge and foundation to researchers and practitioners interested in knowing, applying, and extending the state-of-the-art HE, PHE, SWHE, and FHE systems.},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\LNHNFMDD\\Acar et al. - 2018 - A Survey on Homomorphic Encryption Schemes Theory.pdf},
+  journal = {ACM Computing Surveys},
+  keywords = {FHE,FHE implementation,FHE survey,Fully homomorphic encryption,homomorphic encryption,partially homomorphic encryption,PHE,somewhat homomorphic encryption,SWHE},
+  number = {4}
+}
+
 @incollection{chenettePracticalOrderRevealingEncryption2016,
   title = {Practical {{Order}}-{{Revealing Encryption}} with {{Limited Leakage}}},
   booktitle = {Fast {{Software Encryption}}},
@@ -32,6 +49,33 @@
   language = {en}
 }
 
+@article{duImplementingMLAlgorithms,
+  title = {Implementing {{ML Algorithms}} with {{HE}}},
+  author = {Du, Yilun and Gustafson, Laura and Huang, David and Peterson, Kelly},
+  pages = {14},
+  abstract = {An increase in cloud-based computing leads to an increased worry in the security of user data. Typically, data is sent to a third-party server which performs analytics or machine learning on the data. However, in most of these scenarios, the data involved is sensitive and should remain private. Homomorphic encryption, a form of encryption that allows functions to be performed on encrypted ciphertext, allows privacy-preserving data analysis of existing large private, sensitive data sets. We implement and analyze the performance of linear regression and K-means clustering using the homomorphic encryption library SEAL and provide an extension of the SEAL library to matrix operations.},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\3W2EDY7Z\\Du et al. - Implementing ML Algorithms with HE.pdf},
+  language = {en}
+}
+
+@inproceedings{elgamalPublicKeyCryptosystem1985,
+  title = {A {{Public Key Cryptosystem}} and a {{Signature Scheme Based}} on {{Discrete Logarithms}}},
+  booktitle = {Advances in {{Cryptology}}},
+  author = {ElGamal, Taher},
+  editor = {Blakley, George Robert and Chaum, David},
+  year = {1985},
+  pages = {10--18},
+  publisher = {{Springer}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/3-540-39568-7_2},
+  abstract = {A new signature scheme is proposed together with an implementation of the Diffie - Hellman key distribution scheme that achieves a public key cryptosystem. The security of both systems relies on the difficulty of computing discrete logarithms over finite fields.},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\QKX2UT5Z\\ElGamal - 1985 - A Public Key Cryptosystem and a Signature Scheme B.pdf},
+  isbn = {978-3-540-39568-3},
+  keywords = {Cipher Text,Discrete Logarithm,Discrete Logarithm Problem,Distribution Scheme,Signature Scheme},
+  language = {en},
+  series = {Lecture {{Notes}} in {{Computer Science}}}
+}
+
 @inproceedings{frankenImprovedFastCovariance2005,
   title = {Improved Fast Covariance Intersection for Distributed Data Fusion},
   booktitle = {2005 7th {{International Conference}} on {{Information Fusion}}},
@@ -45,6 +89,21 @@
   abstract = {Among the possible approaches to tackling the problem of data incest in distributed data fusion networks, covariance intersection is a candidate that yields consistent estimates independent of network structure and any possible cross-correlation between local estimates. The corresponding weighting coefficients are usually chosen with the aim for a minimum trace or determinant of the resulting error variance matrix. A fast non-iterative algorithm exists that, to a certain extent, approximately solves this nonlinear optimization problem with extremely reduced numerical implementation effort. Yet, the obtained weighting coefficients do not depend on the relative orientation of the estimation error variance matrices which may lead to a degraded performance in certain applications. Hence, an improved fast covariance intersection algorithm is developed that comes with a slightly increased implementation effort while yielding significantly better estimation results in some cases and comparable results in all other ones. Simulation results confirm the postulated performance improvement.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\44JWMHGZ\\Franken and Hupper - 2005 - Improved fast covariance intersection for distribu.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\XLYKVVBJ\\1591849.html},
   keywords = {consistent estimation,correlation theory,covariance matrices,Covariance matrix,cross-correlation,Degradation,distributed data fusion,Distributed data fusion,distributed sensors,error analysis,error variance matrix,Estimation error,fast covariance intersection,information fusion of correlated estimates,Information geometry,Measurement errors,noniterative algorithm,nonlinear estimation,nonlinear optimization,Observability,sensor fusion,Sensor fusion,weighting coefficient,Yield estimation}
+}
+
+@inproceedings{gentryFullyHomomorphicEncryption2009,
+  title = {Fully Homomorphic Encryption Using Ideal Lattices},
+  booktitle = {Proceedings of the 41st Annual {{ACM}} Symposium on {{Symposium}} on Theory of Computing - {{STOC}} '09},
+  author = {Gentry, Craig},
+  year = {2009},
+  pages = {169},
+  publisher = {{ACM Press}},
+  address = {{Bethesda, MD, USA}},
+  doi = {10.1145/1536414.1536440},
+  abstract = {We propose a fully homomorphic encryption scheme \textendash{} i.e., a scheme that allows one to evaluate circuits over encrypted data without being able to decrypt. Our solution comes in three steps. First, we provide a general result \textendash{} that, to construct an encryption scheme that permits evaluation of arbitrary circuits, it suffices to construct an encryption scheme that can evaluate (slightly augmented versions of) its own decryption circuit; we call a scheme that can evaluate its (augmented) decryption circuit bootstrappable.},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\XIVYM4YT\\Gentry - 2009 - Fully homomorphic encryption using ideal lattices.pdf},
+  isbn = {978-1-60558-506-2},
+  language = {en}
 }
 
 @article{goldwasserProbabilisticEncryption1984a,
@@ -64,6 +123,38 @@
   number = {2}
 }
 
+@article{kalmanNewApproachLinear1960,
+  title = {A {{New Approach}} to {{Linear Filtering}} and {{Prediction Problems}}},
+  author = {Kalman, R. E.},
+  year = {1960},
+  month = mar,
+  volume = {82},
+  pages = {35--45},
+  publisher = {{American Society of Mechanical Engineers Digital Collection}},
+  issn = {0021-9223},
+  doi = {10.1115/1.3662552},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\4FK9NCVZ\\Kalman - 1960 - A New Approach to Linear Filtering and Prediction .pdf;C\:\\Users\\tn5093\\Zotero\\storage\\ZPREZ3BP\\A-New-Approach-to-Linear-Filtering-and-Prediction.html},
+  journal = {Journal of Basic Engineering},
+  language = {en},
+  number = {1}
+}
+
+@article{lagendijkEncryptedSignalProcessing2013,
+  title = {Encrypted Signal Processing for Privacy Protection: {{Conveying}} the Utility of Homomorphic Encryption and Multiparty Computation},
+  shorttitle = {Encrypted Signal Processing for Privacy Protection},
+  author = {Lagendijk, R. L. and Barni, M.},
+  year = {2013},
+  month = jan,
+  volume = {30},
+  pages = {82--105},
+  issn = {1053-5888},
+  doi = {10.1109/MSP.2012.2219653},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\32GF79PA\\Lagendijk and Barni - 2013 - Encrypted signal processing for privacy protection.pdf},
+  journal = {IEEE Signal Processing Magazine},
+  language = {en},
+  number = {1}
+}
+
 @inproceedings{lewiOrderRevealingEncryptionNew2016,
   title = {Order-{{Revealing Encryption}}: {{New Constructions}}, {{Applications}}, and {{Lower Bounds}}},
   shorttitle = {Order-{{Revealing Encryption}}},
@@ -77,6 +168,19 @@
   abstract = {In the last few years, there has been significant interest in developing methods to search over encrypted data. In the case of range queries, a simple solution is to encrypt the contents of the database using an order-preserving encryption (OPE) scheme (i.e., an encryption scheme that supports comparisons over encrypted values). However, Naveed et al. (CCS 2015) recently showed that OPE-encrypted databases are extremely vulnerable to ``inference attacks.'' In this work, we consider a related primitive called order-revealing encryption (ORE), which is a generalization of OPE that allows for stronger security. We begin by constructing a new ORE scheme for small message spaces which achieves the ``best-possible'' notion of security for ORE. Next, we introduce a ``domain-extension'' technique and apply it to our small-message-space ORE. While our domain-extension technique does incur a loss in security, the resulting ORE scheme we obtain is more secure than all existing (stateless and non-interactive) OPE and ORE schemes which are practical. All of our constructions rely only on symmetric primitives. As part of our analysis, we also give a tight lower bound for OPE and show that no efficient OPE scheme can satisfy best-possible security if the message space contains just three messages. Thus, achieving strong notions of security for even small message spaces requires moving beyond OPE. Finally, we examine the properties of our new ORE scheme and show how to use it to construct an efficient range query protocol that is robust against the inference attacks of Naveed et al. We also give a full implementation of our new ORE scheme, and show that not only is our scheme more secure than existing OPE schemes, it is also faster: encrypting a 32-bit integer requires just 55 microseconds, which is more than 65 times faster than existing OPE schemes.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\ZDPIZUGI\\Lewi and Wu - 2016 - Order-Revealing Encryption New Constructions, App.pdf},
   isbn = {978-1-4503-4139-4},
+  language = {en}
+}
+
+@book{mutambaraDecentralizedEstimationControl2019,
+  title = {Decentralized {{Estimation}} and {{Control}} for {{Multisensor Systems}}},
+  author = {Mutambara, Arthur G. O.},
+  year = {2019},
+  month = may,
+  publisher = {{Routledge}},
+  doi = {10.1201/9781315140803},
+  abstract = {Decentralized Estimation and Control for Multisensor Systems explores the problem of developing scalable, decentralized estimation and control algorithms for},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\HRT5NFZE\\Mutambara - 2019 - Decentralized Estimation and Control for Multisens.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\6MMN3QT5\\9781315140803.html},
+  isbn = {978-1-315-14080-3},
   language = {en}
 }
 
@@ -109,6 +213,19 @@
   keywords = {Encryption Scheme,Homomorphic Encryption,Random Oracle,Random Oracle Model,Signature Scheme},
   language = {en},
   series = {Lecture {{Notes}} in {{Computer Science}}}
+}
+
+@book{simonOptimalStateEstimation2006a,
+  title = {Optimal State Estimation: {{Kalman}}, {{H}} [Infinity], and Nonlinear Approaches},
+  shorttitle = {Optimal State Estimation},
+  author = {Simon, Dan},
+  year = {2006},
+  publisher = {{Wiley-Interscience}},
+  address = {{Hoboken, NJ}},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\DDWMAY74\\Simon - 2006 - Optimal state estimation Kalman, H [infinity], an.pdf},
+  isbn = {978-0-471-70858-2},
+  language = {en},
+  note = {OCLC: 741524579}
 }
 
 
