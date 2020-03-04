@@ -117,7 +117,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \end{itemize}
 \begin{gather}
    \mP^{-1}=\sum_{i=0}^{n}\omega_i \mP_i^{-1} \label{eqn:ci_cov}\\
-   \mP^{-1} \mean{\vec{x}} =\sum_{i=0}^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i \label{eqn:ci_estimate}\\
+   \mP^{-1} \mean{\vec{x}} =\sum_{i=0}^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i \label{eqn:ci_estimate}
 \end{gather}
 \begin{itemize}
    \item Where values $\omega_i$ satisfy \eqref{eqn:ci_omega_sum} and \eqref{eqn:ci_omega_bound} and are chosen in a way to minimise a property of the resulting fused estimate. 
