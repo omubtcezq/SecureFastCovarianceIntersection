@@ -38,7 +38,7 @@
 \usepackage{pgf}
 
 \title{\LARGE \bf
-Secure Third-party Fast Covariance Intersection Using Partially Homomorphic and Order Revealing Encryption Schemes
+Secure Fast Covariance Intersection Using Partially Homomorphic and Order Revealing Encryption Schemes
 }
 
 \author{Marko Ristic, Benjamin Noack, and Uwe D. Hanebeck% <-this % stops a space
@@ -86,8 +86,26 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 
 
 \section{Introduction}
+Sensor data processing and state estimation have been increasingly prevalent in networked systems \cite{}. Bayesian state estimation has become a particularly common application since the beginning of Kalman estimation theory \cite{} and has led to a large interest in the field of state estimation fusion \cite{}.
+
+Challenges of estimation fusion are closely tied to the handling and merging of estimation error statistics \cite{}. Cross-correlation between estimation errors characterise dependencies between local estimates and must be considered when performing consistent or optimal fusion \cite{}.
+
+Methods that keep track of the cross-correlation of errors omit the need for repeated reconstruction \cite{} however typically add local computational complexity and limit usability. An alternative strategy sees the approximation of estimate error cross-correlation based on conservative suboptimal strategies, and has been implemented in a variety of methods \cite{}.
+
+Covariance Intersection (CI) \cite{} provides one such conservative strategy, from which less computationally expensive methods such as the Fast Covariance Intersection (FCI) \cite{} have been derived. CI is particularly well paired with the information form of the Kalman filter \cite{}. This algebraically equivalent form of the standard Kalman filter requires the persistent storing of the information matrix and vector instead of the usual state estimate and covariance and reduces fusion operations to simple summations. It has been used to subtract common information between estimates when cross-correlations are known \cite{} and within fully distributed filter implementations \cite{}.
+
+
+A key step in distributed sensor fusion, and our topic of interest in this paper, is the requirement of transmitting sensor state estimate information between network nodes for the computation of a final fused result. Network eavesdroppers or curious fusion nodes are not prevented from learning possibly sensitive local state estimates and errors.
+
+Encryption has until recently been primarily used to secure information transfer between communicating parties, with common symmetric-key encryption schemes such as AES \cite{} being used to encrypt sent information to its destination, and public-key encryption schemes such as RSA \cite{} to distribute symmetric keys. However, recent developments in public-key homomorphic encryption (HE) schemes \cite{}(FHE, PHE), which allow algebraic operations to be performed on encryptions, are leading to more secure cloud or network applications for signal processing \cite{}(lag, Alex, zeros, aris).
+
+Although implementations of Fully Homomorphic Encryption (FHE) schemes exist \cite{}(FHE), and provide all algebraic operations on encryptions, current implementations are still computationally infeasible for large-scale signal processing \cite{}(ML, survey). Instead, Partially Homomorphic Encryption (PHE) schemes \cite{}(PHE), providing typically only one algebraic operation, have been a focus for such processing tasks \cite{}(Alex, zeros, aris).
+
+However, due to the limited operations provided by PHE (most commonly addition provided by the Paillier encryption scheme due to its speed and simplicity, \cite{}), securely computable processing algorithms have thus far been relatively restricted in complexity and application. The recent development of new encryption schemes, such as Order Revealing Encryption (ORE) \cite{}, have provided new light on the possible complexity of signal processing algorithms that can be computed securely. Thus far, ORE has found little application in the context of signal processing algorithms or in combination with HE schemes.
+
+In this paper, we make use of a combination of ORE and PHE schemes to develop a Secure FCI (SecFCI) fusion approximation method that enables us to protect sensor estimates from both eavesdroppers and other algorithm participants.
+
 \begin{itemize}
-   \item 
    \item Describe what will be in each following section and how the paper structure makes sense
 \end{itemize}
 \subsection{Notation}
@@ -109,7 +127,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 
 
 
-\section{Covariance Intersection and Approximations}
+\section{Covariance Intersection and Approximations} \label{sec:ci}
 \begin{itemize}
    \item Covariance intersection (CI) is a method for fusing state estimations for different sources when models and cross-correlations are not known
    \item The fused estimate and estimate covariance are commuted by \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate}
@@ -196,7 +214,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 
 
 
-\section{Homomorphic and Order Revealing Encryption}
+\section{Homomorphic and Order Revealing Encryption} \label{sec:encryption}
 \begin{itemize}
    \item To achieve a secure solution to the FCI fusion problem, we have focused on two types of function providing encryption schemes. 
    \item Additive partially homomorphic encryption (PHE) schemes such ones defined in \cite{paillierPublicKeyCryptosystemsBased1999} and \cite{goldwasserProbabilisticEncryption1984a} provide a homomorphic addition operation as shown in \eqref{eqn:phe_eq}.
@@ -304,7 +322,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \end{figure}
 \begin{itemize}
    \item Once the two consecutive differing comparisons from vertically aligned points in \ref{fig:2_sensor_sol} are found, the FCI $\omega$ can be approximated by taking the middle value between the two bounds. This is computed simply with \eqref{eqn:secfci_2sen_omega}.
-   \item In the case where the comparison function from the ORE scheme returns an exact equality, the exact value of $\omega$ is known and can be taken as the approximation.
+   \item In the case where the comparison function from the ORE scheme returns exact equality, the exact value of $\omega$ is known and can be taken as the approximation.
 \end{itemize}
 \begin{gather}
    \omega_0'=\frac{1}{2}(a + b),\ \omega_1' = (1-\omega_0) \label{eqn:secfci_2sen_omega}
@@ -312,8 +330,8 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 
 \section{Multi-sensor Secure Fast Covariance Intersection} \label{sec:multi_secfci}
 \begin{itemize}
-   \item In the multi sensor case, the same method of using PHE encryptions of each sensor's estimate and covariance is used to compute \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate}. Again we are left with the task of computing the weights $\omega_i$.
-   \item For the ease of diagrams we will demonstrate how this can be done in the three sensor case, and provide equations for the $n$ sensor case.
+   \item In the multi-sensor case, the same method of using PHE encryptions of each sensor's estimate and covariance is used to compute \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate}. Again we are left with the task of computing the weights $\omega_i$.
+   \item For the ease of diagrams, we will demonstrate how this can be done in the three sensor case, and provide equations for the $n$ sensor case.
    \item Computing the $\omega_i$ values for FCI in the three sensor case requires the solving of \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2}.
 \end{itemize}
 \begin{gather}
@@ -322,7 +340,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \end{gather}
 \begin{itemize}
    \item Our method solves the multiple equations by approximating the partial solutions of each, similarly to the two sensor case, and solving the newly obtained, unencrypted, multiple equations.
-   \item Partial solutions are treated as hyperplanes on the possible solutions space, and their intersection gives the solution to the mujltiple equations. We consider each $\omega_i$ a dimension, and defined hyperplane points as $(\omega_0, \omega_1, \dots, \omega_n)$ accordingly.
+   \item Partial solutions are treated as hyperplanes on the possible solutions space, and their intersection gives the solution to the multiple equations. We consider each $\omega_i$ a dimension, and defined hyperplane points as $(\omega_0, \omega_1, \dots, \omega_n)$ accordingly.
    \item Solving \eqref{eqn:3_sensor_partial_sol_1} as was done in the two sensor case with \eqref{eqn:sen0_ore_list} and \eqref{eqn:sen1_ore_list}, gives the partial solution of \eqref{eqn:3_sensor_partial_sol_1} when $\omega_2=0$ in the three sensor case. The other defining points of the partial solution of $\omega_0$ and $\omega_1$ are obtained when each remaining $\omega_i=1$. In the three sensor case, this gives one aditional point; (0,0,1). In Fig. \ref{fig:3_sensor_partial_sol} the partial solution of \eqref{eqn:3_sensor_partial_sol_1} has been plotted over the solution space defined by \eqref{eqn:ci_omega_sum} and \eqref{eqn:ci_omega_bound} when $n=2$.
 \end{itemize}
 
@@ -387,7 +405,7 @@ Fast covariance intersection is a widespread technique for state estimate fusion
    \end{bmatrix} \label{eqn:3sen_plane_sol_eq}
 \end{gather}
 \begin{itemize}
-   \item In the case of $n$ sonsors, hyperplanes are defined similarly, and produce the linear equation \eqref{eqn:hyperplane_sol_eq}.
+   \item In the case of $n$ sensors, hyperplanes are defined similarly and produce the linear equation \eqref{eqn:hyperplane_sol_eq}.
 \end{itemize}
 \begin{gather}
    \begin{bmatrix}
@@ -435,12 +453,12 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 
 
 
-\section{Simulation Results}
+\section{Simulation Results} \label{sec:results}
 \begin{itemize}
    \item A simulation was implemented to demonstrate the accuracy of SecFCI fusion when compared to traditional FCI fusion.
-   \item A constant-speed linear process model was used, with two independant cartesion sensors making white Gaussian noisy measurements of the ground truth. Both sensors ran linear Kalman Filters \cite{} on their own measumrents producing a local estimate and estimate covariance. 
+   \item A constant-speed linear process model was used, with two independent cartesian sensors making white Gaussian noisy measurements of the ground truth. Both sensors ran linear Kalman Filters \cite{} on their measurements producing a local estimate and estimate covariance. 
    \item Sensors provided their estimates to a fusion center both in unencrypted form, and encrypted form. Unencrypted estimates consisted of only the estimates $\mean{\vec{x}}_i$ and $\mP_i$, while encrypted estimates were composed of PHE encryption of the estimate in the information filter form, $\mathcal{E}(\mP^{-1}_i)$ and $\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$, and the ordered ORE encryptions defined in \eqref{eqn:sensor_lists}.
-   \item The fusion center then performed FCI fusion on the unencrypted estimates and our SecFCI fusion on the encrypted information. A portion of the trajectory and fused estimates are shown in Fig. \ref{fig:fci_secfci_traj}.
+   \item The fusion center then performs FCI fusion on the unencrypted estimates and our SecFCI fusion on the encrypted information. A portion of the trajectory and fused estimates are shown in Fig. \ref{fig:fci_secfci_traj}.
 \end{itemize}
 
 \begin{figure}[tb]
@@ -452,8 +470,8 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 \end{figure}
 
 \begin{itemize}
-   \item Fig. \ref{fig:fci_secfci_trace} plots the resulting fused estimate covariances' traces over the course of the simulation. Approximatation of exact FCI fusion results in slightly differing covariance traces as expected. In our simulation the resulting covariance trace of the SecFCI fusion algorithm is consistently higher than that of FCI fusion. However, this is not always the case, due to FCI itself computing an approximation to the trace minimising choice of $\omega$.
-   \item In Fig. \ref{fig:fci_secfci_omegas} FCI and SecFCI values for each $\omega_i$ are plotted over the duration of a portion of the trajectory. SecFCI values for $\omega_i$ stay constant over time as can be expected due to the discretisation of partial solution estimates.
+   \item Fig. \ref{fig:fci_secfci_trace} plots the resulting fused estimate covariances' traces over the course of the simulation. Approximation of exact FCI fusion results in slightly differing covariance traces as expected. In our simulation, the resulting covariance trace of the SecFCI fusion algorithm is consistently higher than that of FCI fusion. However, this is not always the case, due to FCI itself computing an approximation to the trace minimising choice of $\omega$.
+   \item In Fig. \ref{fig:fci_secfci_omegas} FCI and SecFCI values for each $\omega_i$ are plotted throughout a portion of the trajectory. SecFCI values for $\omega_i$ stay constant over time as can be expected due to the discretisation of partial solution estimates.
 \end{itemize}
 
 \begin{figure}[tb]
@@ -483,11 +501,11 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 
 
 
-\section{Conclusion}
+\section{Conclusion} \label{sec:conclusion}
 \begin{itemize}
-   \item Fast Covariance Intesection is a commonly used method for the approximation of the non-linear optimisation problem of Covariance Intersection fusion, but requires the sharing of local sensor estimates with each other, or a centralised fusion server. We have proposed an approximation to the FCI which can be computed given only encrypted estimate and estimate covariance information from each sensor.
-   \item Uses for a secure fusion algorithm can be found in various security critical applications, or with untrusted networks and fusion centers.
-   \item In future work, we would like to assess the estimate data leakage implications of ORE encrypted covariance information, and produce security assumptions and proofs for the signal processing technique.
+   \item Fast Covariance Intersection commonly used method for the approximation of the non-linear optimisation problem of Covariance Intersection fusion but requires the sharing of local sensor estimates with each other or a centralised fusion server. We have proposed an approximation to the FCI which can be computed given only encrypted estimate and estimate covariance information from each sensor.
+   \item Uses for a secure fusion algorithm can be found in various security-critical applications, or with untrusted networks and fusion centers.
+   \item In future work, we would like to assess the estimate data leakage implications of ORE encrypted covariance information and produce security assumptions and proofs for the signal processing technique.
    \item We are also interested in how the computational performance of SecFCi may compare with alternative FHE and real number encoding techniques.
 \end{itemize}
 
