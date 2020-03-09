@@ -296,7 +296,7 @@ If we reverse \eqref{eqn:sen1_ore_list}, we obtain the equivalent list
 \begin{equation}
    [\mathcal{E}^R_{ORE}((1-\omega)\tr(\mP_1)),\ \omega \in [0,0+s,\dots,1-s,1]] \label{eqn:sen2_ore_rev_list}
 \end{equation}
-which when decrypted and plotted over \eqref{eqn:sen1_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:fci_2sen_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in $O(log(1/s))$ by a binary search.
+which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:fci_2sen_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in $O(log(1/s))$ by a binary search.
 \begin{figure}[tb]
    \begin{center}
       \input{images/2_sensors.pgf}
@@ -340,7 +340,7 @@ and
 \begin{equation}
    \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0\,. \label{eqn:3_sensor_partial_sol_2}
 \end{equation}
-Fig. \ref{fig:3_sensor_partial_sol} shows partial solution \eqref{eqn:3_sensor_partial_sol_1} plotted over the possible solution space. Partial solution points are given by solving the two-sensor case for $\omega_j$ and $\omega_k$ and letting all $\omega_i=0,\ i\neq j,k$, plus an additional point for each $\omega_i=1,\ i\neq j,k$ with $\omega_j=\omega_k=0$. Both partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} can be seen plotted over the solution space in Fig. \ref{fig:3_sensor_partial_sols}.
+Fig. \ref{fig:3_sensor_partial_sol} shows partial solution \eqref{eqn:3_sensor_partial_sol_1} plotted over the possible solution space. Partial solution points are given by solving the two-sensor case for $\omega_j$ and $\omega_k$ when letting all $\omega_i=0,\ i\neq j,k$, plus an additional point for each $\omega_i=1,\ i\neq j,k$ with $\omega_j=\omega_k=0$. Both partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} can be seen plotted over the solution space in Fig. \ref{fig:3_sensor_partial_sols}.
 \begin{figure}[tb]
    \begin{center}
       \input{images/partial_sol1.pgf}
@@ -391,7 +391,7 @@ where $a_{i,j}$ denotes parameter $i$ of partial solution $j$.
    \label{fig:3sen_planes}
 \end{figure}
 
-In the case with $n$ sensors, the hyperplanes equations are given by
+In the case with $n$ sensors, the hyperplane equations are given by
 \begin{equation}
    a_0\omega_0 + a_1\omega_1 + \cdots + a_n\omega_n + a_{n+1} = 0\,, \label{eqn:hyperplane_eq}
 \end{equation}
