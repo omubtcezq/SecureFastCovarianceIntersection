@@ -268,7 +268,7 @@ holds.
 \section{Two-sensor Secure Fast Covariance Intersection} \label{sec:secfci}
 In this section, we will introduce the Secure FCI (SecFCI) fusion algorithm for the two-sensor case, before extending it to the $n$-sensor case in section \ref{sec:multi_secfci}. The network model we will consider is one where all sensors are capable of running local estimation filters, as well as the PHE and ORE encryption schemes described in section \ref{sec:encryption}. Each sensor $i$ computes its state estimate and estimate error, $\mean{\vec{x}_i}$ and $\mP_i$, and sends the relevant encrypted information to a single fusion centre which aims to compute the fused state estimate and estimate error homomorphically. A third, querying party, can request and use the current encrypted fused information from the fusion centre at any time. The querying party is the key holding party in this network and generates the PHE public key $pk$, secret key $sk$, and ORE symmetric key $k$. $pk$ is made available to all parties in the network, and $k$ made available to the sensors only, via any standard public-key scheme such as RSA \cite{rivestMethodObtainingDigital1978}. When encrypting with ORE key $k$, individual sensors are limited to using only $L$ or $R$ ORE encryption to reduce local information leakage. Thus, consecutive ORE encryptions from any sensor cannot be used to infer local information directly, and can only be compared to encryptions from sensors using the alternate ORE encryption.
 
-From the CI equations \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate} we can see that both fusion equations can be computed on PHE encryptions of sensor information matrices and vectors, given valid values for each $\omega_i$. In the two-sensor case, homomorphic fusion is described by
+From the CI equations \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate} we can see that both fusion equations can be computed on PHE encryptions of sensor information matrices and vectors, given valid values for each $\omega_i$. In the two-sensor case, homomorphic fusion is computed by
 \begin{equation}
    \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_0)^{\omega_0}\mathcal{E}(\mP^{-1}_1)^{(1 -\omega_0)} \label{eqn:paillier_ci_cov}
 \end{equation}
@@ -301,7 +301,7 @@ which when decrypted and plotted over \eqref{eqn:sen1_ore_list} shows that the i
    \begin{center}
       \input{images/2_sensors.pgf}
    \end{center}
-   \caption{Approximation of $\omega_0$ with discretisation step-size $s=0.1$, where only comparisons between line points are used.}
+   \caption{Approximation of $\omega_0$ with discretisation step-size $s=0.1$. Only comparisons between line points are used.}
    \label{fig:2_sensor_sol}
 \end{figure}
 Consecutive $\omega_l$ and $\omega_u$ for which list comparisons differ can be used to estimate the true intersection, and $\omega_0$, by
@@ -322,68 +322,52 @@ In the case a comparison returns equality, the exact value of $\omega$ can be ta
 
 
 \section{Multi-sensor Secure Fast Covariance Intersection} \label{sec:multi_secfci}
-\begin{itemize}
-   \item (also single multiplication)
-   \item In the multi-sensor case, the same method of using PHE encryptions of each sensor's estimate and covariance is used to compute \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate}. Again we are left with the task of computing the weights $\omega_i$.
-   \item For the ease of diagrams, we will demonstrate how this can be done in the three sensor case, and provide equations for the $n$ sensor case.
-   \item Computing the $\omega_i$ values for FCI in the three sensor case requires the solving of \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2}.
-\end{itemize}
-\begin{gather}
-   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \label{eqn:3_sensor_partial_sol_1}\\
-   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0 \label{eqn:3_sensor_partial_sol_2}
-\end{gather}
-\begin{itemize}
-   \item Our method solves the multiple equations by approximating the partial solutions of each, similarly to the two sensor case, and solving the newly obtained, unencrypted, multiple equations.
-   \item Partial solutions are treated as hyperplanes on the possible solutions space, and their intersection gives the solution to the multiple equations. We consider each $\omega_i$ a dimension, and defined hyperplane points as $(\omega_0, \omega_1, \dots, \omega_n)$ accordingly.
-   \item Solving \eqref{eqn:3_sensor_partial_sol_1} as was done in the two sensor case with \eqref{eqn:sen0_ore_list} and \eqref{eqn:sen1_ore_list}, gives the partial solution of \eqref{eqn:3_sensor_partial_sol_1} when $\omega_2=0$ in the three sensor case. The other defining points of the partial solution of $\omega_0$ and $\omega_1$ are obtained when each remaining $\omega_i=1$. In the three sensor case, this gives one aditional point; (0,0,1). In Fig. \ref{fig:3_sensor_partial_sol} the partial solution of \eqref{eqn:3_sensor_partial_sol_1} has been plotted over the solution space defined by \eqref{eqn:ci_omega_sum} and \eqref{eqn:ci_omega_bound} when $n=2$.
-\end{itemize}
+When computing the SecFCI fusion for $n$ sensors, we solve \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate} homomorphically by computing
+\begin{equation}
+   \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_0)^{\omega_0}\cdots\mathcal{E}(\mP^{-1}_n)^{\omega_n} \label{eqn:n_sen_paillier_ci_cov}
+\end{equation}
+and
+\begin{equation}
+   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_0\mean{\vec{x}}_0)^{\omega_0}\cdots\mathcal{E}(\mP^{-1}_n\mean{\vec{x}}_n)^{\omega_n}\,. \label{eqn:n_sen_paillier_ci_estimate}
+\end{equation}
+As with the two-sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the weights $\omega_0,\dots,\omega_n$.
 
+Our approach to the $n$-sensor case, is to solve each $n-1$ conditions in \eqref{eqn:fci_eq} using the two-sensor method, and combining partial solutions to compute the final result. When we consider each $\omega_i$ a dimensional axis, partial solutions can be considered geometrically, as hyperplanes of $n-2$ dimension, over the $n-1$ dimensional solution space given by \eqref{eqn:ci_omega_sum} and \eqref{eqn:ci_omega_bound}. This can be visualised in the three-sensor case, which requires solving partial solutions
+\begin{equation}
+   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \label{eqn:3_sensor_partial_sol_1}
+\end{equation}
+and
+\begin{equation}
+   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0\,. \label{eqn:3_sensor_partial_sol_2}
+\end{equation}
+Fig. \ref{fig:3_sensor_partial_sol} shows partial solution \eqref{eqn:3_sensor_partial_sol_1} plotted over the possible solution space. Partial solution points are given by solving the two-sensor case for $\omega_j$ and $\omega_k$ and letting all $\omega_i=0,\ i\neq j,k$, plus an additional point for each $\omega_i=1,\ i\neq j,k$ with $\omega_j=\omega_k=0$. Both partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} can be seen plotted over the solution space in Fig. \ref{fig:3_sensor_partial_sols}.
 \begin{figure}[tb]
    \begin{center}
       \input{images/partial_sol1.pgf}
    \end{center}
-   \caption{Partial solution from equation \eqref{eqn:3_sensor_partial_sol_1} plotted on the plane of all possible values of $\omega_0$, $\omega_1$, and $\omega_2$.}
+   \caption{Partial solution to \eqref{eqn:3_sensor_partial_sol_1} over plane of $\omega_0$, $\omega_1$, and $\omega_2$ solution space.}
    \label{fig:3_sensor_partial_sol}
 \end{figure}
-
-\begin{itemize}
-   \item Next we compute the partial solution for $\omega_1$, and $\omega_2$ in the same way. The additional known point defining this partial solution space is $(1,0,0)$. Fig \ref{fig:3_sensor_partial_sols} shows both partial solutions plotted over the solution space. Note that the intersection of the partial solutions gives the approximate solution for the FCI $\omega$ values.
-\end{itemize}
-
 \begin{figure}[tb]
    \begin{center}
       \input{images/partial_sols.pgf}
    \end{center}
-   \caption{Partial solutions from equations \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} plotted on the plane of all possible values of $\omega_0$, $\omega_1$, and $\omega_2$.}
+   \caption{Partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} over plane of $\omega_0$, $\omega_1$, and $\omega_2$ solution space.}
    \label{fig:3_sensor_partial_sols}
 \end{figure}
+Finding the final solution from all partial solutions is computed by finding their intersection. This can be seen in Fig. \ref{fig:3_sensor_partial_sols} as the intersection of the $\omega_0,\omega_1$ and $\omega_1,\omega_2$ partial solution lines. Due to their inherent orthogonality, $n-1$ partial solution hyperplanes are guaranteed to intersect at exactly one point when at most $1$ sensor has $\tr(\mP_i)=0$.
 
-\begin{itemize}
-   \item The partial solutions provide $n-1$ hyperplanes, each of dimension $n-2$. When computing the partial solutions' intersection, we define hyperplanes of dimension $n-1$ for each partial solution, by adding a dimension perpendicular to the solution space. This can be seen in Fig. \ref{fig:3sen_planes}.
-\end{itemize}
+To simplify computing the partial solution intersection, we define equivalent hyperplanes of dimension $n-1$, perpendicular to the solution space, and solve the resulting $n$ simultaneous linear equations.
 
-\begin{figure}[tb]
-   \begin{center}
-      \input{images/partial_sol_planes.pgf}
-   \end{center}
-   \caption{Partial solutions from fig. \ref{fig:3_sensor_partial_sols} plotted as planes perpendicular to the plane of possible solutions. Intersection point gives solution values of $\omega_i$ for Fast Covariance Intersection.}
-   \label{fig:3sen_planes}
-\end{figure}
-
-\begin{itemize}
-   \item Each partial solution in the three sensor case is therefore now defined as a plane of the form \eqref{eqn:3sen_plane_eq}, where $x,y,z$ represent the $\omega_0,\omega_1,\omega_2$ axes.
-\end{itemize}
-\begin{gather}
-   a_0x + a_1y +a_2z + d = 0 \label{eqn:3sen_plane_eq}
-\end{gather}
-\begin{itemize}
-   \item We now have $n$ equations, one of which is the solution space equation, and $n$ values of $'omega_i$ to solve for. In the three sensor case, the solution to the linear problem \eqref{eqn:3sen_plane_sol_eq} provides the approximate solution to each $\omega_i$ value in FCI.
-\end{itemize}
-
-\begin{gather}
+In the three-sensor case, each partial solution line can be defined by a plane perpendicular to the solution space plane in the form
+\begin{equation}
+   a_0\omega_0 + a_1\omega_1 +a_2\omega_2 + a_3 = 0\,, \label{eqn:3sen_plane_eq}
+\end{equation}
+as can be seen in Fig. \ref{fig:3sen_planes}. The resulting linear system and solution is then given by
+\begin{equation}
    \begin{bmatrix}
-      a_0^0 & a_1^0 & a_2^0 \\
-      a_0^1 & a_1^1 & a_2^1 \\
+      a_{0,0} & a_{1,0} & a_{2,0} \\
+      a_{0,1} & a_{1,1} & a_{2,1} \\
       1 & 1 & 1
    \end{bmatrix}
    \begin{bmatrix}
@@ -393,20 +377,31 @@ In the case a comparison returns equality, the exact value of $\omega$ can be ta
    \end{bmatrix}
    =
    \begin{bmatrix}
-      d^0 \\
-      d^1 \\
+      a_{3,0} \\
+      a_{3,1} \\
       1
-   \end{bmatrix} \label{eqn:3sen_plane_sol_eq}
-\end{gather}
-\begin{itemize}
-   \item In the case of $n$ sensors, hyperplanes are defined similarly and produce the linear equation \eqref{eqn:hyperplane_sol_eq}.
-\end{itemize}
-\begin{gather}
+   \end{bmatrix}\,, \label{eqn:3sen_plane_sol_eq}
+\end{equation}
+where $a_{i,j}$ denotes parameter $i$ of partial solution $j$.
+\begin{figure}[tb]
+   \begin{center}
+      \input{images/partial_sol_planes.pgf}
+   \end{center}
+   \caption{Partial solutions from Fig. \ref{fig:3_sensor_partial_sols} as planes perpendicular to the solution space plane. Intersection point gives SecFCI solutions for each $\omega_i$.}
+   \label{fig:3sen_planes}
+\end{figure}
+
+In the case with $n$ sensors, the hyperplanes equations are given by
+\begin{equation}
+   a_0\omega_0 + a_1\omega_1 + \cdots + a_n\omega_n + a_{n+1} = 0\,, \label{eqn:3sen_plane_eq}
+\end{equation}
+and simultaneous equations and solution by
+\begin{equation}
    \begin{bmatrix}
-      a_0^0 & a_1^0 & \cdots & a_n^0 \\
-      a_0^1 & a_1^1 & \cdots & a_n^1 \\
+      a_{0,0} & a_{1,0} & \cdots & a_{n,0} \\
+      a_{0,1} & a_{1,1} & \cdots & a_{n,1} \\
       \vdots & \vdots & \ddots & \vdots \\
-      a_0^n & a_1^n & \cdots & a_n^{n-1} \\
+      a_{0,n-1} & a_{1,n-1} & \cdots & a_{n,n-1} \\
       1 & 1 & \cdots & 1
    \end{bmatrix}
    \begin{bmatrix}
@@ -418,21 +413,19 @@ In the case a comparison returns equality, the exact value of $\omega$ can be ta
    \end{bmatrix}
    =
    \begin{bmatrix}
-      d^0 \\
-      d^1 \\
+      a_{n+1,0} \\
+      a_{n+1,1} \\
       \vdots \\
-      d^{n-1} \\
+      a_{n+1,n-1} \\
       1
-   \end{bmatrix} \label{eqn:hyperplane_sol_eq}
-\end{gather}
-\begin{itemize}
-   \item Each of the partial solutions is approximated using consecutive sensor lists encrypted with ORE. This allows ``Left-Right'' ORE to still be used, by alternating which sensor uses which encryption.
-   \item The required ordered lists sent from each sensor $i$ are described by \eqref{eqn:sensor_lists}.
-\end{itemize}
+   \end{bmatrix}. \label{eqn:hyperplane_sol_eq}
+\end{equation}
+
+As all ORE comparisons between sensor values are done between sequential sensors, $L$ and $R$ ORE encryptions can be used to the same effect as for the two-sensor case. The ORE ordered list sent from each sensor is given by
 \begin{equation}
    \begin{gathered} \label{eqn:sensor_lists}
-      [\mathcal{E}^L_{ORE}(\omega\tr(\mP^{-1}_i)),\ \omega \in [0,0+s,\dots,1-s,1]],\ i\text{ is even} \\
-      [\mathcal{E}^R_{ORE}(\omega\tr(\mP^{-1}_i)),\ \omega \in [0,0+s,\dots,1-s,1]],\ i\text{ is odd}
+      [\mathcal{E}^L_{ORE}(\omega\tr(\mP^{-1}_i)),\ \omega \in [0,0+s,\dots,1-s,1]],\ i\text{ even} \\
+      [\mathcal{E}^R_{ORE}(\omega\tr(\mP^{-1}_i)),\ \omega \in [0,0+s,\dots,1-s,1]],\ i\text{ odd}\,.
    \end{gathered}
 \end{equation}
 
@@ -448,39 +441,29 @@ In the case a comparison returns equality, the exact value of $\omega$ can be ta
 
 
 \section{Simulation Results} \label{sec:results}
-\begin{itemize}
-   \item A simulation was implemented to demonstrate the accuracy of SecFCI fusion when compared to traditional FCI fusion.
-   \item A constant-speed linear process model was used, with two independent cartesian sensors making white Gaussian noisy measurements of the ground truth. Both sensors ran linear Kalman Filters \cite{} on their measurements producing a local estimate and estimate covariance. 
-   \item Sensors provided their estimates to a fusion center both in unencrypted form, and encrypted form. Unencrypted estimates consisted of only the estimates $\mean{\vec{x}}_i$ and $\mP_i$, while encrypted estimates were composed of PHE encryption of the estimate in the information filter form, $\mathcal{E}(\mP^{-1}_i)$ and $\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$, and the ordered ORE encryptions defined in \eqref{eqn:sensor_lists}.
-   \item The fusion center then performs FCI fusion on the unencrypted estimates and our SecFCI fusion on the encrypted information. A portion of the trajectory and fused estimates are shown in Fig. \ref{fig:fci_secfci_traj}.
-\end{itemize}
-
+We have implemented a simulation to demonstrate and compare the SecFCI algorithm. Three sensors independently measured a two-dimensional constant-speed linear process, and simultaneously run a linear Kalman filter on their measurements. Estimates were then sent both unencrypted and encrypted to a fusion centre which computed the FCI and SecFCI fusions on the received data respectively. Unencrypted estimates consisted of the state estimate and estimate error $\mean{\vec{x}}_i$ and $\mP_i$, while encrypted estimates were comprised of PHE encryptions of the information matrix and vector $\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$ and $\mathcal{E}(\mP^{-1}_i)$, and the ORE list given by \eqref{eqn:sensor_lists}. The trajectory and fused estimates are shown in Fig. \ref{fig:fci_secfci_traj}.
 \begin{figure}[tb]
    \begin{center}
       \input{images/fci_secfci_cmp.pgf}
    \end{center}
-   \caption{Tracking simulation comparing Fast Covariance Intersection and our Secure Fast Covariance Intersection fusion methods.}
+   \caption{Tracking simulation comparing FCI and SecFCI methods.}
    \label{fig:fci_secfci_traj}
 \end{figure}
 
-\begin{itemize}
-   \item Fig. \ref{fig:fci_secfci_trace} plots the resulting fused estimate covariances' traces over the course of the simulation. Approximation of exact FCI fusion results in slightly differing covariance traces as expected. In our simulation, the resulting covariance trace of the SecFCI fusion algorithm is consistently higher than that of FCI fusion. However, this is not always the case, due to FCI itself computing an approximation to the trace minimising choice of $\omega$.
-   \item In Fig. \ref{fig:fci_secfci_omegas} FCI and SecFCI values for each $\omega_i$ are plotted throughout a portion of the trajectory. SecFCI values for $\omega_i$ stay constant over time as can be expected due to the discretisation of partial solution estimates.
-\end{itemize}
-
+The traces of the fused estimate errors from both FCI and SecFCI fusion are shown in Fig. \ref{fig:fci_secfci_trace}. As can be seen, the trace difference is very small, and due to both methods approximating CI's minimisation function \eqref{eqn:ci_trace_min}, neither is necessarily a bound on the other.
 \begin{figure}[tb]
    \begin{center}
       \input{images/traces_cmp.pgf}
    \end{center}
-   \caption{Plot showing the fused estimate covariance trace throughout a tracking simulation, for both Fast Covariance Intersection and our Secure Fast Covariance Intersection}
+   \caption{Traces of fused estimate errors for FCI and SecFCI.}
    \label{fig:fci_secfci_trace}
 \end{figure}
-
+Values of each $\omega_i$ over time have been plotted in Fig. \ref{fig:fci_secfci_omegas}. Due to discretisation, and as can be expected, SecFCI values of $\omega_i$ stay constant, but may jump with sufficient change in the true FCI $\omega_i$ values they estimate.
 \begin{figure}[tb]
    \begin{center}
       \input{images/omegas_cmp.pgf}
    \end{center}
-   \caption{Plot showing the difference in $\omega_i$ values between Fast Covariance Intersection and our Secure Fast Covariance Intersection, throughout a tracking simulation.}
+   \caption{FCI and SecFCI $\omega_i$ values and their difference.}
    \label{fig:fci_secfci_omegas}
 \end{figure}
 
@@ -496,12 +479,7 @@ In the case a comparison returns equality, the exact value of $\omega$ can be ta
 
 
 \section{Conclusion} \label{sec:conclusion}
-\begin{itemize}
-   \item Fast Covariance Intersection commonly used method for the approximation of the non-linear optimisation problem of Covariance Intersection fusion but requires the sharing of local sensor estimates with each other or a centralised fusion server. We have proposed an approximation to the FCI which can be computed given only encrypted estimate and estimate covariance information from each sensor.
-   \item Uses for a secure fusion algorithm can be found in various security-critical applications, or with untrusted networks and fusion centers.
-   \item In future work, we would like to assess the estimate data leakage implications of ORE encrypted covariance information and produce security assumptions and proofs for the signal processing technique.
-   \item We are also interested in how the computational performance of SecFCi may compare with alternative FHE and real number encoding techniques.
-\end{itemize}
+FCI is a commonly used, efficiently computable, approximation to the CI optimisation problem which requires the sharing of local sensor estimates to compute their fusion. We have proposed a secure approximation to FCI, SecFCI, to compute sensor estimate fusion homomorphically. The novel encrypted signal processing approach may find uses in various security-critical applications, or over untrusted networks. It is clear that particular computational requirements are necessary for the computation of SecFCI, and that it may only be practical in specific scenarios. Namely, the ability for sensors to compute local estimation and encryption is required. Possible future work includes a run-time comparison between SecFCI and potential FHE implementations, giving a computational bound for its practicality. Also, we hope to further quantize ORE leakage concerning SecFCI fusion and produce formal security proofs and assumptions for the novel algorithm.
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEtranBST/IEEEabrv,BibTeX/secure_FCI_cdc2020}
