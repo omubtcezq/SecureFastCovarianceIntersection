@@ -286,9 +286,11 @@ If we reverse \eqref{eqn:sen1_ore_list}, we obtain the equivalent list
 \end{equation}
 which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:fci_2sen_omega_sum_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in $O(log(1/s))$ by a binary search.
 \begin{figure}[tb]
+   \vspace{-5pt}
    \begin{center}
       \input{images/2_sensors.pgf}
    \end{center}
+   \vspace{-10pt}
    \caption{Approximation of $\omega_0$ with discretisation step-size $s=0.1$. Only comparisons between line points are used.}
    \label{fig:2_sensor_sol}
 \end{figure}
@@ -330,16 +332,20 @@ and
 \end{equation}
 Fig. \ref{fig:3_sensor_partial_sol} shows partial solution \eqref{eqn:3_sensor_partial_sol_1} plotted over the possible solution space. Partial solution points are given by solving the two-sensor case for $\omega_j$ and $\omega_k$ when letting all $\omega_i=0,\ i\neq j,k$, plus an additional point for each $\omega_i=1,\ i\neq j,k$ with $\omega_j=\omega_k=0$. Both partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} can be seen plotted over the solution space in Fig. \ref{fig:3_sensor_partial_sols}.
 \begin{figure}[tb]
+   \vspace{-30pt}
    \begin{center}
       \input{images/partial_sol1.pgf}
    \end{center}
+   \vspace{-10pt}
    \caption{Partial solution to \eqref{eqn:3_sensor_partial_sol_1} over plane of $\omega_0$, $\omega_1$, and $\omega_2$ solution space.}
    \label{fig:3_sensor_partial_sol}
 \end{figure}
 \begin{figure}[tb]
+   \vspace{-30pt}
    \begin{center}
       \input{images/partial_sols.pgf}
    \end{center}
+   \vspace{-10pt}
    \caption{Partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} over plane of $\omega_0$, $\omega_1$, and $\omega_2$ solution space.}
    \label{fig:3_sensor_partial_sols}
 \end{figure}
@@ -372,9 +378,11 @@ as can be seen in Fig. \ref{fig:3sen_planes}. The resulting linear system and so
 \end{equation}
 where $a_{i,j}$ denotes parameter $i$ of partial solution $j$.
 \begin{figure}[tb]
+   \vspace{-30pt}
    \begin{center}
       \input{images/partial_sol_planes.pgf}
    \end{center}
+   \vspace{-10pt}
    \caption{Partial solutions from Fig. \ref{fig:3_sensor_partial_sols} as planes perpendicular to the solution space plane. Intersection point gives SecFCI solutions for each $\omega_i$.}
    \label{fig:3sen_planes}
 \end{figure}
@@ -431,26 +439,32 @@ As all ORE comparisons between sensor values are done between sequential sensors
 \section{Simulation Results} \label{sec:results}
 We have implemented a simulation to demonstrate and compare the SecFCI algorithm. Three sensors independently measured a two-dimensional constant-speed linear process, and simultaneously run a linear Kalman filter on their measurements. Estimates were then sent both unencrypted and encrypted to a fusion centre which computed the FCI and SecFCI fusions on the received data respectively. Unencrypted estimates consisted of the state estimate and covariance matrix $\mean{\vec{x}}_i$, $\mP_i$, while encrypted estimates were comprised of PHE encryptions of the information matrix and information vector $\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$ and $\mathcal{E}(\mP^{-1}_i)$, and the ORE list given by \eqref{eqn:sensor_lists}. The trajectory and fused estimates are shown in Fig. \ref{fig:fci_secfci_traj}.
 \begin{figure}[tb]
+   \vspace{-5pt}
    \begin{center}
       \input{images/fci_secfci_cmp.pgf}
    \end{center}
+   \vspace{-10pt}
    \caption{Tracking simulation comparing FCI and SecFCI methods.}
    \label{fig:fci_secfci_traj}
 \end{figure}
 
 The traces of the fused covariance matrices from both FCI and SecFCI fusion are shown in Fig. \ref{fig:fci_secfci_trace}. As can be seen, the trace difference is very small, and due to both methods approximating CI's minimisation function \eqref{eqn:ci_trace_min}, neither is necessarily a bound on the other.
 \begin{figure}[tb]
+   \vspace{-5pt}
    \begin{center}
       \input{images/traces_cmp.pgf}
    \end{center}
+   \vspace{-10pt}
    \caption{Traces of fused covariance matrices for FCI and SecFCI.}
    \label{fig:fci_secfci_trace}
 \end{figure}
 Values of each $\omega_i$ over time have been plotted in Fig. \ref{fig:fci_secfci_omegas}. Due to discretisation, as can be expected, SecFCI values of $\omega_i$ stay constant, but may jump with sufficient change in the true FCI $\omega_i$ values they estimate.
 \begin{figure}[tb]
+   \vspace{-5pt}
    \begin{center}
       \input{images/omegas_cmp.pgf}
    \end{center}
+   \vspace{-10pt}
    \caption{FCI and SecFCI $\omega_i$ values and their difference.}
    \label{fig:fci_secfci_omegas}
 \end{figure}
