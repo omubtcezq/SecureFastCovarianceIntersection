@@ -40,6 +40,12 @@
 % Needed to display images generated with Matplotlib nicely
 \usepackage{pgf}
 
+% Used to make subfigures and fit 3 figures across the page
+\usepackage{subcaption}
+
+% Used to make the last page have even height columns
+\usepackage{flushend}
+
 \title{\LARGE \bf
 Secure Fast Covariance Intersection Using Partially Homomorphic and Order Revealing Encryption Schemes
 }
@@ -327,16 +333,40 @@ and
 \begin{equation}
    \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0\,. \label{eqn:3_sensor_partial_sol_2}
 \end{equation}
-Fig. \ref{fig:3_sensor_partial_sols} shows partial solutions \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} plotted over the possible solution space. Partial solution points are given by solving the two-sensor case for $\omega_j$ and $\omega_k$ when letting all $\omega_i=0,\ i\neq j,k$, plus an additional point for each $\omega_i=1,\ i\neq j,k$ with $\omega_j=\omega_k=0$.
-\begin{figure}[tb]
-   \vspace{-30pt}
-   \begin{center}
-      \input{images/partial_sols.pgf}
-   \end{center}
-   \vspace{-10pt}
-   \caption{Partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} over plane of $\omega_0$, $\omega_1$, and $\omega_2$ solution space.}
-   \label{fig:3_sensor_partial_sols}
-\end{figure}
+Fig. \ref{fig:3_sensor_partial_sols} shows partial solution \eqref{eqn:3_sensor_partial_sol_1} plotted over the possible solution space. Partial solution points are given by solving the two-sensor case for $\omega_j$ and $\omega_k$ when letting all $\omega_i=0,\ i\neq j,k$, plus an additional point for each $\omega_i=1,\ i\neq j,k$ with $\omega_j=\omega_k=0$. Both partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} can be seen plotted over the solution space in Fig. \ref{fig:3_sensor_partial_sols}.
+\begin{figure*}[tb]
+   \begin{subfigure}[t]{0.3\textwidth}
+      %\vspace{-30pt}
+      \begin{center}
+         \input{images/partial_sol1.pgf}
+      \end{center}
+      %\vspace{-10pt}
+      \caption{Partial solution to \eqref{eqn:3_sensor_partial_sol_1}.}
+      \label{fig:3_sensor_partial_sol}
+   \end{subfigure}
+   ~
+   \begin{subfigure}[t]{0.3\textwidth}
+      %\vspace{-30pt}
+      \begin{center}
+         \input{images/partial_sols.pgf}
+      \end{center}
+      %\vspace{-10pt}
+      \caption{Partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2}.}
+      \label{fig:3_sensor_partial_sols}
+   \end{subfigure}
+   ~
+   \begin{subfigure}[t]{0.3\textwidth}
+      %\vspace{-30pt}
+      \begin{center}
+         \input{images/partial_sol_planes.pgf}
+      \end{center}
+      %\vspace{-10pt}
+      \caption{Partial solutions as planes perpendicular to the solution space.}
+      \label{fig:3sen_planes}
+   \end{subfigure}
+   \caption{Partial solutions over plane of $\omega_0$, $\omega_1$, and $\omega_2$ solution space.}
+   \label{fig:partial_sols_and_planes}
+\end{figure*}
 Finding the final solution from all partial solutions is computed by finding their intersection. This can be seen in Fig. \ref{fig:3_sensor_partial_sols} as the intersection of the $\omega_0,\omega_1$ and $\omega_1,\omega_2$ partial solution lines. Due to their inherent orthogonality, $n-1$ partial solution hyperplanes are guaranteed to intersect at exactly one point when at most $1$ sensor has $\tr(\mP_i)=0$.
 
 To simplify computing the partial solution intersection, we define equivalent hyperplanes of dimension $n-1$, perpendicular to the solution space, and solve the resulting $n$ simultaneous linear equations.
@@ -365,15 +395,6 @@ as can be seen in Fig. \ref{fig:3sen_planes}. The resulting linear system and so
    \end{bmatrix}\,, \label{eqn:3sen_plane_sol_eq}
 \end{equation}
 where $a_{i,j}$ denotes parameter $i$ of partial solution $j$.
-\begin{figure}[tb]
-   \vspace{-30pt}
-   \begin{center}
-      \input{images/partial_sol_planes.pgf}
-   \end{center}
-   \vspace{-10pt}
-   \caption{Partial solutions from Fig. \ref{fig:3_sensor_partial_sols} as planes perpendicular to the solution space plane. Intersection point gives SecFCI solutions for each $\omega_i$.}
-   \label{fig:3sen_planes}
-\end{figure}
 
 In the case with $n$ sensors, the hyperplane equations are given by
 \begin{equation}
@@ -446,7 +467,7 @@ The traces of the fused covariance matrices from both FCI and SecFCI fusion are 
    \caption{Traces of fused covariance matrices for FCI and SecFCI.}
    \label{fig:fci_secfci_trace}
 \end{figure}
-Values of each $\omega_i$ over time have been plotted in Fig. \ref{fig:fci_secfci_omegas}. Due to discretisation, as can be expected, SecFCI values of $\omega_i$ stay constant, but may jump with sufficient change in the true FCI $\omega_i$ values they estimate.
+Values of each $\omega_i$ over time have been plotted in Fig. \ref{fig:fci_secfci_omegas}. Due to discretisation, as can be expected, SecFCI values of $\omega_i$ stay constant but may jump with sufficient change in the true FCI $\omega_i$ values they estimate.
 \begin{figure}[tb]
    \vspace{-5pt}
    \begin{center}
