@@ -1,359 +1,277 @@
 
 @article{acarSurveyHomomorphicEncryption2018,
-  ids = {acarSurveyHomomorphicEncryption2018a},
   title = {A {{Survey}} on {{Homomorphic Encryption Schemes}}: {{Theory}} and {{Implementation}}},
-  shorttitle = {A {{Survey}} on {{Homomorphic Encryption Schemes}}},
-  author = {Acar, Abbas and Aksu, Hidayet and Uluagac, A. Selcuk and Conti, Mauro},
+  author = {Acar, A. and Aksu, H. and Uluagac, A. S. and Conti, M.},
   year = {2018},
-  month = jul,
   volume = {51},
-  pages = {79:1--79:35},
+  pages = {1--35},
   issn = {0360-0300},
   doi = {10.1145/3214303},
-  abstract = {Legacy encryption systems depend on sharing a key (public or private) among the peers involved in exchanging an encrypted message. However, this approach poses privacy concerns. The users or service providers with the key have exclusive rights on the data. Especially with popular cloud services, control over the privacy of the sensitive data is lost. Even when the keys are not shared, the encrypted material is shared with a third party that does not necessarily need to access the content. Moreover, untrusted servers, providers, and cloud operators can keep identifying elements of users long after users end the relationship with the services. Indeed, Homomorphic Encryption (HE), a special kind of encryption scheme, can address these concerns as it allows any third party to operate on the encrypted data without decrypting it in advance. Although this extremely useful feature of the HE scheme has been known for over 30 years, the first plausible and achievable Fully Homomorphic Encryption (FHE) scheme, which allows any computable function to perform on the encrypted data, was introduced by Craig Gentry in 2009. Even though this was a major achievement, different implementations so far demonstrated that FHE still needs to be improved significantly to be practical on every platform. Therefore, this survey focuses on HE and FHE schemes. First, we present the basics of HE and the details of the well-known Partially Homomorphic Encryption (PHE) and Somewhat Homomorphic Encryption (SWHE), which are important pillars for achieving FHE. Then, the main FHE families, which have become the base for the other follow-up FHE schemes, are presented. Furthermore, the implementations and recent improvements in Gentry-type FHE schemes are also surveyed. Finally, further research directions are discussed. This survey is intended to give a clear knowledge and foundation to researchers and practitioners interested in knowing, applying, and extending the state-of-the-art HE, PHE, SWHE, and FHE systems.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\LNHNFMDD\\Acar et al. - 2018 - A Survey on Homomorphic Encryption Schemes Theory.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\TDZ7MJCU\\Acar et al. - 2018 - A Survey on Homomorphic Encryption Schemes Theory.pdf},
-  journal = {ACM Computing Surveys},
+  journal = {ACM Computing Surveys (CSUR)},
   keywords = {FHE,FHE implementation,FHE survey,Fully homomorphic encryption,homomorphic encryption,partially homomorphic encryption,PHE,somewhat homomorphic encryption,SWHE},
   number = {4}
 }
 
-@article{alexandruEncryptedCooperativeControl,
+@inproceedings{alexandruEncryptedCooperativeControl2019,
   title = {Encrypted {{Cooperative Control Revisited}}},
-  author = {Alexandru, Andreea B and Darup, Moritz Schulze and Pappas, George J},
-  pages = {7},
-  abstract = {Distributed systems are ubiquitous in present-day technologies like smart cities. Such applications require decentralized control, which reduces the load on a single central party, but requires communication and data sharing between the participating agents. However, agents might not trust their peers with their private data. We propose secure multi-party computation schemes that ensure the private computation of the control updates of each agent, without leaking any other information about the states and controls of their neighbors. To this end, we make use of homomorphic encryption and private sum aggregation schemes. We analyze the conditions such that a dishonest agent cannot observe the rest of the network. Finally, we present implementations of the proposed schemes and showcase their efficiency.},
-  file = {C\:\\Users\\tn5093\\Zotero\\storage\\DMNFG2TU\\Alexandru et al. - Encrypted Cooperative Control Revisited.pdf},
-  language = {en}
-}
-
-@techreport{AnnouncingAdvancedEncryption2001,
-  title = {Announcing the {{Advanced Encryption Standard}} ({{AES}})},
-  year = {2001},
-  month = nov,
-  institution = {{NATIONAL INST OF STANDARDS AND TECHNOLOGY GAITHERSBURG MD}},
-  abstract = {This standard specifies the Rijndael algorithm (3 end 4), 5 symmetric block cipher that can process data blocks of 135 bits, using cipher keys with lengths of 135, 193, end 355 bits. Rijndael wee designed to handle additional block sizes end key lengths, however, they are not adopted in this standard. Throughout the remainder of this standard, the algorithm specified herein will be referred to we the ASS algorithm. The algorithm may be used with the three different key lengths indicated above, and therefore these different flavors may be referred to we AES-138, AES-192, end AES-256.},
-  file = {C\:\\Users\\tn5093\\Zotero\\storage\\WT33RDRX\\2001 - Announcing the Advanced Encryption Standard (AES).pdf;C\:\\Users\\tn5093\\Zotero\\storage\\HGWFP92T\\ADA403903.html},
-  language = {en}
+  author = {Alexandru, A. B. and Darup, M. S. and Pappas, G. J.},
+  year = {2019},
+  volume = {58},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\DMNFG2TU\\Alexandru et al. - Encrypted Cooperative Control Revisited.pdf}
 }
 
 @inproceedings{aristovEncryptedMultisensorInformation2018,
   title = {Encrypted {{Multisensor Information Filtering}}},
   booktitle = {2018 21st {{International Conference}} on {{Information Fusion}} ({{FUSION}})},
-  author = {Aristov, Mikhail and Noack, Benjamin and Hanebeck, Uwe D. and {Muller-Quade}, Jorn},
+  author = {Aristov, M. and Noack, B. and Hanebeck, U. D. and {Muller-Quade}, J.},
   year = {2018},
-  month = jul,
   pages = {1631--1637},
   publisher = {{IEEE}},
-  address = {{Cambridge, United Kingdom}},
   doi = {10.23919/ICIF.2018.8455449},
-  abstract = {With the advent of cheap sensor technology, multisensor data fusion algorithms have been becoming a key enabler for efficient in-network processing of sensor data. The information filter, in particular, has proven useful due to its simple additive structure of the measurement update equations. In order to exploit this structure for an efficient in-network processing, each node in the network is supposed to locally process and combine data from its neighboring nodes. The aspired in-network processing, at first glance, prohibits efficient privacy-preserving communication protocols, and encryption schemes that allow for algebraic manipulations are often computationally too expensive. Partially homomorphic encryption schemes constitute far more practical solutions but are restricted to a single algebraic operation on the corresponding ciphertexts. In this paper, an additivehomomorphic encryption scheme is used to derive a privacypreserving implementation of the information filter where additive operations are sufficient to distribute the workload among the sensor nodes. However, the encryption scheme requires the floating-point data to be quantized, which impairs the estimation quality. The proposed filter and the implications of the necessary quantization are analyzed in a simulated multisensor tracking scenario.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\Z6U4L6QV\\Aristov et al. - 2018 - Encrypted Multisensor Information Filtering.pdf},
-  isbn = {978-0-9964527-6-2},
-  language = {en}
+  isbn = {978-0-9964527-6-2}
 }
 
 @article{bar-shalomTracktotrackCorrelationProblem1981,
-  title = {On the Track-to-Track Correlation Problem},
+  title = {On {{The Track}}-to-Track {{Correlation Problem}}},
   author = {{Bar-Shalom}, Y.},
   year = {1981},
-  month = apr,
   volume = {26},
   pages = {571--572},
   issn = {2334-3303},
   doi = {10.1109/TAC.1981.1102635},
-  abstract = {The testing of the hypothesis whether two tracks represent the same target is considered. Previous works in the literature assumed that the estimates of the same target's state from two track files are uncorrelated. A test that includes their correlation is presented.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\K8KDWYPZ\\Bar-Shalom - 1981 - On the track-to-track correlation problem.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\R8IJBCG6\\1102635.html},
   journal = {IEEE Transactions on Automatic Control},
   keywords = {Covariance matrix,Data processing,Equations,Estimation error,Filters,Sensor systems,State estimation,Surveillance,Target tracking,Testing,Tracking},
-  note = {Conference Name: IEEE Transactions on Automatic Control},
   number = {2}
 }
 
-@incollection{bellareRelationsNotionsSecurity1998,
-  title = {Relations among Notions of Security for Public-Key Encryption Schemes},
-  booktitle = {Advances in {{Cryptology}} \textemdash{} {{CRYPTO}} '98},
-  author = {Bellare, Mihir and Desai, Anand and Pointcheval, David and Rogaway, Phillip},
-  editor = {Goos, Gerhard and Hartmanis, Juris and {van Leeuwen}, Jan and Krawczyk, Hugo},
+@inproceedings{bellareRelationsNotionsSecurity1998,
+  title = {Relations {{Among Notions}} of {{Security}} for {{Public}}-Key {{Encryption Schemes}}},
+  booktitle = {Annual {{International Cryptology Conference}}},
+  author = {Bellare, M. and Desai, A. and Pointcheval, D. and Rogaway, P.},
   year = {1998},
-  volume = {1462},
   pages = {26--45},
-  publisher = {{Springer Berlin Heidelberg}},
-  address = {{Berlin, Heidelberg}},
-  doi = {10.1007/BFb0055718},
-  abstract = {We compare the relative strengths of popular notions of security for public-key encryption schemes. We consider the goals of privacy and non-malleability, each under chosen-plaintext attack and two kinds of chosen-ciphertext attack. For each of the resulting pairs of definitions we prove either an implication (every scheme meeting one notion must meet the other) or a separation (there is a scheme meeting one notion but not the other, assuming the first notion can be met at all). We similarly treat plaintext awareness, a notion of security in the randomoracle model. An additional contribution of this paper is a new definition of non-malleability which we believe is simpler than the previous one.},
+  publisher = {{Springer}},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\KWQWJHMH\\Bellare et al. - 1998 - Relations among notions of security for public-key.pdf},
-  isbn = {978-3-540-64892-5 978-3-540-68462-6},
-  language = {en},
-  note = {Series Title: Lecture Notes in Computer Science}
+  isbn = {978-3-540-64892-5 978-3-540-68462-6}
 }
 
-@article{bogatovComparativeEvaluationOrderPreserving,
+@article{bogatovComparativeEvaluationOrderPreserving2018,
   title = {A {{Comparative Evaluation}} of {{Order}}-{{Preserving}} and {{Order}}-{{Revealing Schemes}} and {{Protocols}}},
-  author = {Bogatov, Dmytro and Kollios, George and Reyzin, Leo},
-  pages = {19},
-  abstract = {Database query evaluation over encrypted data has received a lot of attention recently. Order Preserving Encryption (OPE) and Order Revealing Encryption (ORE) are two important encryption schemes that have been proposed in this area. These schemes can provide very efficient query execution but at the same time may leak some information to adversaries. In this paper, we present the first comprehensive comparison among a number of important OPE and ORE schemes using a framework that we developed. We evaluate protocols that are based on these schemes as well. We analyze and compare them both theoretically and experimentally and measure their performance over database indexing and query evaluation techniques using not only execution time but also I/O performance and usage of cryptographic primitive operations. Our comparison reveals some interesting insights concerning the relative security and performance of these approaches in database settings. Furthermore, we propose a number of improvements for some of these scheme and protocols. Finally, we provide a number of suggestions and recommendations that can be valuable to database researchers and users.},
+  author = {Bogatov, D. and Kollios, G. and Reyzin, L.},
+  year = {2018},
+  volume = {2018},
+  pages = {953},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\9HYR5XGZ\\Bogatov et al. - A Comparative Evaluation of Order-Preserving and O.pdf},
-  language = {en}
+  journal = {IACR Cryptology ePrint Archive}
 }
 
 @inproceedings{carlsonFederatedFilterFaulttolerant1988,
-  title = {Federated Filter for Fault-Tolerant Integrated Navigation Systems},
-  booktitle = {{{IEEE PLANS}} '88.,{{Position Location}} and {{Navigation Symposium}}, {{Record}}. '{{Navigation}} into the 21st {{Century}}'.},
+  title = {Federated {{Filter}} for {{Fault}}-Tolerant {{Integrated Navigation Systems}}},
+  booktitle = {{{IEEE PLANS}}'88., {{Position Location}} and {{Navigation Symposium}}, {{Record}}.'{{Navigation}} into the 21st {{Century}}'.},
   author = {Carlson, N.A.},
   year = {1988},
-  month = nov,
   pages = {110--119},
-  issn = {null},
   doi = {10.1109/PLANS.1988.195473},
-  abstract = {An efficient, federated Kalman filtering method is presented, based on rigorous information-sharing principles. The method applies to decentralized navigation systems in which one or more sensor-dedicated local filters feed a larger master filter. The local filters operate in parallel, processing unique data from their local sensors, and common data from a shared inertial navigation system. The master filter combines local filter outputs at a selectable reduced rate, and yields estimates that are globally optimal or subset-optimal. The method provides major improvements in throughput (speed) and fault tolerance, and is well suited to real-time implementation. Practical federated filter examples are presented, and discussed in terms of structure, accuracy, fault tolerance, throughput, data compression, and other real-time issues.{$<>$}},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\76DJA4TV\\Carlson - 1988 - Federated filter for fault-tolerant integrated nav.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\UQLTNPMP\\195473.html},
   keywords = {accuracy,data compression,Data compression,decentralized navigation systems,Fault tolerance,Fault tolerant systems,fault-tolerant integrated navigation systems,Feeds,Filtering,filtering and prediction theory,inertial navigation,Inertial navigation,information-sharing,Kalman filtering,Kalman filters,master filter,real-time implementation,real-time issues,Sensor systems,sensor-dedicated local filters,shared inertial navigation system,structure,throughput,Throughput,Yield estimation}
 }
 
-@article{chaseSECURITYHOMOMORPHICENCRYPTION,
-  title = {{{SECURITY OF HOMOMORPHIC ENCRYPTION}}},
-  author = {Chase, Melissa and Chen, Hao and Ding, Jintai and Goldwasser, Shafi and Gorbunov, Sergey and Hoffstein, Jeffrey and Lauter, Kristin and Lokam, Satya and Moody, Dustin and Morrison, Travis and Sahai, Amit and Vaikuntanathan, Vinod},
-  pages = {27},
+@article{chaseSecurityHomomorphicEncryption2017,
+  title = {Security of {{Homomorphic Encryption}}},
+  author = {Chase, M. and Chen, H. and Ding, J. and Goldwasser, S. and Gorbunov, S. and Hoffstein, J. and Lauter, K. and Lokam, S. and Moody, D. and Morrison, T. and Sahai, A.},
+  year = {2017},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\GVR4CVPX\\Chase et al. - SECURITY OF HOMOMORPHIC ENCRYPTION.pdf},
-  language = {en}
+  journal = {HomomorphicEncryption. org, Redmond WA, Tech. Rep}
 }
 
-@incollection{chenettePracticalOrderRevealingEncryption2016,
+@inproceedings{chenettePracticalOrderRevealingEncryption2016,
   title = {Practical {{Order}}-{{Revealing Encryption}} with {{Limited Leakage}}},
-  booktitle = {Fast {{Software Encryption}}},
-  author = {Chenette, Nathan and Lewi, Kevin and Weis, Stephen A. and Wu, David J.},
-  editor = {Peyrin, Thomas},
+  booktitle = {International {{Conference}} on {{Fast Software Encryption}}},
+  author = {Chenette, N. and Lewi, K. and Weis, S. A. and Wu, D. J.},
   year = {2016},
-  volume = {9783},
   pages = {474--493},
-  publisher = {{Springer Berlin Heidelberg}},
-  address = {{Berlin, Heidelberg}},
-  doi = {10.1007/978-3-662-52993-5_24},
-  abstract = {In an order-preserving encryption scheme, the encryption algorithm produces ciphertexts that preserve the order of their plaintexts. Order-preserving encryption schemes have been studied intensely in the last decade, and yet not much is known about the security of these schemes. Very recently, Boneh et al. (Eurocrypt 2015) introduced a generalization of order-preserving encryption, called order-revealing encryption, and presented a construction which achieves this notion with best-possible security. Because their construction relies on multilinear maps, it is too impractical for most applications and therefore remains a theoretical result.},
+  publisher = {{Springer}},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\ZVCBZFN9\\Chenette et al. - 2016 - Practical Order-Revealing Encryption with Limited .pdf},
-  isbn = {978-3-662-52992-8 978-3-662-52993-5},
-  language = {en}
+  isbn = {978-3-662-52992-8 978-3-662-52993-5}
 }
 
 @inproceedings{chongDistributedTrackingDistributed1986,
   title = {Distributed {{Tracking}} in {{Distributed Sensor Networks}}},
   booktitle = {1986 {{American Control Conference}}},
-  author = {Chong, Chee-Yee and Chang, Kuo-Chu and Mori, Shozo},
+  author = {Chong, C. Y. and Chang, K. C. and Mori, S.},
   year = {1986},
-  month = jun,
   pages = {1863--1868},
   issn = {null},
   doi = {10.23919/ACC.1986.4789229},
-  abstract = {A distributed sensor network (DSN) consists of a set of processing nodes collecting data from sensors. When the nodes communicate, each node fuses the information received from other nodes with the local information to update its estimate on the state of the world. Previous papers have dealt with the theoretic algorithms for tracking multiple targets using a DSN. This paper considers the processing functions performed by each DSN node and presents some simulation results on tracking vehicles moving over a road network.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\ECERQ2UY\\Chong et al. - 1986 - Distributed Tracking in Distributed Sensor Network.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\DZIFKMAD\\4789229.html},
   keywords = {Communication networks,Fuses,Hardware,Intelligent networks,Military computing,Road vehicles,Sensor systems,Signal processing algorithms,State estimation,Target tracking}
 }
 
 @inproceedings{chongFortyYearsDistributed2017,
-  title = {Forty Years of Distributed Estimation: {{A}} Review of Noteworthy Developments},
-  shorttitle = {Forty Years of Distributed Estimation},
+  title = {Forty {{Years}} of {{Distributed Estimation}}: {{A Review}} of {{Noteworthy Developments}}},
   booktitle = {2017 {{Sensor Data Fusion}}: {{Trends}}, {{Solutions}}, {{Applications}} ({{SDF}})},
-  author = {Chong, Chee-Yee},
+  author = {Chong, C. Y.},
   year = {2017},
-  month = oct,
   pages = {1--10},
-  issn = {null},
   doi = {10.1109/SDF.2017.8126358},
-  abstract = {Distributed estimation has been an active research area since the late 1970's, starting with decentralized filtering and estimation for control of large scale systems. Early research focused on optimal fusion to reconstruct the best global estimate by de-correlating the local estimates to avoid double counting of information. This approach was extended to distributed estimation for general sensor networks using information graphs in the 1980's, with channel filter as a special case for acyclic networks. Track fusion for systems with process noise led to a general framework for linear estimate fusion given cross covariances in the 1990's. Fusion rules include maximum likelihood, maximum a posteriori probability, and best linear unbiased estimate (BLUE). BLUE is based on a unified fusion model, which has been used to develop other fusion rules. In addition, covariance intersection handles situations where correlation information is completely unknown. Advances in sensing and communication hardware have resulted in low-cost wireless ad hoc sensor networks around 2000. These require robust distributed estimation algorithms such as consensus-based filters and diffusion-based filters, which have other performance criteria than estimation accuracy. There was recent resurgent interest in distributed estimation algorithms that handle process noise. Examples are distributed Kalman filters using pseudo estimates and distributed accumulated state density filters.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\RMVA6SSR\\Chong - 2017 - Forty years of distributed estimation A review of.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\7VKQEFDX\\8126358.html},
   keywords = {active research area,ad hoc networks,augmented state estimates,Computer architecture,consensus-based filtering,correlation information,covariance analysis,decentralized estimation,decentralized filtering,diffusion Kalman filters,diffusion-based filters,distributed estimation,distributed Kalman filters,distributed sensors,Estimation,estimation accuracy,estimation fusion,fusion rules,general sensor networks,global estimate,information decorrelation,Information filters,Kalman filters,linear estimate fusion,linear unbiased estimate,low-cost wireless ad hoc sensor networks,Mathematical model,optimal fusion,probability,Program processors,pseudoestimates,robust distributed estimation algorithms,sensor fusion,sensor networks,time 40.0 year,track fusion,unified fusion model,wireless sensor networks}
 }
 
-@article{chongHIERARCHICALESTIMATION,
-  ids = {chongHIERARCHICALESTIMATIONa},
-  title = {{{HIERARCHICAL ESTIMATION}}},
+@inproceedings{chongHierarchicalEstimation1979,
+  title = {Hierarchical {{Estimation}}},
+  booktitle = {Proc. {{MIT}}/{{ONR Workshop}} on {{C3}}},
   author = {Chong, C Y},
-  pages = {17},
-  abstract = {In this paper we consider the hierarchical estimation of linear systems with distributed sensors. After a discussion of the general nature of the problem we consider systems where the measurements are given by linear combinations of the signal and noises. Static results are generalized to dynamic processes to obtain two architectures of the hierarchical Kalman filter with different communication and computation requirements.},
-  file = {C\:\\Users\\tn5093\\Zotero\\storage\\KCTX3SX2\\Chong - HIERARCHICAL ESTIMATION.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\NR2LBC6K\\Chong - HIERARCHICAL ESTIMATION.pdf},
-  language = {en}
+  year = {1979},
+  pages = {205--220},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\KCTX3SX2\\Chong - HIERARCHICAL ESTIMATION.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\NR2LBC6K\\Chong - HIERARCHICAL ESTIMATION.pdf}
 }
 
 @article{congOrderInsensitiveSequential2016,
-  title = {An Order Insensitive Sequential Fast Covariance Intersection Fusion Algorithm},
-  author = {Cong, Jinliang and Li, Yinya and Qi, Guoqing and Sheng, Andong},
+  title = {An {{Order Insensitive Sequential Fast Covariance Intersection Fusion Algorithm}}},
+  author = {Cong, J. and Li, Y. and Qi, G. and Sheng, A.},
   year = {2016},
-  month = nov,
-  volume = {367-368},
+  volume = {367},
   pages = {28--40},
   issn = {0020-0255},
   doi = {10.1016/j.ins.2016.06.001},
-  abstract = {In this article, data cross-correlation in distributed sensor system is investigated via an order insensitive sequential fast covariance intersection fusion algorithm. Among the existing approaches, the common drawbacks are that the fusion results are sensitive to fusion orders and the computational burden is tremendous due to the optimization of multi-dimensional nonlinear cost function. In order to overcome these drawbacks, a sequential fast covariance intersection (SFCI) algorithm is presented. The new fusion coefficients can be calculated straightforward by taking the reciprocal of the trace of the inverse variances as local fusion coefficients and using an iterative process for fusion step to revise the coefficient weight. Note that the proposed fusion algorithm is consistent, and its accuracy is unrelated to the fusion order of the distributed system. Finally, real radar data and simulation examples are provided to verify the effectiveness of the proposed algorithm.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\LL2MVCR2\\Cong et al. - 2016 - An order insensitive sequential fast covariance in.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\GNIYAMU9\\S0020025516303929.html},
   journal = {Information Sciences},
-  keywords = {Consistency,Distributed fusion,Order insensitive,Unknown cross-covariance},
-  language = {en}
+  keywords = {Consistency,Distributed fusion,Order insensitive,Unknown cross-covariance}
 }
 
-@article{duImplementingMLAlgorithms,
+@article{daemonAnnouncingAdvancedEncryption2001,
+  title = {Announcing the {{Advanced Encryption Standard}} ({{AES}})},
+  author = {Daemon, J. and Rijmen, V.},
+  year = {2001},
+  volume = {197},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\WT33RDRX\\2001 - Announcing the Advanced Encryption Standard (AES).pdf;C\:\\Users\\tn5093\\Zotero\\storage\\HGWFP92T\\ADA403903.html},
+  journal = {Federal Information Processing Standards Publication}
+}
+
+@incollection{duImplementingMLAlgorithms2017,
   title = {Implementing {{ML Algorithms}} with {{HE}}},
-  author = {Du, Yilun and Gustafson, Laura and Huang, David and Peterson, Kelly},
-  pages = {14},
-  abstract = {An increase in cloud-based computing leads to an increased worry in the security of user data. Typically, data is sent to a third-party server which performs analytics or machine learning on the data. However, in most of these scenarios, the data involved is sensitive and should remain private. Homomorphic encryption, a form of encryption that allows functions to be performed on encrypted ciphertext, allows privacy-preserving data analysis of existing large private, sensitive data sets. We implement and analyze the performance of linear regression and K-means clustering using the homomorphic encryption library SEAL and provide an extension of the SEAL library to matrix operations.},
-  file = {C\:\\Users\\tn5093\\Zotero\\storage\\3W2EDY7Z\\Du et al. - Implementing ML Algorithms with HE.pdf},
-  language = {en}
+  booktitle = {{{MIT Course}} 6. 857: {{Computer}} and {{Network Security}}},
+  author = {Du, Y. and Gustafson, L. and Huang, D. and Peterson, K.},
+  year = {2017},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\3W2EDY7Z\\Du et al. - Implementing ML Algorithms with HE.pdf}
 }
 
-@inproceedings{elgamalPublicKeyCryptosystem1985,
+@article{elgamalPublicKeyCryptosystem1985,
   title = {A {{Public Key Cryptosystem}} and a {{Signature Scheme Based}} on {{Discrete Logarithms}}},
-  booktitle = {Advances in {{Cryptology}}},
-  author = {ElGamal, Taher},
-  editor = {Blakley, George Robert and Chaum, David},
+  author = {ElGamal, T.},
   year = {1985},
-  pages = {10--18},
-  publisher = {{Springer}},
-  address = {{Berlin, Heidelberg}},
+  volume = {31},
+  pages = {469--472},
   doi = {10.1007/3-540-39568-7_2},
-  abstract = {A new signature scheme is proposed together with an implementation of the Diffie - Hellman key distribution scheme that achieves a public key cryptosystem. The security of both systems relies on the difficulty of computing discrete logarithms over finite fields.},
-  file = {C\:\\Users\\tn5093\\Zotero\\storage\\QKX2UT5Z\\ElGamal - 1985 - A Public Key Cryptosystem and a Signature Scheme B.pdf},
-  isbn = {978-3-540-39568-3},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\M9C2U487\\ElGamal - 1985 - A Public Key Cryptosystem and a Signature Scheme B.pdf},
+  journal = {IEEE transactions on information theory},
   keywords = {Cipher Text,Discrete Logarithm,Discrete Logarithm Problem,Distribution Scheme,Signature Scheme},
-  language = {en},
-  series = {Lecture {{Notes}} in {{Computer Science}}}
+  number = {4}
 }
 
 @book{fouratiMultisensorDataFusion2017,
   title = {Multisensor {{Data Fusion}} : {{From Algorithms}} and {{Architectural Design}} to {{Applications}}},
-  shorttitle = {Multisensor {{Data Fusion}}},
-  author = {Fourati, Hassen},
+  author = {Fourati, H.},
   year = {2017},
-  month = dec,
   publisher = {{CRC Press}},
   doi = {10.1201/b18851},
-  abstract = {Multisensor Data Fusion: From Algorithms and Architectural Design to Applications covers the contemporary theory and practice of multisensor data fusion, from},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\PDAS4CE9\\9781315214993.html},
-  isbn = {978-1-315-21499-3},
-  language = {en}
+  isbn = {978-1-315-21499-3}
 }
 
 @inproceedings{frankenImprovedFastCovariance2005,
-  title = {Improved Fast Covariance Intersection for Distributed Data Fusion},
+  title = {Improved {{Fast Covariance Intersection For Distributed Data Fusion}}},
   booktitle = {2005 7th {{International Conference}} on {{Information Fusion}}},
   author = {Franken, D. and Hupper, A.},
   year = {2005},
-  month = jul,
   volume = {1},
-  pages = {7 pp.-},
-  issn = {null},
+  pages = {7},
   doi = {10.1109/ICIF.2005.1591849},
-  abstract = {Among the possible approaches to tackling the problem of data incest in distributed data fusion networks, covariance intersection is a candidate that yields consistent estimates independent of network structure and any possible cross-correlation between local estimates. The corresponding weighting coefficients are usually chosen with the aim for a minimum trace or determinant of the resulting error variance matrix. A fast non-iterative algorithm exists that, to a certain extent, approximately solves this nonlinear optimization problem with extremely reduced numerical implementation effort. Yet, the obtained weighting coefficients do not depend on the relative orientation of the estimation error variance matrices which may lead to a degraded performance in certain applications. Hence, an improved fast covariance intersection algorithm is developed that comes with a slightly increased implementation effort while yielding significantly better estimation results in some cases and comparable results in all other ones. Simulation results confirm the postulated performance improvement.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\44JWMHGZ\\Franken and Hupper - 2005 - Improved fast covariance intersection for distribu.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\XLYKVVBJ\\1591849.html},
   keywords = {consistent estimation,correlation theory,covariance matrices,Covariance matrix,cross-correlation,Degradation,distributed data fusion,Distributed data fusion,distributed sensors,error analysis,error variance matrix,Estimation error,fast covariance intersection,information fusion of correlated estimates,Information geometry,Measurement errors,noniterative algorithm,nonlinear estimation,nonlinear optimization,Observability,sensor fusion,Sensor fusion,weighting coefficient,Yield estimation}
 }
 
 @inproceedings{gentryFullyHomomorphicEncryption2009,
-  title = {Fully Homomorphic Encryption Using Ideal Lattices},
-  booktitle = {Proceedings of the 41st Annual {{ACM}} Symposium on {{Symposium}} on Theory of Computing - {{STOC}} '09},
-  author = {Gentry, Craig},
+  title = {Fully {{Homomorphic Encryption Using Ideal Lattices}}},
+  booktitle = {Proceedings of the Forty-First Annual {{ACM}} Symposium on {{Theory}} of Computing},
+  author = {Gentry, C.},
   year = {2009},
-  pages = {169},
-  publisher = {{ACM Press}},
-  address = {{Bethesda, MD, USA}},
+  pages = {169--178},
   doi = {10.1145/1536414.1536440},
-  abstract = {We propose a fully homomorphic encryption scheme \textendash{} i.e., a scheme that allows one to evaluate circuits over encrypted data without being able to decrypt. Our solution comes in three steps. First, we provide a general result \textendash{} that, to construct an encryption scheme that permits evaluation of arbitrary circuits, it suffices to construct an encryption scheme that can evaluate (slightly augmented versions of) its own decryption circuit; we call a scheme that can evaluate its (augmented) decryption circuit bootstrappable.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\XIVYM4YT\\Gentry - 2009 - Fully homomorphic encryption using ideal lattices.pdf},
-  isbn = {978-1-60558-506-2},
-  language = {en}
+  isbn = {978-1-60558-506-2}
 }
 
 @inproceedings{gentryImplementingGentryFullyHomomorphic2011,
   title = {Implementing {{Gentry}}'s {{Fully}}-{{Homomorphic Encryption Scheme}}},
-  booktitle = {Advances in {{Cryptology}} \textendash{} {{EUROCRYPT}} 2011},
-  author = {Gentry, Craig and Halevi, Shai},
-  editor = {Paterson, Kenneth G.},
+  booktitle = {Annual International Conference on the Theory and Applications of Cryptographic Techniques},
+  author = {Gentry, C. and Halevi, S.},
   year = {2011},
   pages = {129--148},
-  publisher = {{Springer Berlin Heidelberg}},
-  abstract = {We describe a working implementation of a variant of Gentry's fully homomorphic encryption scheme (STOC 2009), similar to the variant used in an earlier implementation effort by Smart and Vercauteren (PKC 2010). Smart and Vercauteren implemented the underlying ``somewhat homomorphic'' scheme, but were not able to implement the bootstrapping functionality that is needed to get the complete scheme to work. We show a number of optimizations that allow us to implement all aspects of the scheme, including the bootstrapping functionality.Our main optimization is a key-generation method for the underlying somewhat homomorphic encryption, that does not require full polynomial inversion. This reduces the asymptotic complexity from O\textasciitilde{}(n2.5)O\textasciitilde{}(n2.5)\textbackslash{}tilde\{O\}(n\^\{2.5\}) to O\textasciitilde{}(n1.5)O\textasciitilde{}(n1.5)\textbackslash{}tilde\{O\}(n\^\{1.5\}) when working with dimension-n lattices (and practically reducing the time from many hours/days to a few seconds/minutes). Other optimizations include a batching technique for encryption, a careful analysis of the degree of the decryption polynomial, and some space/time trade-offs for the fully-homomorphic scheme.We tested our implementation with lattices of several dimensions, corresponding to several security levels. From a ``toy'' setting in dimension 512, to ``small,'' ``medium,'' and ``large'' settings in dimensions 2048, 8192, and 32768, respectively. The public-key size ranges in size from 70 Megabytes for the ``small'' setting to 2.3 Gigabytes for the ``large'' setting. The time to run one bootstrapping operation (on a 1-CPU 64-bit machine with large memory) ranges from 30 seconds for the ``small'' setting to 30 minutes for the ``large'' setting.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\9FU8784P\\Gentry and Halevi - 2011 - Implementing Gentry’s Fully-Homomorphic Encryption.pdf},
   isbn = {978-3-642-20465-4},
-  keywords = {Decryption Procedure,Encryption Scheme,Homomorphic Encryption,Ideal Lattice,Leftmost Column},
-  language = {en},
-  series = {Lecture {{Notes}} in {{Computer Science}}}
+  keywords = {Decryption Procedure,Encryption Scheme,Homomorphic Encryption,Ideal Lattice,Leftmost Column}
 }
 
-@article{goldwasserProbabilisticEncryption1984a,
-  ids = {goldwasserProbabilisticEncryption1984},
-  title = {Probabilistic Encryption},
-  author = {Goldwasser, Shafi and Micali, Silvio},
+@article{goldwasserProbabilisticEncryption1984,
+  title = {Probabilistic {{Encryption}}},
+  author = {Goldwasser, S. and Micali, S.},
   year = {1984},
-  month = apr,
   volume = {28},
   pages = {270--299},
   issn = {0022-0000},
   doi = {10.1016/0022-0000(84)90070-9},
-  abstract = {A new probabilistic model of data encryption is introduced. For this model, under suitable complexity assumptions, it is proved that extracting any information about the cleartext from the cyphertext is hard on the average for an adversary with polynomially bounded computational resources. The proof holds for any message space with any probability distribution. The first implementation of this model is presented. The security of this implementation is proved under the interactability assumptin of deciding Quadratic Residuosity modulo composite numbers whose factorization is unknown.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\QTE56MCN\\Goldwasser and Micali - 1984 - Probabilistic encryption.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\ZSEIW2ZP\\Goldwasser and Micali - 1984 - Probabilistic encryption.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\36BTTVMJ\\0022000084900709.html;C\:\\Users\\tn5093\\Zotero\\storage\\DP39T34T\\0022000084900709.html},
-  journal = {Journal of Computer and System Sciences},
-  language = {en},
+  journal = {Journal of computer and system sciences},
   number = {2}
 }
 
 @article{grimeDataFusionDecentralized1994,
-  title = {Data Fusion in Decentralized Sensor Networks},
+  title = {Data {{Fusion}} in {{Decentralized Sensor Networks}}},
   author = {Grime, S. and {Durrant-Whyte}, H. F.},
   year = {1994},
-  month = oct,
   volume = {2},
   pages = {849--863},
   issn = {0967-0661},
   doi = {10.1016/0967-0661(94)90349-2},
-  abstract = {This paper addresses the problem of data fusion in decentralized sensor networks in which there is no central fusion center and in which no single sensor node has global knowledge of network topology. An algorithm is described which is able to locally process and assimilate data in such networks and which yields an identical result to that obtained in a centralized system. An implementation of this decentralized data fusion algorithm on a process control rig incorporating over 150 sensors and 30 processors is described. The results show that the decentralized data fusion system described in this paper offers many advantages in terms of robustness, scalability and flexibility over a centralized system.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\VXN5H6GP\\Grime and Durrant-Whyte - 1994 - Data fusion in decentralized sensor networks.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\PKYZLR39\\0967066194903492.html},
   journal = {Control Engineering Practice},
   keywords = {Data Fusion,Decentralized Systems},
-  language = {en},
   number = {5}
 }
 
-@book{hallDistributedDataFusion2012,
-  title = {Distributed {{Data Fusion}} for {{Network}}-{{Centric Operations}}},
-  author = {Hall, David and Chong, Chee-Yee and Llinas, James and Liggins, Martin},
-  year = {2012},
-  edition = {1st},
-  publisher = {{CRC Press, Inc.}},
-  address = {{USA}},
-  abstract = {With the recent proliferation of service-oriented architectures (SOA), cloud computing technologies, and distributed-interconnected systems, distributed fusion is taking on a larger role in a variety of applicationsfrom environmental monitoring and crisis management to intelligent buildings and defense. Drawing on the work of leading experts around the world, Distributed Data Fusion for Network-Centric Operations examines the state of the art of data fusion in a distributed sensing, communications, and computing environment. Get Insight into Designing and Implementing Data Fusion in a Distributed Network Addressing the entirety of information fusion, the contributors cover everything from signal and image processing, through estimation, to situation awareness. In particular, the work offers a timely look at the issues and solutions involving fusion within a distributed network enterprise. These include critical design problems, such as how to maintain a pedigree of agents or nodes that receive information, provide their contribution to the dataset, and pass to other network components. The book also tackles dynamic data sharing within a network-centric enterprise, distributed fusion effects on state estimation, graph-theoretic methods to optimize fusion performance, human engineering factors, and computer ontologies for higher levels of situation assessment. A comprehensive introduction to this emerging field and its challenges, the book explores how data fusion can be used within grid, distributed, and cloud computing architectures. Bringing together both theoretical and applied research perspectives, this is a valuable reference for fusion researchers and practitioners. It offers guidance and insight for those working on the complex issues of designing and implementing distributed, decentralized information fusion.},
-  isbn = {978-1-4398-5830-1}
-}
-
 @article{hashemipourDecentralizedStructuresParallel1988,
-  ids = {hashemipourDecentralizedStructuresParallel1988a,hashemipourDecentralizedStructuresParallel1988b},
-  title = {Decentralized Structures for Parallel {{Kalman}} Filtering},
-  author = {Hashemipour, H.R. and Roy, S. and Laub, A.J.},
+  title = {Decentralized {{Structures}} for {{Parallel Kalman Filtering}}},
+  author = {Hashemipour, H.R. and Roy, S. and Laub, A. J.},
   year = {1988},
-  month = jan,
   volume = {33},
   pages = {88--94},
   issn = {2334-3303},
   doi = {10.1109/9.364},
-  abstract = {Various multisensor network scenarios with signal processing tasks that are amenable to multiprocessor implementation are described. The natural origins of such multitasking are emphasized, and novel parallel structures for state estimation using the Kalman filter are proposed that extend existing results in several directions. In particular, hierarchical network structures are developed that have the property that the optimal global estimate based on all the available information can be reconstructed from estimates computed by local processor nodes solely on the basis of their own local information and transmitted to a central processor. The algorithms potentially yield an approximately linear speedup rate, are reasonably failure-resistant, and are optimized with respect to communication bandwidth and memory requirements at the various processors.{$<>$}},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\ZD7HEKII\\Hashemipour et al. - 1988 - Decentralized structures for parallel Kalman filte.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\4Z6XW3VB\\364.html;C\:\\Users\\tn5093\\Zotero\\storage\\CEDZWT24\\364.html;C\:\\Users\\tn5093\\Zotero\\storage\\LPAFIKDS\\364.html},
-  journal = {IEEE Transactions on Automatic Control},
+  journal = {IEEE Transactions on automatic control},
   keywords = {Automatic control,Equations,Filtering,Fusion power generation,hierarchical network structures,Kalman filters,multiprocessor implementation,multisensor network,multitasking,Multitasking,parallel algorithms,parallel Kalman filtering,Parallel processing,signal processing,Signal processing,Signal processing algorithms,state estimation,State estimation},
-  note = {Conference Name: IEEE Transactions on Automatic Control},
   number = {1}
 }
 
-@article{julierNondivergentEstimationAlgorithm,
+@inproceedings{julierNondivergentEstimationAlgorithm1997,
   title = {A {{Non}}-Divergent {{Estimation Algorithm}} in the {{Presence}} of {{Unknown Correlations}}},
-  author = {Julier, Simon J},
-  pages = {5},
-  abstract = {This paper addresses the problem of estimation when the cross-correlation in the errors between di erent random variables are unknown. A new data fusion algorithm, the Covariance Intersection Algorithm(CI), is presented. It is proved that this algorithm yields consistent estimates irrespective of the actual correlations. This property is illustrated in an application of decentralised estimation where it is impossible to consistently use a Kalman lter.},
-  file = {C\:\\Users\\tn5093\\Zotero\\storage\\RKZTQR9L\\Julier - A Non-divergent Estimation Algorithm in the Presen.pdf},
-  language = {en}
+  booktitle = {Proceedings of the 1997 {{American Control Conference}} ({{Cat}}. {{No}}. {{97CH36041}})},
+  author = {Julier, S. J. and Uhlmann, J. K.},
+  year = {1997},
+  volume = {4},
+  pages = {2369--2373},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\RKZTQR9L\\Julier - A Non-divergent Estimation Algorithm in the Presen.pdf}
 }
 
 @article{kalmanNewApproachLinear1960,
   title = {A {{New Approach}} to {{Linear Filtering}} and {{Prediction Problems}}},
   author = {Kalman, R. E.},
   year = {1960},
-  month = mar,
   volume = {82},
   pages = {35--45},
   publisher = {{American Society of Mechanical Engineers Digital Collection}},
@@ -361,160 +279,131 @@
   doi = {10.1115/1.3662552},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\4FK9NCVZ\\Kalman - 1960 - A New Approach to Linear Filtering and Prediction .pdf;C\:\\Users\\tn5093\\Zotero\\storage\\ZPREZ3BP\\A-New-Approach-to-Linear-Filtering-and-Prediction.html},
   journal = {Journal of Basic Engineering},
-  language = {en},
   number = {1}
 }
 
-@book{katzIntroductionModernCryptography2007,
+@book{katzIntroductionModernCryptography2008,
   title = {Introduction to {{Modern Cryptography}}: {{Principles}} and {{Protocols}}},
-  shorttitle = {Introduction to {{Modern Cryptography}}},
-  author = {Katz, Jonathan},
-  year = {2007},
-  month = aug,
-  edition = {1},
-  publisher = {{Chapman and Hall/CRC}},
-  doi = {10.1201/9781420010756},
+  author = {Katz, J. and Lindell, Y.},
+  year = {2008},
+  publisher = {{Chapman \& Hall}},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\B549UT3X\\Katz - 2007 - Introduction to Modern Cryptography Principles an.pdf},
-  isbn = {978-1-4200-1075-6},
-  language = {en}
+  isbn = {978-1-4200-1075-6}
 }
 
-@article{lagendijkEncryptedSignalProcessing2013,
-  title = {Encrypted Signal Processing for Privacy Protection: {{Conveying}} the Utility of Homomorphic Encryption and Multiparty Computation},
-  shorttitle = {Encrypted Signal Processing for Privacy Protection},
-  author = {Lagendijk, R. L. and Barni, M.},
-  year = {2013},
-  month = jan,
+@article{lagendijkEncryptedSignalProcessing2012,
+  title = {Encrypted {{Signal Processing}} for {{Privacy Protection}}: {{Conveying}} the {{Utility}} of {{Homomorphic Encryption}} and {{Multiparty Computation}}},
+  author = {Lagendijk, R. L. and Erkin, Z. and Barni, M.},
+  year = {2012},
   volume = {30},
   pages = {82--105},
   issn = {1053-5888},
   doi = {10.1109/MSP.2012.2219653},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\32GF79PA\\Lagendijk and Barni - 2013 - Encrypted signal processing for privacy protection.pdf},
   journal = {IEEE Signal Processing Magazine},
-  language = {en},
   number = {1}
 }
 
 @inproceedings{lewiOrderRevealingEncryptionNew2016,
   title = {Order-{{Revealing Encryption}}: {{New Constructions}}, {{Applications}}, and {{Lower Bounds}}},
-  shorttitle = {Order-{{Revealing Encryption}}},
-  booktitle = {Proceedings of the 2016 {{ACM SIGSAC Conference}} on {{Computer}} and {{Communications Security}} - {{CCS}}'16},
-  author = {Lewi, Kevin and Wu, David J.},
+  booktitle = {Proceedings of the 2016 {{ACM SIGSAC Conference}} on {{Computer}} and {{Communications Security}}},
+  author = {Lewi, K. and Wu, D. J.},
   year = {2016},
   pages = {1167--1178},
-  publisher = {{ACM Press}},
-  address = {{Vienna, Austria}},
   doi = {10.1145/2976749.2978376},
-  abstract = {In the last few years, there has been significant interest in developing methods to search over encrypted data. In the case of range queries, a simple solution is to encrypt the contents of the database using an order-preserving encryption (OPE) scheme (i.e., an encryption scheme that supports comparisons over encrypted values). However, Naveed et al. (CCS 2015) recently showed that OPE-encrypted databases are extremely vulnerable to ``inference attacks.'' In this work, we consider a related primitive called order-revealing encryption (ORE), which is a generalization of OPE that allows for stronger security. We begin by constructing a new ORE scheme for small message spaces which achieves the ``best-possible'' notion of security for ORE. Next, we introduce a ``domain-extension'' technique and apply it to our small-message-space ORE. While our domain-extension technique does incur a loss in security, the resulting ORE scheme we obtain is more secure than all existing (stateless and non-interactive) OPE and ORE schemes which are practical. All of our constructions rely only on symmetric primitives. As part of our analysis, we also give a tight lower bound for OPE and show that no efficient OPE scheme can satisfy best-possible security if the message space contains just three messages. Thus, achieving strong notions of security for even small message spaces requires moving beyond OPE. Finally, we examine the properties of our new ORE scheme and show how to use it to construct an efficient range query protocol that is robust against the inference attacks of Naveed et al. We also give a full implementation of our new ORE scheme, and show that not only is our scheme more secure than existing OPE schemes, it is also faster: encrypting a 32-bit integer requires just 55 microseconds, which is more than 65 times faster than existing OPE schemes.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\ZDPIZUGI\\Lewi and Wu - 2016 - Order-Revealing Encryption New Constructions, App.pdf},
-  isbn = {978-1-4503-4139-4},
-  language = {en}
+  isbn = {978-1-4503-4139-4}
 }
 
-@article{liljaDesigningDigitalComputer,
+@book{ligginsDistributedDataFusion2012,
+  title = {Distributed {{Data Fusion}} for {{Network}}-{{Centric Operations}}},
+  author = {Liggins, M. and Chong, C. Y. and Hall, D. and Llinas, J.},
+  year = {2012},
+  publisher = {{CRC Press}},
+  isbn = {978-1-4398-5830-1}
+}
+
+@book{liljaDesigningDigitalComputer2004,
   title = {Designing {{Digital Computer Systems}} with {{Verilog}}},
-  author = {Lilja, David J and Sapatnekar, Sachin S},
-  pages = {176},
-  file = {C\:\\Users\\tn5093\\Zotero\\storage\\DGABEZB9\\Lilja and Sapatnekar - Designing Digital Computer Systems with Verilog.pdf},
-  language = {en}
+  author = {Lilja, D. J. and Sapatnekar, S. S.},
+  year = {2004},
+  publisher = {{Cambridge University Press}},
+  file = {C\:\\Users\\tn5093\\Zotero\\storage\\DGABEZB9\\Lilja and Sapatnekar - Designing Digital Computer Systems with Verilog.pdf}
 }
 
-@book{mutambaraDecentralizedEstimationControl2019,
+@book{mutambaraDecentralizedEstimationControl1998,
   title = {Decentralized {{Estimation}} and {{Control}} for {{Multisensor Systems}}},
   author = {Mutambara, Arthur G. O.},
-  year = {2019},
-  month = may,
-  publisher = {{Routledge}},
-  doi = {10.1201/9781315140803},
-  abstract = {Decentralized Estimation and Control for Multisensor Systems explores the problem of developing scalable, decentralized estimation and control algorithms for},
+  year = {1998},
+  publisher = {{CRC press}},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\HRT5NFZE\\Mutambara - 2019 - Decentralized Estimation and Control for Multisens.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\6MMN3QT5\\9781315140803.html},
-  isbn = {978-1-315-14080-3},
-  language = {en}
+  isbn = {978-1-315-14080-3}
 }
 
 @inproceedings{niehsenInformationFusionBased2002,
-  title = {Information Fusion Based on Fast Covariance Intersection Filtering},
+  title = {Information {{Fusion Based On Fast Covariance Intersection Filtering}}},
   booktitle = {Proceedings of the {{Fifth International Conference}} on {{Information Fusion}}. {{FUSION}} 2002. ({{IEEE Cat}}.{{No}}.{{02EX5997}})},
   author = {Niehsen, W.},
   year = {2002},
-  month = jul,
   volume = {2},
-  pages = {901-904 vol.2},
-  issn = {null},
+  pages = {901--904},
   doi = {10.1109/ICIF.2002.1020907},
-  abstract = {Information fusion based on Kalman filtering often suffers from the lack of knowledge about cross correlations between the noise-corrupted signal sources. Covariance intersection filtering provides a general framework for information fusion with incomplete knowledge about the signal sources since it yields consistent estimates for any degree of cross correlation. However, covariance intersection filtering requires optimization of a nonlinear cost function which is a significant drawback with respect to computational complexity. Therefore, a fast covariance intersection algorithm is developed and investigated based on simulation results.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\7LK7KLH3\\Niehsen - 2002 - Information fusion based on fast covariance inters.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\9YECG2CL\\1020907.html},
   keywords = {computational complexity,Cost function,covariance matrices,Covariance matrix,cross correlations,Estimation error,fast covariance intersection filtering,filtering theory,incomplete knowledge,Information filtering,Information filters,information fusion,Kalman filter,Kalman filters,noise,noise-corrupted signal sources,nonlinear cost function,Nonlinear filters,optimisation,optimization,sensor fusion,simulation,State estimation,Statistics,Yield estimation}
 }
 
 @inproceedings{noackInverseCovarianceIntersection2017,
-  title = {Inverse Covariance Intersection: {{New}} Insights and Properties},
-  shorttitle = {Inverse Covariance Intersection},
+  title = {Inverse {{Covariance Intersection}}: {{New Insights}} and {{Properties}}},
   booktitle = {2017 20th {{International Conference}} on {{Information Fusion}} ({{Fusion}})},
-  author = {Noack, Benjamin and Sijs, Joris and Hanebeck, Uwe D.},
+  author = {Noack, B. and Sijs, J. and Hanebeck, U. D.},
   year = {2017},
-  month = jul,
   pages = {1--8},
   publisher = {{IEEE}},
-  address = {{Xi'an, China}},
   doi = {10.23919/ICIF.2017.8009694},
-  abstract = {Decentralized data fusion is a challenging task. Either it is too difficult to maintain and track the information required to perform fusion optimally, or too much information is discarded to obtain informative fusion results. A well-known solution is Covariance Intersection, which may provide too conservative fusion results. A less conservative alternative is discussed in this paper, and generalizations are proposed in order to apply it to a wide class of fusion problems. The Inverse Covariance Intersection algorithm is about finding the maximum possible common information shared by the estimates to be fused. A bound on the possibly shared common information is derived and removed from the fusion result in order to guarantee consistency. It is shown that the conditions required for consistency can be significantly relaxed, and also other causes of correlations, such as common process noise, can be treated.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\ISGREWEN\\Noack et al. - 2017 - Inverse covariance intersection New insights and .pdf},
-  isbn = {978-0-9964527-0-0},
-  language = {en}
+  isbn = {978-0-9964527-0-0}
 }
 
-@article{oberstarFixedPointRepresentationFractional,
+@article{oberstarFixedPointRepresentationFractional2007,
   title = {Fixed-{{Point Representation}} \& {{Fractional Math}}},
-  author = {Oberstar, Erick L and Consulting, Oberstar},
-  pages = {19},
-  abstract = {In a majority of the commercially available processors on the market today there is no hardware support for floating-point arithmetic due to the cost the extra silicon imposes on a processor's total cost. In fact a large portion of processors do not even have hardware support for integer multiplication. This necessitates software emulation for floating-point arithmetic and possibly even software emulation for computing integer multiplications. This software overhead can significantly limit the rate at which algorithms can be executed.},
+  author = {Oberstar, E. L.},
+  year = {2007},
+  volume = {9},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\2G2PVND9\\Oberstar and Consulting - Fixed-Point Representation & Fractional Math.pdf},
-  language = {en}
+  journal = {Oberstar Consulting}
 }
 
 @inproceedings{paillierPublicKeyCryptosystemsBased1999,
   title = {Public-{{Key Cryptosystems Based}} on {{Composite Degree Residuosity Classes}}},
-  booktitle = {Advances in {{Cryptology}} \textemdash{} {{EUROCRYPT}} '99},
-  author = {Paillier, Pascal},
-  editor = {Stern, Jacques},
+  booktitle = {International Conference on the Theory and Applications of Cryptographic Techniques},
+  author = {Paillier, P.},
   year = {1999},
   pages = {223--238},
-  publisher = {{Springer Berlin Heidelberg}},
-  abstract = {This paper investigates a novel computational problem, namely the Composite Residuosity Class Problem, and its applications to public-key cryptography. We propose a new trapdoor mechanism and derive from this technique three encryption schemes: a trapdoor permutation and two homomorphic probabilistic encryption schemes computationally comparable to RSA. Our cryptosystems, based on usual modular arithmetics, are provably secure under appropriate assumptions in the standard model.},
+  publisher = {{Springer}},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\4NS4WZMX\\Paillier - 1999 - Public-Key Cryptosystems Based on Composite Degree.pdf},
   isbn = {978-3-540-48910-8},
-  keywords = {Encryption Scheme,Homomorphic Encryption,Random Oracle,Random Oracle Model,Signature Scheme},
-  language = {en},
-  series = {Lecture {{Notes}} in {{Computer Science}}}
+  keywords = {Encryption Scheme,Homomorphic Encryption,Random Oracle,Random Oracle Model,Signature Scheme}
 }
 
 @inproceedings{pfaffInformationFormDistributed2017,
-  title = {Information Form Distributed {{Kalman}} Filtering ({{IDKF}}) with Explicit Inputs},
+  title = {Information {{Form Distributed Kalman Filtering}} ({{IDKF}}) with {{Explicit Inputs}}},
   booktitle = {2017 20th {{International Conference}} on {{Information Fusion}} ({{Fusion}})},
-  author = {Pfaff, Florian and Noack, Benjamin and Hanebeck, Uwe D. and Govaers, Felix and Koch, Wolfgang},
+  author = {Pfaff, F. and Noack, B. and Hanebeck, U. D. and Govaers, F. and Koch, W.},
   year = {2017},
-  month = jul,
   pages = {1--8},
-  publisher = {{IEEE}},
-  address = {{Xi'an, China}},
   doi = {10.23919/ICIF.2017.8009724},
-  abstract = {With the ubiquity of information distributed in networks, performing recursive Bayesian estimation using distributed calculations is becoming more and more important. There are a wide variety of algorithms catering to different applications and requiring different degrees of knowledge about the other nodes involved. One recently developed algorithm is the distributed Kalman filter (DKF), which assumes that all knowledge about the measurements, except the measurements themselves, are known to all nodes. If this condition is met, the DKF allows deriving the optimal estimate if all information is combined in one node at an arbitrary time step. In this paper, we present an information form of the distributed Kalman filter (IDKF) that allows the use of explicit system inputs at the individual nodes while still yielding the same results as a centralized Kalman filter.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\GEYTVTJU\\Pfaff et al. - 2017 - Information form distributed Kalman filtering (IDK.pdf},
-  isbn = {978-0-9964527-0-0},
-  language = {en}
+  isbn = {978-0-9964527-0-0}
 }
 
 @article{rivestMethodObtainingDigital1978,
-  title = {A Method for Obtaining Digital Signatures and Public-Key Cryptosystems},
+  title = {A {{Method}} for {{Obtaining Digital Signatures}} and {{Public}}-Key {{Cryptosystems}}},
   author = {Rivest, R. L. and Shamir, A. and Adleman, L.},
   year = {1978},
-  month = feb,
   volume = {21},
   pages = {120--126},
   issn = {0001-0782},
   doi = {10.1145/359340.359342},
-  abstract = {An encryption method is presented with the novel property that publicly revealing an encryption key does not thereby reveal the corresponding decryption key. This has two important consequences: (1) Couriers or other secure means are not needed to transmit keys, since a message can be enciphered using an encryption key publicly revealed by the intented recipient. Only he can decipher the message, since only he knows the corresponding decryption key. (2) A message can be ``signed'' using a privately held decryption key. Anyone can verify this signature using the corresponding publicly revealed encryption key. Signatures cannot be forged, and a signer cannot later deny the validity of his signature. This has obvious applications in ``electronic mail'' and ``electronic funds transfer'' systems. A message is encrypted by representing it as a number M, raising M to a publicly specified power e, and then taking the remainder when the result is divided by the publicly specified product, n, of two large secret primer numbers p and q. Decryption is similar; only a different, secret, power d is used, where e * d {$\equiv$} 1(mod (p - 1) * (q - 1)). The security of the system rests in part on the difficulty of factoring the published divisor, n.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\25MKIM7T\\Rivest et al. - 1978 - A method for obtaining digital signatures and publ.pdf},
   journal = {Communications of the ACM},
   keywords = {authentication,cryptography,digital signatures,electronic funds transfer,electronic mail,factorization,message-passing,prime number,privacy,public-key cryptosystems,security},
@@ -522,72 +411,56 @@
 }
 
 @inproceedings{sijsStateFusionUnknown2010,
-  title = {State Fusion with Unknown Correlation: {{Ellipsoidal}} Intersection},
-  shorttitle = {State Fusion with Unknown Correlation},
+  title = {State {{Fusion}} with {{Unknown Correlation}}: {{Ellipsoidal Intersection}}},
   booktitle = {Proceedings of the 2010 {{American Control Conference}}},
-  author = {Sijs, J. and Lazar, M. and Bosch, P.P.J.v.d.},
+  author = {Sijs, J. and Lazar, M. and Bosch, P.},
   year = {2010},
-  month = jun,
   pages = {3992--3997},
-  issn = {0743-1619},
   doi = {10.1109/ACC.2010.5531237},
-  abstract = {Some crucial challenges of estimation over sensor networks are reaching consensus on the estimates of different systems in the network and separating the mutual information of two estimates from their exclusive information. Current fusion methods of two estimates tend to bypass the mutual information and directly optimize the fused estimate. Moreover, both the mean and covariance of the fused estimate are fully determined by optimizing the covariance only. In contrast to that, this paper proposes a novel fusion method in which the mutual information results in an additional estimate, which defines a mutual mean and covariance. Both variables are derived from the two initial estimates. The mutual covariance is used to optimize the fused covariance, while the mutual mean optimizes the fused mean. An example of decentralized state estimation, where the proposed fusion method is applied, shows a reduction in estimation error compared to the existing alternatives.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\9CEF9ATM\\Sijs et al. - 2010 - State fusion with unknown correlation Ellipsoidal.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\GZD4FUQI\\5531237.html},
   keywords = {correlation methods,covariance,covariance analysis,decentralized state estimation,ellipsoidal intersection,estimation error,Estimation error,mean,multivariable systems,mutual information,Mutual information,Optimization methods,Performance evaluation,Probability density function,Robustness,sensor fusion,sensor network,Sensor systems,state estimation,State estimation,state fusion,State fusion,Temperature,unknown correlation,USA Councils}
 }
 
-@book{simonOptimalStateEstimation2006a,
-  ids = {simonOptimalStateEstimation2006b,simonOptimalStateEstimation2006c,simonOptimalStateEstimation2006d,simonOptimalStateEstimation2006e},
-  title = {Optimal State Estimation: {{Kalman}}, {{H}} [Infinity], and Nonlinear Approaches},
-  shorttitle = {Optimal State Estimation},
-  author = {Simon, Dan},
+@book{simonOptimalStateEstimation2006,
+  title = {Optimal {{State Estimation}}: {{Kalman}}, {{H Infinity}}, and {{Nonlinear Approaches}}},
+  author = {Simon, D.},
   year = {2006},
-  publisher = {{Wiley-Interscience}},
-  address = {{Hoboken, NJ}},
+  publisher = {{John Wiley \& Sons}},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\5M48A76S\\Simon - 2006 - Optimal state estimation Kalman, H [infinity], an.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\BASGFG5Q\\Simon - 2006 - Optimal state estimation Kalman, H [infinity], an.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\DDWMAY74\\Simon - 2006 - Optimal state estimation Kalman, H [infinity], an.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\TU62PBK6\\Simon - 2006 - Optimal state estimation Kalman, H [infinity], an.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\XRIWJNWB\\Simon - 2006 - Optimal state estimation Kalman, H [infinity], an.pdf},
-  isbn = {978-0-471-70858-2},
-  language = {en},
-  note = {OCLC: 741524579}
+  isbn = {978-0-471-70858-2}
 }
 
 @inproceedings{steinbringOptimalSamplebasedFusion2016,
-  title = {Optimal Sample-Based Fusion for Distributed State Estimation},
+  title = {Optimal {{Sample}}-Based {{Fusion}} for {{Distributed State Estimation}}},
   booktitle = {2016 19th {{International Conference}} on {{Information Fusion}} ({{FUSION}})},
-  author = {Steinbring, Jannik and Noack, Benjamin and Reinhardt, Marc and Hanebeck, Uwe D.},
+  author = {Steinbring, J. and Noack, B. and Reinhardt, M. and Hanebeck, U. D.},
   year = {2016},
-  month = jul,
   pages = {1600--1607},
-  issn = {null},
-  abstract = {In this paper, we present a novel approach to optimally fuse estimates in distributed state estimation for linear and nonlinear systems. An optimal fusion requires the knowledge of the correct correlations between locally obtained estimates. The naive and intractable way of calculating the correct correlations would be to exchange information about every processed measurement between all nodes. Instead, we propose to obtain the correct correlations by keeping and processing a small set of deterministic samples on each node in parallel to the actual local state estimation. Sending these samples in addition to the local state estimate to the fusion center allows for correctly reconstructing the desired correlations between all estimates. In doing so, each node does not need any information about measurements processed on other nodes. We show the optimality of the proposed method by means of tracking an extended object in a multi-camera network.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\Z48295PJ\\Steinbring et al. - 2016 - Optimal sample-based fusion for distributed state .pdf;C\:\\Users\\tn5093\\Zotero\\storage\\K8XKCP6S\\7528074.html},
   keywords = {Correlation,Covariance matrices,distributed state estimation,extended object tracking,Kalman filters,local state estimation,multicamera network,nonlinear system,object tracking,optimal sample-based fusion,Robot sensing systems,sensor fusion,state estimation,State estimation,Time measurement}
 }
 
 @article{sunMultisensorOptimalInformation2004,
-  title = {Multi-Sensor Optimal Information Fusion {{Kalman}} Filter},
-  author = {Sun, Shu-Li and Deng, Zi-Li},
+  title = {Multi-Sensor {{Optimal Information Fusion Kalman Filter}}},
+  author = {Sun, S. L. and Deng, Z. L.},
   year = {2004},
-  month = jun,
   volume = {40},
   pages = {1017--1023},
   issn = {0005-1098},
   doi = {10.1016/j.automatica.2004.01.014},
-  abstract = {This paper presents a new multi-sensor optimal information fusion criterion weighted by matrices in the linear minimum variance sense, it is equivalent to the maximum likelihood fusion criterion under the assumption of normal distribution. Based on this optimal fusion criterion, a general multi-sensor optimal information fusion decentralized Kalman filter with a two-layer fusion structure is given for discrete time linear stochastic control systems with multiple sensors and correlated noises. The first fusion layer has a netted parallel structure to determine the cross covariance between every pair of faultless sensors at each time step. The second fusion layer is the fusion center that determines the optimal fusion matrix weights and obtains the optimal fusion filter. Comparing it with the centralized filter, the result shows that the computational burden is reduced, and the precision of the fusion filter is lower than that of the centralized filter when all sensors are faultless, but the fusion filter has fault tolerance and robustness properties when some sensors are faulty. Further, the precision of the fusion filter is higher than that of each local filter. Applying it to a radar tracking system with three sensors demonstrates its effectiveness.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\ZPFVJXQ8\\Sun and Deng - 2004 - Multi-sensor optimal information fusion Kalman fil.pdf;C\:\\Users\\tn5093\\Zotero\\storage\\797K5LYW\\S0005109804000287.html},
   journal = {Automatica},
   keywords = {Fault tolerance,Information fusion,Linear minimum variance,Maximum likelihood,Multisensor,Optimal information fusion Kalman filter,Radar tracking system},
-  language = {en},
   number = {6}
 }
 
-@inproceedings{willnerKalmanFilterAlgorithms1977,
-  title = {Kalman Filter Algorithms for a Multi-Sensor System},
-  author = {Willner, D. and Chang, Chaw-Bing and Dunn, Keh-Ping},
-  year = {1977},
-  month = jan,
+@inproceedings{willnerKalmanFilterAlgorithms1976,
+  title = {Kalman {{Filter Algorithms}} for a {{Multi}}-Sensor {{System}}},
+  booktitle = {1976 {{IEEE Conference}} on {{Decision}} and {{Control}} Including the 15th {{Symposium}} on {{Adaptive Processes}}},
+  author = {Willner, D. and Chang, C. B. and Dunn, K. P.},
+  year = {1976},
   pages = {570--574},
   doi = {10.1109/CDC.1976.267794},
-  abstract = {The purpose of this paper is to examine several Kalman filter algorithms that can be used for state estimation with a multiple sensor system. In a synchronous data collection system, the statistically independent data blocks can be processed in parallel or sequentially, or similar data can be compressed before processing; in the linear case these three filter types are optimum and their results are identical. When measurements from each sensor are statistically independent, the data compression method is shown to be computationally most efficient, followed by the sequential processing; the parallel processing is least efficient.},
   file = {C\:\\Users\\tn5093\\Zotero\\storage\\VH23JXMN\\Willner et al. - 1977 - Kalman filter algorithms for a multi-sensor system.pdf}
 }
 
