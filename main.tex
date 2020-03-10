@@ -113,22 +113,14 @@ Throughout this paper we will use the following notation. Lowercase characters r
 \section{Covariance Intersection and Approximations} \label{sec:ci}
 Covariance Intersection (CI), introduced in \cite{julierNondivergentEstimationAlgorithm}, provides a consistent state estimation fusion algorithm when model cross-correlations are not known. The resulting fused estimate $\mean{\vec{x}}$ and estimate covariance $\mP$ can be easily derived from its equations
 \begin{equation}
-   \mP^{-1}=\sum_{i=0}^{n}\omega_i \mP_i^{-1} \label{eqn:ci_cov}
+   \mP^{-1}=\sum_{i=0}^{n}\omega_i \mP_i^{-1},\ \mP^{-1} \mean{\vec{x}} =\sum_{i=0}^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i\,. \label{eqn:ci_cov_estimate}
 \end{equation}
-and
-\begin{equation}
-   \mP^{-1} \mean{\vec{x}} =\sum_{i=0}^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i\,. \label{eqn:ci_estimate}
-\end{equation}
-Note that \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate} compute the fusion of the information matrix and information vectors defined in \cite{niehsenInformationFusionBased2002} and reduce the fusion to a simple weighted sum.
+Note that \eqref{eqn:ci_cov_estimate} computes the fusion of the information matrix and information vectors defined in \cite{niehsenInformationFusionBased2002} and reduce the fusion to a simple weighted sum.
 Values for $\omega_i$ must satisfy
 \begin{equation}
-   \omega_0 + \omega_1 + \cdots + \omega_n = 1 \label{eqn:ci_omega_sum}
+   \omega_0 + \omega_1 + \cdots + \omega_n = 1,\ 0 \leq \omega_i \leq 1\,, \label{eqn:ci_omega_sum_bound}
 \end{equation}
-and
-\begin{equation}
-   0 \leq \omega_i \leq 1\,. \label{eqn:ci_omega_bound}
-\end{equation}
-and guarantee consistency of the fused estimates. They are chosen in a way to speed up convergence, by minimising a certain specified property of the resulting fused estimate covariance. One such property which may be minimised to guarantee faster convergence is the fused estimate covariance trace, requiring the solution to
+which guarantee consistency of the fused estimates. They are chosen in a way to speed up convergence, by minimising a certain specified property of the resulting fused estimate covariance. One such property which may be minimised to guarantee faster convergence is the fused estimate covariance trace, requiring the solution to
 \begin{equation}
    \argmin_{\omega_0,\dots,\omega_n} \{\tr(\mP)\} = \argmin_{\omega_0,\dots,\omega_n} \{\tr((\sum_{i=0}^{n}\omega_i \mP_i)^{-1})\}\,. \label{eqn:ci_trace_min}
 \end{equation}
@@ -142,11 +134,7 @@ The Fast Covariance Intersection (FCI) algorithm from \cite{niehsenInformationFu
 \end{equation}
 on $\omega_i$ and solving the resulting equations instead. In the two sensor case, this results in the solving of
 \begin{equation}
-   \omega_0 + \omega_1 = 1 \label{eqn:fci_2sen_omega_sum}
-\end{equation}
-and
-\begin{equation}
-   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0\,, \label{eqn:fci_2sen_eq}
+   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0,\ \omega_0 + \omega_1 = 1\,, \label{eqn:fci_2sen_omega_sum_eq}
 \end{equation}
 with analytical solutions given by
 \begin{equation}
@@ -183,7 +171,7 @@ and requires the solution to the linear problem
 \end{equation}
 where we let $\mathcal{P}_i = \tr(\mP_i)$.
 
-Our proposed filter aims to solve FCI fusion, namly \eqref{eqn:ci_cov}, \eqref{eqn:ci_estimate} and \eqref{eqn:fci_eq_sys}, homomorphically, such that using only encryptions from each sensor $i$ we are able to produce valid encryptions of fused estimates without the need for decryption.
+Our proposed filter aims to solve FCI fusion, namely \eqref{eqn:ci_cov_estimate} and \eqref{eqn:fci_eq_sys}, homomorphically, such that using only encryptions from each sensor $i$ we can produce valid encryptions of fused estimates without the need for decryption.
 
 % 8888888b.  888    888 8888888888       .d8888b.            .d88888b.  8888888b.  8888888888
 % 888   Y88b 888    888 888             d88P  "88b          d88P" "Y88b 888   Y88b 888
@@ -268,7 +256,7 @@ holds.
 \section{Two-sensor Secure Fast Covariance Intersection} \label{sec:secfci}
 In this section, we will introduce the Secure FCI (SecFCI) fusion algorithm for the two-sensor case, before extending it to the $n$-sensor case in section \ref{sec:multi_secfci}. The network model we will consider is one where all sensors are capable of running local estimation filters, as well as the PHE and ORE encryption schemes described in section \ref{sec:encryption}. Each sensor $i$ computes its state estimate and covariance matrix, $\mean{\vec{x}_i}$, $\mP_i$ and sends the relevant encrypted information to a single fusion centre which aims to compute the fused state estimate and covariance matrix homomorphically. A third, querying party, can request and use the current encrypted fused information from the fusion centre at any time. The querying party is the key holding party in this network and generates the PHE public key $pk$, secret key $sk$, and ORE symmetric key $k$. $pk$ is made available to all parties in the network, and $k$ is made available to the sensors only, via any standard public-key scheme such as RSA \cite{rivestMethodObtainingDigital1978}. When encrypting with ORE key $k$, individual sensors are limited to using only $L$ or $R$ ORE encryption to reduce local information leakage. Thus, consecutive ORE encryptions from any sensor cannot be used to infer local information directly, and can only be compared to encryptions from sensors using the alternate ORE encryption.
 
-From the CI equations \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate} we can see that both fusion equations can be computed on PHE encryptions of sensor information matrices and information vectors, given valid values for each $\omega_i$. In the two-sensor case, homomorphic fusion is computed by
+From the CI equations \eqref{eqn:ci_cov_estimate}, we can see that both fusion equations can be computed on PHE encryptions of sensor information matrices and information vectors, given valid values for each $\omega_i$. In the two-sensor case, homomorphic fusion is computed by
 \begin{equation}
    \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_0)^{\omega_0}\mathcal{E}(\mP^{-1}_1)^{(1 -\omega_0)} \label{eqn:paillier_ci_cov}
 \end{equation}
@@ -276,9 +264,9 @@ and
 \begin{equation}
    \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_0\mean{\vec{x}}_0)^{\omega_0}\mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{(1 - \omega_0)}\,, \label{eqn:paillier_ci_estimate}
 \end{equation}
-where we note that $\omega_1=1-\omega_0$ due to the CI requirements \eqref{eqn:ci_omega_sum} and \eqref{eqn:ci_omega_bound}. We also note that in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}, each resulting value will have exactly one Q encoding multiplication factor to remove, and can be decoded exactly by using \eqref{eqn:qmn_mult_decode}.
+where we note that $\omega_1=1-\omega_0$ due to the CI requirement \eqref{eqn:ci_omega_sum_bound}. We also note that in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}, each resulting value will have exactly one Q encoding multiplication factor to remove, and can be decoded exactly by using \eqref{eqn:qmn_mult_decode}.
    
-In the two-sensor case, all that remains for computing CI homomorphically is the calculation of parameter $\omega_0$. For this, we approximate the solution to the FCI fusion algorithm. Since analytical solutions \eqref{eqn:fci_2sen_sol} require division, they cannot be computed exactly with the given PHE encryptions of sensor information matrices and information vectors. Instead, we discretise $\omega_0$ by step-size $s$, such that $s<1$ and $s|1$, and turn to ORE to approximate \eqref{eqn:fci_2sen_eq}. Each sensor computes $\tr(\mP)\omega$ for each ordered discretisation $\omega \in [0,0+s,\dots,1-s,1]$, and encrypts it with its ORE key $k$. Each sensor $i$ uses $L$ ORE if $i$ is even, and $R$ ORE otherwise. The resulting encryptions are kept ordered and sent alongside the PHE encryptions of local information matrix and information vector estimates. Sensor $0$'s list is defined by 
+In the two-sensor case, all that remains for computing CI homomorphically is the calculation of parameter $\omega_0$. For this, we approximate the solution to the FCI fusion algorithm. Since analytical solutions \eqref{eqn:fci_2sen_sol} require division, they cannot be computed exactly with the given PHE encryptions of sensor information matrices and information vectors. Instead, we discretise $\omega_0$ by step-size $s$, such that $s<1$ and $s|1$, and turn to ORE to approximate \eqref{eqn:fci_2sen_omega_sum_eq}. Each sensor computes $\tr(\mP)\omega$ for each ordered discretisation $\omega \in [0,0+s,\dots,1-s,1]$, and encrypts it with its ORE key $k$. Each sensor $i$ uses $L$ ORE if $i$ is even, and $R$ ORE otherwise. The resulting encryptions are kept ordered and sent alongside the PHE encryptions of local information matrix and information vector estimates. Sensor $0$'s list is defined by 
 \begin{equation}
    [\mathcal{E}^L_{ORE}(\omega\tr(\mP_0)),\ \omega \in [0,0+s,\dots,1-s,1]] \label{eqn:sen0_ore_list}
 \end{equation}
@@ -288,7 +276,7 @@ and similarly sensor $1$'s by
 \end{equation}
 Lists \eqref{eqn:sen0_ore_list} and \eqref{eqn:sen1_ore_list} are then used to estimate the FCI values of $\omega_0$ and $\omega_1$ before computing \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}.
 
-From \eqref{eqn:fci_2sen_eq} and \eqref{eqn:fci_2sen_omega_sum} we know that $\omega_0$ must satisfy
+From \eqref{eqn:fci_2sen_omega_sum_eq} we know that $\omega_0$ must satisfy
 \begin{equation}
    \omega_0 \tr(\mP_0) = (1-\omega_1)\tr(\mP_1)\,. \label{eqn:secfci_2sen_intersect}
 \end{equation}
@@ -296,7 +284,7 @@ If we reverse \eqref{eqn:sen1_ore_list}, we obtain the equivalent list
 \begin{equation}
    [\mathcal{E}^R_{ORE}((1-\omega)\tr(\mP_1)),\ \omega \in [0,0+s,\dots,1-s,1]] \label{eqn:sen2_ore_rev_list}
 \end{equation}
-which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:fci_2sen_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in $O(log(1/s))$ by a binary search.
+which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:fci_2sen_omega_sum_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in $O(log(1/s))$ by a binary search.
 \begin{figure}[tb]
    \begin{center}
       \input{images/2_sensors.pgf}
@@ -322,7 +310,7 @@ In the case a comparison returns equality, the exact value of $\omega$ can be ta
 
 
 \section{Multi-sensor Secure Fast Covariance Intersection} \label{sec:multi_secfci}
-When computing the SecFCI fusion for $n$ sensors, we solve \eqref{eqn:ci_cov} and \eqref{eqn:ci_estimate} homomorphically by computing
+When computing the SecFCI fusion for $n$ sensors, we solve \eqref{eqn:ci_cov_estimate} homomorphically by computing
 \begin{equation}
    \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_0)^{\omega_0}\cdots\mathcal{E}(\mP^{-1}_n)^{\omega_n} \label{eqn:n_sen_paillier_ci_cov}
 \end{equation}
@@ -332,7 +320,7 @@ and
 \end{equation}
 As with the two-sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the weights $\omega_0,\dots,\omega_n$.
 
-Our approach to the $n$-sensor case, is to solve each $n-1$ conditions in \eqref{eqn:fci_eq} using the two-sensor method, and combining partial solutions to compute the final result. When we consider each $\omega_i$ a dimensional axis, partial solutions can be considered geometrically, as hyperplanes of $n-2$ dimension, over the $n-1$ dimensional solution space given by \eqref{eqn:ci_omega_sum} and \eqref{eqn:ci_omega_bound}. This can be visualised in the three-sensor case, which requires solving partial solutions
+Our approach to the $n$-sensor case, is to solve each $n-1$ conditions in \eqref{eqn:fci_eq} using the two-sensor method, and combining partial solutions to compute the final result. When we consider each $\omega_i$ a dimensional axis, partial solutions can be considered geometrically, as hyperplanes of $n-2$ dimension, over the $n-1$ dimensional solution space given by \eqref{eqn:ci_omega_sum_bound}. This can be visualised in the three-sensor case, which requires solving partial solutions
 \begin{equation}
    \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \label{eqn:3_sensor_partial_sol_1}
 \end{equation}
