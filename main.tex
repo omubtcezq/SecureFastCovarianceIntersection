@@ -40,8 +40,9 @@
 % Needed to display images generated with Matplotlib nicely
 \usepackage{pgf}
 
-% Used to make subfigures and fit 3 figures across the page
-\usepackage{subcaption}
+% Used to make subfigures and fit 3 figures across the page. Command lets sub references be in parentheses
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
 
 % Used to make the last page have even height columns
 \usepackage{flushend}
@@ -76,7 +77,7 @@ Secure Fast Covariance Intersection Using Partially Homomorphic and Order Reveal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-Fast covariance intersection is a widespread technique for state estimate fusion in sensor networks when cross-correlations are not known and fast computations are desired. The common requirement of sending estimates from one party to another during fusion means they do not remain localy private. Current secure fusion algorithms have a reliance on encryption schemes that do not provide sufficient flexibility and as a result require, often undesired, excess communication between estimate producers. We propose a novel method of homomorphically computing the fast covariance intersection algorithm on estimates encrypted with a combination of encryption schemes. Using order revealing encryption we show how the approximate solutions to the fast covariance intersection coefficients can be computed and combined with partially homomorphic encryptions of estimates, to calculate an encryption of the fused result. The described approach allows the secure fusion of any number of private estimates, making third-party cloud processing a viable option when working with sensitive state estimates or when performing estimation over untrusted networks.
+Fast covariance intersection is a widespread technique for state estimate fusion in sensor networks when cross-correlations are not known and fast computations are desired. The common requirement of sending estimates from one party to another during fusion means they do not remain locally private. Current secure fusion algorithms have a reliance on encryption schemes that do not provide sufficient flexibility and as a result require, often undesired, excess communication between estimate producers. We propose a novel method of homomorphically computing the fast covariance intersection algorithm on estimates encrypted with a combination of encryption schemes. Using order revealing encryption we show how the approximate solutions to the fast covariance intersection coefficients can be computed and combined with partially homomorphic encryptions of estimates, to calculate an encryption of the fused result. The described approach allows the secure fusion of any number of private estimates, making third-party cloud processing a viable option when working with sensitive state estimates or when performing estimation over untrusted networks.
 
 \end{abstract}
 
@@ -197,7 +198,7 @@ holds. While symmetric-key Order Revealing Encryption (ORE) schemes \cite{chenet
    f(\mathcal{E}_{ORE}(a), \mathcal{E}_{ORE}(b)) = cmp(a, b)\,. \label{eqn:ore_eq}
 \end{equation}
 
-The formal security of encryption schemes consists of a security goal and a formal threat model \cite{katzIntroductionModernCryptography2008}. Indistinguishability of ciphertexts under the adaptive chosen ciphertext attack model (IND-CCA2) is commonly considered the strongest security guarantee \cite{bellareRelationsNotionsSecurity1998}, however, no homomorphic encryption scheme provides security against chosen ciphertext attack models due to their apparent ability to create valid cyphertexts via homomorphic operations. Instead, PHE schemes aim to protect against the weaker assumption of the chosen plaintext attack model (IND-CPA) \cite{chaseSecurityHomomorphicEncryption2017}. Similarly, ORE schemes aim to protect against a weaker simulation-based security defined in \cite{chenettePracticalOrderRevealingEncryption2016} or the harder to achieve ordered chosen-plaintext attack model (IND-OCPA).
+The formal security of encryption schemes consists of a security goal and a formal threat model \cite{katzIntroductionModernCryptography2008}. Indistinguishability of ciphertexts under the adaptive chosen ciphertext attack model (IND-CCA2) is commonly considered the strongest security guarantee \cite{bellareRelationsNotionsSecurity1998}, however, no homomorphic encryption scheme provides security against chosen ciphertext attack models due to their apparent ability to create valid cyphertexts via homomorphic operations. Instead, PHE schemes aim to protect against the weaker assumption of the chosen plaintext attack model (IND-CPA) \cite{chaseSecurityHomomorphicEncryption2017}. Similarly, ORE schemes aim to protect against simulation-based security defined in \cite{chenettePracticalOrderRevealingEncryption2016} or the harder to achieve ordered chosen-plaintext attack model (IND-OCPA).
 
 \subsection{Additive Partially Homomorphic Encryption} \label{subsec:paillier}
 The additive PHE scheme we have used is the Paillier encryption scheme \cite{paillierPublicKeyCryptosystemsBased1999} due to its implementation simplicity, and computational speed. The Paillier scheme provides two homomorphic operations on encrypted data, 
@@ -238,7 +239,7 @@ While encoded Q numbers are consistent under addition, multiplication requires a
    a = \frac{e}{2^{2f}}\,. \label{eqn:qmn_mult_decode}
 \end{equation}
 
-While the largest encryptable integer is given by $N/2-1$, the largest encodable real number must account for the additional multiplication factor in its encoding and must have integer and fractional bits $i$ and $f$ chosen such that
+While the largest encryptable integer is given by $N/2-1$, the largest encodable real number must account for the additional multiplication factor in its encoding. Thus, the integer and fractional bits $i$ and $f$ must be chosen such that
 \begin{equation}
    (2^{(i+f)}-1)^2 \leq \frac{N}{2}-1 \label{eqn:qmn_max}
 \end{equation}
@@ -323,63 +324,57 @@ and
 \begin{equation}
    \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_0\mean{\vec{x}}_0)^{\omega_0}\cdots\mathcal{E}(\mP^{-1}_n\mean{\vec{x}}_n)^{\omega_n}\,. \label{eqn:n_sen_paillier_ci_estimate}
 \end{equation}
-As with the two-sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the weights $\omega_0,\dots,\omega_n$.
+As with the two-sensor case encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the weights $\omega_0,\dots,\omega_n$.
 
-Our approach to the $n$-sensor case, is to solve each $n-1$ conditions in \eqref{eqn:fci_eq} using the two-sensor method, and combining partial solutions to compute the final result. When we consider each $\omega_i$ a dimensional axis, partial solutions can be considered geometrically, as hyperplanes of $n-2$ dimension, over the $n-1$ dimensional solution space given by \eqref{eqn:ci_omega_sum_bound}. This can be visualised in the three-sensor case, which requires solving partial solutions
+Our approach to the $n$-sensor case, is to solve each $n-1$ conditions in \eqref{eqn:fci_eq} using the two-sensor method, and combining partial solutions to compute the final result. When we consider a Euclidean dimension for each $\omega_i$, partial solutions can be considered geometrically, as hyperplanes of $n-2$ dimension, over the $n-1$ dimensional solution space given by \eqref{eqn:ci_omega_sum_bound}. 
+
+This can be visualised in the three-sensor case, which requires solving partial solutions
 \begin{equation}
-   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0 \label{eqn:3_sensor_partial_sol_1}
+   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0,\ \omega_0+\omega_1=1-\omega_2 \label{eqn:3_sensor_partial_sol_1}
 \end{equation}
 and
 \begin{equation}
-   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0\,. \label{eqn:3_sensor_partial_sol_2}
+   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0,\ \omega_1+\omega_2=1-\omega_0\,. \label{eqn:3_sensor_partial_sol_2}
 \end{equation}
-Fig. \ref{fig:3_sensor_partial_sol} shows partial solution \eqref{eqn:3_sensor_partial_sol_1} plotted over the possible solution space. Partial solution points are given by solving the two-sensor case for $\omega_j$ and $\omega_k$ when letting all $\omega_i=0,\ i\neq j,k$, plus an additional point for each $\omega_i=1,\ i\neq j,k$ with $\omega_j=\omega_k=0$. Both partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} can be seen plotted over the solution space in Fig. \ref{fig:3_sensor_partial_sols}.
+We can use the two-sensor method from section \ref{sec:secfci} to solve \eqref{eqn:3_sensor_partial_sol_1} exactly when $\omega_2=0$, and know that when $\omega_2=1$, then $\omega_0=\omega_1=0$. These two points are enough to define the two-dimensional partial solution \eqref{eqn:3_sensor_partial_sol_1} which can be seen plotted over the possible solution space in Fig. \ref{fig:3_sensor_partial_sol}. Fig. \ref{fig:3_sensor_partial_sols} shows both partial solutions \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} plotted over the solution space.
 \begin{figure*}[tb]
    \begin{subfigure}[t]{0.3\textwidth}
-      %\vspace{-30pt}
       \begin{center}
          \input{images/partial_sol1.pgf}
       \end{center}
-      %\vspace{-10pt}
       \caption{Partial solution to \eqref{eqn:3_sensor_partial_sol_1}.}
       \label{fig:3_sensor_partial_sol}
    \end{subfigure}
    ~
    \begin{subfigure}[t]{0.3\textwidth}
-      %\vspace{-30pt}
       \begin{center}
          \input{images/partial_sols.pgf}
       \end{center}
-      %\vspace{-10pt}
       \caption{Partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2}.}
       \label{fig:3_sensor_partial_sols}
    \end{subfigure}
    ~
    \begin{subfigure}[t]{0.3\textwidth}
-      %\vspace{-30pt}
       \begin{center}
          \input{images/partial_sol_planes.pgf}
       \end{center}
-      %\vspace{-10pt}
       \caption{Partial solutions as planes perpendicular to the solution space.}
       \label{fig:3sen_planes}
    \end{subfigure}
    \caption{Partial solutions over $\omega_0$, $\omega_1$, and $\omega_2$ solution space.}
    \label{fig:partial_sols_and_planes}
 \end{figure*}
-Finding the final solution from all partial solutions is computed by finding their intersection. This can be seen in Fig. \ref{fig:3_sensor_partial_sols} as the intersection of the $\omega_0,\omega_1$ and $\omega_1,\omega_2$ partial solution lines. Due to their inherent orthogonality, $n-1$ partial solution hyperplanes are guaranteed to intersect at exactly one point when at most $1$ sensor has $\tr(\mP_i)=0$.
+The final solution from all partial solutions is computed by finding their intersection. This can be seen in Fig. \ref{fig:3_sensor_partial_sols} as the intersection of the $\omega_0,\omega_1$ and $\omega_1,\omega_2$ partial solution lines.
 
-To simplify computing the partial solution intersection, we define equivalent hyperplanes of dimension $n-1$, perpendicular to the solution space, and solve the resulting $n$ simultaneous linear equations.
-
-In the three-sensor case, each partial solution line can be defined by a plane perpendicular to the solution space plane in the form
+To simplify computing the partial solution intersection, we define equivalent planes for each partial solution, perpendicular to the solution space, in the form
 \begin{equation}
    a_0\omega_0 + a_1\omega_1 +a_2\omega_2 + a_3 = 0\,, \label{eqn:3sen_plane_eq}
 \end{equation}
-as can be seen in Fig. \ref{fig:3sen_planes}. The resulting linear system and solution is then given by
+and solve the resulting linear system for finding the intersection of all planes and the solution space. This is given by
 \begin{equation}
    \begin{bmatrix}
-      a_{0,0} & a_{1,0} & a_{2,0} \\
-      a_{0,1} & a_{1,1} & a_{2,1} \\
+      a_0^{(0)} & a_1^{(0)} & a_2^{(0)} \\
+      a_0^{(1)} & a_1^{(1)} & a_2^{(1)} \\
       1 & 1 & 1
    \end{bmatrix}
    \begin{bmatrix}
@@ -389,24 +384,24 @@ as can be seen in Fig. \ref{fig:3sen_planes}. The resulting linear system and so
    \end{bmatrix}
    =
    \begin{bmatrix}
-      a_{3,0} \\
-      a_{3,1} \\
+      a_3^{(0)} \\
+      a_3^{(1)} \\
       1
    \end{bmatrix}\,, \label{eqn:3sen_plane_sol_eq}
 \end{equation}
-where $a_{i,j}$ denotes parameter $i$ of partial solution $j$.
+where $a_i^{(j)}$ denotes parameter $i$ of partial solution $j$.
 
-In the case with $n$ sensors, the hyperplane equations are given by
+In the $n$-sensor case, we can similarly solve partial solutions by first using the method from section \ref{sec:secfci} to solve an equation with two paramaters $\omega_k$ and $\omega_{k+1}$ when letting all $\omega_i=0,\ i\neq k,k+1$, and can compute a remaining point for each $\omega_i=1,\ i\neq k,k+1$ with $\omega_j=0,\ l\neq i$. Perpendicular hyperplanes can then be similarly defined in the form 
 \begin{equation}
-   a_0\omega_0 + a_1\omega_1 + \cdots + a_n\omega_n + a_{n+1} = 0\,, \label{eqn:hyperplane_eq}
+   a_0\omega_0 + \dots +a_n\omega_n + a_{n+1} = 0\,. \label{eqn:nsen_plane_eq}
 \end{equation}
-and simultaneous equations and solution by
+Due to their inherent orthogonality, $n-1$ partial solution hyperplanes are guaranteed to intersect at exactly one point when at most $1$ sensor has $\tr(\mP_i)=0$. The hyperplane intersection results in the linear system 
 \begin{equation}
    \begin{bmatrix}
-      a_{0,0} & a_{1,0} & \cdots & a_{n,0} \\
-      a_{0,1} & a_{1,1} & \cdots & a_{n,1} \\
+      a_0^{(0)} & a_1^{(0)} & \cdots & a_n^{(0)} \\
+      a_0^{(1)} & a_1^{(1)} & \cdots & a_n^{(1)} \\
       \vdots & \vdots & \ddots & \vdots \\
-      a_{0,n-1} & a_{1,n-1} & \cdots & a_{n,n-1} \\
+      a_0^{(n-1)} & a_1^{(n-1)} & \cdots & a_n^{(n-1)} \\
       1 & 1 & \cdots & 1
    \end{bmatrix}
    \begin{bmatrix}
@@ -418,22 +413,23 @@ and simultaneous equations and solution by
    \end{bmatrix}
    =
    \begin{bmatrix}
-      a_{n+1,0} \\
-      a_{n+1,1} \\
+      a_{n+1}^{(0)} \\
+      a_{n+1}^{(1)} \\
       \vdots \\
-      a_{n+1,n-1} \\
+      a_{n+1}^{(n-1)} \\
       1
-   \end{bmatrix}. \label{eqn:hyperplane_sol_eq}
+   \end{bmatrix}\,, \label{eqn:hyperplane_sol_eq}
 \end{equation}
+and gives the solution to the SecFCI $\omega_i$ values.
 
-As all ORE comparisons between sensor values are done between sequential sensors, $L$ and $R$ ORE encryptions can be used to the same effect as for the two-sensor case. The ORE ordered list sent from each sensor is given by
+As all ORE comparisons are done between sequential sensors, given by \eqref{eqn:fci_eq}, $L$ and $R$ ORE encryptions can be used to the same effect as for the two-sensor case. The ORE ordered list sent from each sensor is given by
 \begin{equation}
    \begin{gathered} \label{eqn:sensor_lists}
       [\mathcal{E}^L_{ORE}(\omega_d\tr(\mP_i)),\ \omega_d \in [0,s,\dots,1-s,1]],\ i\text{ even} \\
       [\mathcal{E}^R_{ORE}(\omega_d\tr(\mP_i)),\ \omega_d \in [0,s,\dots,1-s,1]],\ i\text{ odd}\,.
    \end{gathered}
 \end{equation}
-
+When combining \eqref{eqn:sensor_lists} with PHE encryptions of local information matrices and information vectors, SecFCI can be computed entirely homomorphically by \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate}.
 
 % 8888888b.                            888 888
 % 888   Y88b                           888 888
@@ -468,7 +464,7 @@ The traces of the fused covariance matrices from both FCI and SecFCI fusion are 
    \caption{Traces of fused covariance matrices for FCI and SecFCI.}
    \label{fig:fci_secfci_trace}
 \end{figure}
-Values of each $\omega_i$ over time have been plotted in Fig. \ref{fig:fci_secfci_omegas}. Due to discretisation, as can be expected, SecFCI values of $\omega_i$ stay constant but may jump with sufficient change in true FCI $\omega_i$ values, as can be seen once near the start of the simulation.
+Values of each $\omega_i$ over time have been plotted in Fig. \ref{fig:fci_secfci_omegas}. Due to discretisation, as can be expected, SecFCI values of $\omega_i$ stay constant but may jump with sufficient change in true FCI $\omega_i$ values, as can be seen near the start of the simulation.
 \begin{figure}[tb]
    \vspace{-5pt}
    \begin{center}
