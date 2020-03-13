@@ -44,8 +44,14 @@
 \usepackage[labelformat=simple]{subcaption}
 \renewcommand\thesubfigure{(\alph{subfigure})}
 
+% Keep the figure captions small
+\usepackage[font=small]{caption}
+
 % Used to make the last page have even height columns
 \usepackage{flushend}
+
+% Condenses everything and also makes it prettier
+\usepackage{microtype}
 
 \title{\LARGE \bf
 Secure Fast Covariance Intersection Using Partially Homomorphic and Order Revealing Encryption Schemes
@@ -101,7 +107,7 @@ Sensor data processing and state estimation have been increasingly prevalent in 
 A key step in distributed sensor fusion, and our topic of interest in this paper, is the requirement of transmitting sensor state estimate and covariance information between network nodes for the computation of a final fused result. Network eavesdroppers or curious fusion nodes are not prevented from learning possibly sensitive local state estimates and covariances. Encryption has until recently been primarily used to secure information transfer between communicating parties, with common symmetric-key encryption schemes such as AES \cite{daemonAnnouncingAdvancedEncryption2001} being used to encrypt sent information to its destination, and public-key encryption schemes such as RSA \cite{rivestMethodObtainingDigital1978} to distribute symmetric keys. However, recent developments in public-key homomorphic encryption (HE) schemes \cite{gentryFullyHomomorphicEncryption2009,elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}, which allow algebraic operations to be performed on encryptions, are leading to more secure cloud or network applications for signal processing \cite{lagendijkEncryptedSignalProcessing2012,alexandruEncryptedCooperativeControl2019,aristovEncryptedMultisensorInformation2018}. Although implementations of Fully Homomorphic Encryption (FHE) schemes exist \cite{gentryImplementingGentryFullyHomomorphic2011}, and provide all algebraic operations on encryptions, current implementations are still computationally infeasible for large-scale signal processing \cite{duImplementingMLAlgorithms2017,acarSurveyHomomorphicEncryption2018}. Instead, Partially Homomorphic Encryption (PHE) schemes \cite{elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}, providing typically only one algebraic operation, have been a focus for such processing tasks \cite{alexandruEncryptedCooperativeControl2019,aristovEncryptedMultisensorInformation2018}. Most commonly, addition is provided by the Paillier encryption scheme \cite{paillierPublicKeyCryptosystemsBased1999} due to its speed and simplicity. However, due to the limited operations provided, securely computable processing algorithms have thus far been relatively restricted in complexity and application. The recent development of new encryption schemes, such as Order Revealing Encryption (ORE) \cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016,bogatovComparativeEvaluationOrderPreserving2018}, have provided new light on the possible complexity of signal processing algorithms that can be computed securely. Thus far, ORE has found little application in the context of signal processing algorithms or in combination with HE schemes. In this paper, we make use of a combination of ORE and PHE schemes to develop a Secure FCI (SecFCI) fusion method that enables us to protect sensor estimates from both eavesdroppers and other algorithm participants.
 
 \subsection{Notation}
-Throughout this paper we will use the following notation. Lowercase characters represent scalars, lowercase underlined characters, $\vec{x}$, represent vectors. Uppercase bold characters, $\mM$, are reserved for matrices, where $\mM^\top$ denotes the matrix transpose, $\mM^{-1}$ the matrix inverse, and $\tr(\cdot)$ the trace function. Covariance matrices will be represented by $\mP$. $m|n$ denotes $m$ divides $n$. $\mathcal{E}_{pk}(a)$ and $\mathcal{E}_{ORE,k}(a)$ denote the public-key $pk$ and ORE key $k$ encryptions of $a$, and similarly with the decryption functions $\mathcal{D}_{pk}(\cdot)$ and $\mathcal{D}_{ORE,k}(\cdot)$, where any required real-number encodings of the number $a$ are assumed to be performed. $\mathcal{E}(a)$ and $\mathcal{E}_{ORE}(a)$ may be used for brevity when the encryption keys can be inferred from context. All encryption of vectors and matrices are defined element-wise, with elements given by $\mathcal{E}(\mP_{i,j}) = \mathcal{E}(\mP)_{i,j}$. Sets are represented as $\{\cdot\}$ while ordered lists with $[\cdot]$.
+Throughout this paper we will use the following notation. Lowercase characters represent scalars, lowercase underlined characters, $\vec{x}$, represent vectors. Uppercase bold characters, $\mM$, are reserved for matrices, where $\mM^\top$ denotes the matrix transpose, $\mM^{-1}$ the matrix inverse, and $\tr(\cdot)$ the trace function. Covariance matrices will be represented by $\mP$. $\mathcal{E}_{pk}(a)$ and $\mathcal{E}_{ORE,k}(a)$ denote the public-key $pk$ and ORE key $k$ encryptions of $a$, and similarly with the decryption functions $\mathcal{D}_{pk}(\cdot)$ and $\mathcal{D}_{ORE,k}(\cdot)$, where any required real-number encodings of the number $a$ are assumed to be performed. $\mathcal{E}(a)$ and $\mathcal{E}_{ORE}(a)$ may be used for brevity when the encryption keys can be inferred from context. All encryption of vectors and matrices are defined element-wise, with elements given by $\mathcal{E}(\mP_{i,j}) = \mathcal{E}(\mP)_{i,j}$. Sets are represented as $\{\cdot\}$ while ordered lists with $[\cdot]$.
 
 %  .d8888b. 8888888
 % d88P  Y88b  888
@@ -270,15 +276,19 @@ and
 \end{equation}
 where we note that $\omega_1=1-\omega_0$ due to the CI requirement \eqref{eqn:ci_omega_sum_bound}. We also note that in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}, each resulting value will have exactly one Q encoding multiplication factor to remove, and can be decoded exactly by using \eqref{eqn:qmn_mult_decode}.
    
-In the two-sensor case, all that remains for computing CI homomorphically is the calculation of parameter $\omega_0$. For this, we approximate the solution to the FCI fusion algorithm. Since analytical solutions \eqref{eqn:fci_2sen_sol} require division, they cannot be computed exactly with the given PHE encryptions of sensor information matrices and information vectors. Instead, we discretise $\omega_0$ by step-size $s$, such that $s<1$ and $s|1$, and turn to ORE to approximate \eqref{eqn:fci_2sen_omega_sum_eq}. Each sensor $i$ computes $\omega_d\tr(\mP_i)$ for each ordered discretisation $\omega_d \in [0,s,\dots,1-s,1]$, and encrypts it with its ORE key $k$. Each sensor $i$ uses $L$ ORE if $i$ is even, and $R$ ORE otherwise. The resulting encryptions are kept ordered and sent alongside the PHE encryptions of local information matrix and information vector estimates. Sensor $0$'s list is defined by 
+In the two-sensor case, all that remains for computing CI homomorphically is the calculation of parameter $\omega_0$. For this, we approximate the solution to the FCI fusion algorithm. Since analytical solutions \eqref{eqn:fci_2sen_sol} require division, they cannot be computed exactly with the given PHE encryptions of sensor information matrices and information vectors. Instead, we discretise $\omega_i$ by step-size $s$, such that $s<1$ and $p=1/s \in \mathbb{Z}$, and approximate \eqref{eqn:fci_2sen_omega_sum_eq} with ORE. The ordered discretisation 
 \begin{equation}
-   [\mathcal{E}^L_{ORE}(\omega_d\tr(\mP_0)),\ \omega_d \in [0,s,\dots,1-s,1]]\,, \label{eqn:sen0_ore_list}
+   [\omega^{(0)},\dots,\omega^{(p)}] = [0,s,\dots,1-s,1]
+\end{equation}
+is computed by each sensor $i$, and each $\omega^{(x)}$ multiplied by $\tr(\mP_i)$ and encrypted with ORE key $k$. Sensor $0$'s list is defined by 
+\begin{equation}
+   [\mathcal{E}^L_{ORE}(\omega^{(0)}\tr(\mP_0)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_0))]\,, \label{eqn:sen0_ore_list}
 \end{equation}
 and similarly sensor $1$'s by
 \begin{equation}
-   [\mathcal{E}^R_{ORE}(\omega_d\tr(\mP_1)),\ \omega_d \in [0,s,\dots,1-s,1]]\,. \label{eqn:sen1_ore_list}
+   [\mathcal{E}^R_{ORE}(\omega^{(0)}\tr(\mP_1)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_1))]\,. \label{eqn:sen1_ore_list}
 \end{equation}
-Lists \eqref{eqn:sen0_ore_list} and \eqref{eqn:sen1_ore_list} are then used to estimate the FCI values of $\omega_0$ and $\omega_1$ before computing \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}.
+Note that Sensor $0$ uses only $L$ ORE while sensor $1$ uses only $R$ ORE and that both lists are ordered. Lists \eqref{eqn:sen0_ore_list} and \eqref{eqn:sen1_ore_list} are sent alongside PHE encryptions of local information matrix and information vector estimates to the fusion centre which uses them to estimate the FCI values of $\omega_0$ and $\omega_1$.
 
 From \eqref{eqn:fci_2sen_omega_sum_eq} we know that $\omega_0$ must satisfy
 \begin{equation}
@@ -286,9 +296,9 @@ From \eqref{eqn:fci_2sen_omega_sum_eq} we know that $\omega_0$ must satisfy
 \end{equation}
 If we reverse \eqref{eqn:sen1_ore_list}, we obtain the equivalent list
 \begin{equation}
-   [\mathcal{E}^R_{ORE}((1-\omega_d)\tr(\mP_1)),\ \omega_d \in [0,s,\dots,1-s,1]] \label{eqn:sen2_ore_rev_list}
+   [\mathcal{E}^R_{ORE}((1-\omega^{(0)})\tr(\mP_1)),\dots,\mathcal{E}^L_{ORE}((1-\omega^{(p)})\tr(\mP_1))] \label{eqn:sen2_ore_rev_list}
 \end{equation}
-which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:secfci_2sen_intersect} and therefore, \eqref{eqn:fci_2sen_omega_sum_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega_d$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in $O(log(1/s))$ by a binary search.
+which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:secfci_2sen_intersect} and therefore, \eqref{eqn:fci_2sen_omega_sum_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega^{(x)}$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in $O(log(p))$ by a binary search.
 \begin{figure}[tb]
    \vspace{-5pt}
    \begin{center}
@@ -296,13 +306,16 @@ which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the i
    \end{center}
    \vspace{-10pt}
    \caption{Approximation of $\omega_0$ with discretisation step-size $s=0.1$. Only comparisons between line points are used.}
+   \vspace{-\baselineskip}
    \label{fig:2_sensor_sol}
 \end{figure}
-Consecutive $\omega_d^{(l)}$ and $\omega_d^{(u)}$ for which list comparisons differ can be used to estimate the true intersection, and $\omega_0$, by
+Consecutive $\omega^{(x)}$ and $\omega^{(x+1)}$ for which list comparisons differ can be used to estimate the true intersection, and $\omega_0$, by
 \begin{equation}
-   \omega_0 \approx \frac{1}{2}(\omega_d^{(l)} + \omega_d^{(u)})\,. \label{eqn:secfci_2sen_omega}
+   \omega_0 \approx \frac{1}{2}(\omega^{(x)} + \omega^{(x+1)})\,. \label{eqn:secfci_2sen_omega}
 \end{equation}
-In the case a comparison returns equality, the exact value of $\omega$ can be taken to be $\omega_0$.
+In the case a comparison returns equality, the exact value of $\omega^{(x)}$ can be taken to be $\omega_0$.
+
+The fusion centre can then use its values for $\omega_0$ and $\omega_1 = 1-\omega_0$ and the recieved PHE encryptions of local information matrices and information vectors to compute \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}.
 
 %  .d8888b.                    8888888888 .d8888b. 8888888
 % d88P  Y88b                   888       d88P  Y88b  888
@@ -362,9 +375,10 @@ We can use the two-sensor method from section \ref{sec:secfci} to solve \eqref{e
       \label{fig:3sen_planes}
    \end{subfigure}
    \caption{Partial solutions over $\omega_0$, $\omega_1$, and $\omega_2$ solution space.}
+   \vspace{-\baselineskip}
    \label{fig:partial_sols_and_planes}
 \end{figure*}
-The final solution from all partial solutions is computed by finding their intersection. This can be seen in Fig. \ref{fig:3_sensor_partial_sols} as the intersection of the $\omega_0,\omega_1$ and $\omega_1,\omega_2$ partial solution lines.
+The final solution from all partial solutions is computed by finding their intersection. This can be seen in Fig. \ref{fig:3_sensor_partial_sols} as the intersection of the $(\omega_0,\omega_1)$ and $(\omega_1,\omega_2)$ partial solution lines.
 
 To simplify computing the partial solution intersection, we define equivalent planes for each partial solution, perpendicular to the solution space, in the form
 \begin{equation}
@@ -425,8 +439,8 @@ and gives the solution to the SecFCI $\omega_i$ values.
 As all ORE comparisons are done between sequential sensors, given by \eqref{eqn:fci_eq}, $L$ and $R$ ORE encryptions can be used to the same effect as for the two-sensor case. The ORE ordered list sent from each sensor is given by
 \begin{equation}
    \begin{gathered} \label{eqn:sensor_lists}
-      [\mathcal{E}^L_{ORE}(\omega_d\tr(\mP_i)),\ \omega_d \in [0,s,\dots,1-s,1]],\ i\text{ even} \\
-      [\mathcal{E}^R_{ORE}(\omega_d\tr(\mP_i)),\ \omega_d \in [0,s,\dots,1-s,1]],\ i\text{ odd}\,.
+      [\mathcal{E}^L_{ORE}(\omega^{(0)}\tr(\mP_0)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_0))],\ i\text{ even} \\
+      [\mathcal{E}^R_{ORE}(\omega^{(0)}\tr(\mP_0)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_0))],\ i\text{ odd}\,.
    \end{gathered}
 \end{equation}
 When combining \eqref{eqn:sensor_lists} with PHE encryptions of local information matrices and information vectors, SecFCI can be computed entirely homomorphically by \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate}.
@@ -462,6 +476,7 @@ The traces of the fused covariance matrices from both FCI and SecFCI fusion are 
    \end{center}
    \vspace{-10pt}
    \caption{Traces of fused covariance matrices for FCI and SecFCI.}
+   \vspace{-\baselineskip}
    \label{fig:fci_secfci_trace}
 \end{figure}
 Values of each $\omega_i$ over time have been plotted in Fig. \ref{fig:fci_secfci_omegas}. Due to discretisation, as can be expected, SecFCI values of $\omega_i$ stay constant but may jump with sufficient change in true FCI $\omega_i$ values, as can be seen near the start of the simulation.
@@ -472,6 +487,7 @@ Values of each $\omega_i$ over time have been plotted in Fig. \ref{fig:fci_secfc
    \end{center}
    \vspace{-10pt}
    \caption{FCI and SecFCI $\omega_i$ values and their difference.}
+   \vspace{-\baselineskip}
    \label{fig:fci_secfci_omegas}
 \end{figure}
 
