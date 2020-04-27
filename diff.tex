@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
-%DIF DEL main_submitted_1.tex   Wed Apr  8 13:25:02 2020
-%DIF ADD main.tex               Wed Apr  8 13:25:02 2020
+%DIF DEL main_submitted_1.tex   Mon Apr 27 13:10:44 2020
+%DIF ADD main.tex               Mon Apr 27 16:45:17 2020
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
@@ -235,9 +235,9 @@ Our proposed filter aims to solve FCI fusion, namely \eqref{eqn:ci_cov_estimate}
 
 
 \section{Homomorphic and Order Revealing Encryption} \label{sec:encryption}
-To achieve a secure solution to the FCI fusion problem, we make use of two types of function-providing encryption schemes. Public-key additive Partially Homomorphic Encryption (PHE) schemes \cite{paillierPublicKeyCryptosystemsBased1999,goldwasserProbabilisticEncryption1984} provide a single homomorphic addition operation on cyphertexts such that
+To achieve a secure solution to the FCI fusion problem, we make use of two types of function-providing encryption schemes. Public-key additive Partially Homomorphic Encryption (PHE) schemes \cite{paillierPublicKeyCryptosystemsBased1999,goldwasserProbabilisticEncryption1984} provide a single homomorphic addition operation \DIFaddbegin \DIFadd{$\oplus$ }\DIFaddend on cyphertexts such that
 \begin{equation}
-   \mathcal{E}(a) \oplus \mathcal{E}(b) = \mathcal{E}(a+b) \label{eqn:phe_eq}
+   \DIFaddbegin \DIFadd{\mathcal{D}(}\DIFaddend \mathcal{E}(a) \oplus \mathcal{E}(b)\DIFaddbegin \DIFadd{) }\DIFaddend = \DIFdelbegin \DIFdel{\mathcal{E}(}\DIFdelend a+b \DIFdelbegin \DIFdel{) }\DIFdelend \label{eqn:phe_eq}
 \end{equation}
 holds. Symmetric-key Order Revealing Encryption (ORE) schemes \cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016} provide a secure comparison function, allowing the comparison of encrypted values via
 \begin{equation}
@@ -249,11 +249,11 @@ The formal security of encryption schemes consists of a security goal and a form
 \subsection{Additive Partially Homomorphic Encryption} \label{subsec:paillier}
 The additive PHE scheme we use is the Paillier encryption scheme \cite{paillierPublicKeyCryptosystemsBased1999} due to its implementation simplicity, and computational speed. The Paillier scheme provides two homomorphic operations on encrypted data, 
 \begin{equation}
-   \mathcal{E}_{pk}(a)\mathcal{E}_{pk}(b) \!\!\pmod{N^{2}} = \mathcal{E}_{pk}(a + b \!\!\pmod{N}) \label{eqn:paillier_add}
+   \DIFaddbegin \DIFadd{\mathcal{D}_{pk}(}\DIFaddend \mathcal{E}_{pk}(a)\mathcal{E}_{pk}(b) \!\!\pmod{N^{2}}\DIFaddbegin \DIFadd{) }\DIFaddend = \DIFdelbegin \DIFdel{\mathcal{E}_{pk}(}\DIFdelend a + b \!\!\pmod{N} \DIFdelbegin \DIFdel{) }\DIFdelend \label{eqn:paillier_add}
 \end{equation}
 and
 \begin{equation}
-   \mathcal{E}_{pk}(a)^c \!\!\pmod{N^{2}} = \mathcal{E}_{pk}(c\cdot a \!\!\pmod{N}),\ c \in \mathbb{Z}^*_N\,, \label{eqn:paillier_mult}
+   \DIFaddbegin \DIFadd{\mathcal{D}_{pk}(}\DIFaddend \mathcal{E}_{pk}(a)^c \!\!\pmod{N^{2}}\DIFaddbegin \DIFadd{) }\DIFaddend = \DIFdelbegin \DIFdel{\mathcal{E}_{pk}(}\DIFdelend c\cdot a \!\!\pmod{N}\DIFdelbegin \DIFdel{)}\DIFdelend ,\ c \in \mathbb{Z}\DIFdelbegin \DIFdel{^*}\DIFdelend _N\,, \label{eqn:paillier_mult}
 \end{equation}
 where the modulus $N$ is computed as the product of two large primes chosen randomly during key-generation. The public and secret keys are shown as $pk$ and $sk$ respectively, and plaintext messages $a,b \in \mathbb{Z}_N$. The Paillier encryption scheme successfully provides security against the IND-CPA model.
 

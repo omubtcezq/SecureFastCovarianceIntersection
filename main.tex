@@ -195,9 +195,9 @@ Our proposed filter aims to solve FCI fusion, namely \eqref{eqn:ci_cov_estimate}
 
 
 \section{Homomorphic and Order Revealing Encryption} \label{sec:encryption}
-To achieve a secure solution to the FCI fusion problem, we make use of two types of function-providing encryption schemes. Public-key additive Partially Homomorphic Encryption (PHE) schemes \cite{paillierPublicKeyCryptosystemsBased1999,goldwasserProbabilisticEncryption1984} provide a single homomorphic addition operation on cyphertexts such that
+To achieve a secure solution to the FCI fusion problem, we make use of two types of function-providing encryption schemes. Public-key additive Partially Homomorphic Encryption (PHE) schemes \cite{paillierPublicKeyCryptosystemsBased1999,goldwasserProbabilisticEncryption1984} provide a single homomorphic addition operation $\oplus$ on cyphertexts such that
 \begin{equation}
-   \mathcal{E}(a) \oplus \mathcal{E}(b) = \mathcal{E}(a+b) \label{eqn:phe_eq}
+   \mathcal{D}(\mathcal{E}(a) \oplus \mathcal{E}(b)) = a+b \label{eqn:phe_eq}
 \end{equation}
 holds. Symmetric-key Order Revealing Encryption (ORE) schemes \cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016} provide a secure comparison function, allowing the comparison of encrypted values via
 \begin{equation}
@@ -209,11 +209,11 @@ The formal security of encryption schemes consists of a security goal and a form
 \subsection{Additive Partially Homomorphic Encryption} \label{subsec:paillier}
 The additive PHE scheme we use is the Paillier encryption scheme \cite{paillierPublicKeyCryptosystemsBased1999} due to its implementation simplicity, and computational speed. The Paillier scheme provides two homomorphic operations on encrypted data, 
 \begin{equation}
-   \mathcal{E}_{pk}(a)\mathcal{E}_{pk}(b) \!\!\pmod{N^{2}} = \mathcal{E}_{pk}(a + b \!\!\pmod{N}) \label{eqn:paillier_add}
+   \mathcal{D}_{pk}(\mathcal{E}_{pk}(a)\mathcal{E}_{pk}(b) \!\!\pmod{N^{2}}) = a + b \!\!\pmod{N} \label{eqn:paillier_add}
 \end{equation}
 and
 \begin{equation}
-   \mathcal{E}_{pk}(a)^c \!\!\pmod{N^{2}} = \mathcal{E}_{pk}(c\cdot a \!\!\pmod{N}),\ c \in \mathbb{Z}^*_N\,, \label{eqn:paillier_mult}
+   \mathcal{D}_{pk}(\mathcal{E}_{pk}(a)^c \!\!\pmod{N^{2}}) = c\cdot a \!\!\pmod{N},\ c \in \mathbb{Z}_N\,, \label{eqn:paillier_mult}
 \end{equation}
 where the modulus $N$ is computed as the product of two large primes chosen randomly during key-generation. The public and secret keys are shown as $pk$ and $sk$ respectively, and plaintext messages $a,b \in \mathbb{Z}_N$. The Paillier encryption scheme successfully provides security against the IND-CPA model.
 
