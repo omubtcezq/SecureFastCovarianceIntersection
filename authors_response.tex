@@ -1,0 +1,341 @@
+\documentclass[a4paper]{scrartcl}
+
+%\usepackage{showframe}
+\usepackage[margin=2cm,footskip=.7cm]{geometry}
+\usepackage{enumitem}
+% \usepackage{fourier}
+\usepackage{xcolor}
+% \usepackage{abkuerzungen}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{ISASmacros/isasmathmacros}
+
+\usepackage{pdfpages}
+
+
+\newcommand{\sA}{\ensuremath{\mathsf{A}}}
+\newcommand{\sAB}{\ensuremath{\mathsf{AB}}}
+\newcommand{\sB}{\ensuremath{\mathsf{B}}}
+\newcommand{\sBA}{\ensuremath{\mathsf{BA}}}
+\newcommand{\sC}{\ensuremath{\mathsf{C}}}
+
+\newcommand{\cest}{\ensuremath{\cvec{\gamma}}}
+\newcommand{\cerest}{\ensuremath{\ervec{\gamma}}}
+\newcommand{\cmat}{\ensuremath{\mat{\Gamma}}}
+\newcommand{\tmat}{\ensuremath{\widetilde{\mat{\Gamma}}}}
+
+\newcommand{\gainA}{\ensuremath{\mat{K}}}
+\newcommand{\gainB}{\ensuremath{\mat{L}}}
+
+% \newcommand{\fus}{\ensuremath{\op{fus}}}
+
+% \newcommand{\CI}{\op{CI}\xspace}
+% \newcommand{\EI}{\op{EI}\xspace}
+% \newcommand{\ICI}{\op{ICI}\xspace}
+% \newcommand{\BC}{\op{B\!/\!C}\xspace}
+% \newcommand{\ind}{\op{s}\xspace}
+\newcommand{\ind}{\op{in}\xspace}
+\newcommand{\opt}{\cmat}
+
+
+\newcommand{\excmat}{\ensuremath{\mat{\Gamma}'}}
+\newcommand{\excest}{\ensuremath{\cest'}}
+% \newcommand{\exoptmat}{\ensuremath{\mat{C}_{\excmat}}}
+\newcommand{\exoptmat}{\ensuremath{\mat{C}'_\EI}}
+
+%\RequirePackage[mathscr]{euscript}
+%\RequirePackage{bbding}
+%\RequirePackage{scalefnt}
+%\RequirePackage{mathtools}
+\RequirePackage[T1]{fontenc}
+
+
+%%% COLOR DEFINITIONS
+
+% KIT Colors
+\definecolor{kitgreenex}{RGB}{0,152,131}
+\definecolor{kitblueex}{RGB}{52,115,186}
+\definecolor{kitmaygreen}{RGB}{119,184,38}
+\definecolor{kityellow}{RGB}{255,228,0}
+\definecolor{kitorange}{RGB}{247,154,0}
+\definecolor{kitbrown}{RGB}{182,130,28}
+\definecolor{kitred}{RGB}{187,25,23}
+\definecolor{kitpurple}{RGB}{190,0,126}
+\definecolor{kitcyanblue}{RGB}{0,167,227}
+% Own Definitions
+\definecolor{grey}{RGB}{150,150,150}
+
+
+\definecolor{nblue}{RGB}{54,95,145}
+
+%%% FONTS
+%\setkomafont{pageheadfoot}{\small\color{darkgray}}
+%\setkomafont{pagefoot}{\normalfont\color{darkgray}}
+%\setkomafont{pagenumber}{\color{darkgray}}
+%\setkomafont{captionlabel}{\small\bfseries\color{darkgray}}
+\setkomafont{disposition}{\bfseries}
+\setkomafont{section}{\normalfont\large\bfseries}
+\setkomafont{subsection}{\normalfont\bfseries}
+\setkomafont{author}{\normalfont}
+\setkomafont{date}{\normalfont}
+
+
+%%% PARAGRAPH LAYOUT
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{6pt}
+
+
+%%% REBUTTAL COMMANDS
+\newenvironment{rebuttal}{\begin{enumerate}[label={\color{grey}\thesection.\arabic{enumi}},leftmargin=0pt,ref=\thesection.\arabic{enumi}]}{\end{enumerate}}
+\newcommand{\reviewtext}[1]{{\color{nblue} #1}}
+\newcommand{\papertext}[1]{\emph{``#1''}}
+
+%%% HYPERREF SETUP
+\hypersetup{
+        colorlinks = true,
+        linkcolor = kitgreenex
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{\boldmath Secure Fast Covariance Intersection Using Partially Homomorphic and Order Revealing Encryption Schemes}
+\subtitle{Response to Reviewers' Comments - Submission L-CSS 20-0282}
+\author{Marko Ristic\and Benjamin Noack\and Uwe D. Hanebeck}
+
+%       .d8888b.  888                     888
+%      d88P  Y88b 888                     888
+%      Y88b.      888                     888
+%       "Y888b.   888888  8888b.  888d888 888888
+%          "Y88b. 888        "88b 888P"   888
+%            "888 888    .d888888 888     888
+%      Y88b  d88P Y88b.  888  888 888     Y88b.
+%       "Y8888P"   "Y888 "Y888888 888      "Y888
+
+
+
+\begin{document}
+
+\maketitle
+
+Dear Dr Giovanni Cherubini,\\
+Dear Reviewers,
+
+We would like to thank you all for your thorough and encouraging reviews. In this letter, we explain how the reviewer comments, questions, and suggestions have been addressed. Throughout this response, reviewers' comments are typed in \reviewtext{blue}. 
+
+Sincerely,\\
+Marko Ristic, Benjamin Noack, and Uwe D. Hanebeck
+
+%      8888888888     888 d8b 888
+%      888            888 Y8P 888
+%      888            888     888
+%      8888888    .d88888 888 888888 .d88b.  888d888
+%      888       d88" 888 888 888   d88""88b 888P"
+%      888       888  888 888 888   888  888 888
+%      888       Y88b 888 888 Y88b. Y88..88P 888
+%      8888888888 "Y88888 888  "Y888 "Y88P"  888
+
+
+
+\section*{Response to the Editor's Report}
+\def\thesection{E}
+\begin{rebuttal} %\setcounter{enumi}{-1}
+\item \reviewtext{Three reports have been collected for this submission. The reviewers
+agree that the topic is interesting. However, they also raise a number
+of concern that should be carefully addressed in a revised version. 
+
+I also have some specific comments:
+
+1. The problem motivation given in the Introduction is a bit vague.
+Specifically, while it is known that encryption plays an important role
+in certain network (control) systems, the need for securing
+confidentiality of data in sensor networks is less evident. The authors
+could discuss some concrete applications related to sensor networks
+where data confidentiality is important.}
+
+My response
+
+\item \reviewtext{2. On a similar vein, the paper lacks a clear problem statement
+defining what is the sensitive information (and why). This has been
+pointed out also by Reviewer 1.}
+
+My response
+
+\item \reviewtext{3. It is known that encryption introduces delays, thus affecting
+performance. The authors could add a discussion on the computation
+complexity of their method and its trade-off with accuracy. All the
+reviewers have similar comments (Reviewer 3 is especially critical on
+this point).}
+
+My response
+
+\item \reviewtext{3. It is known that encryption introduces delays, thus affecting
+performance. The authors could add a discussion on the computation
+complexity of their method and its trade-off with accuracy. All the
+reviewers have similar comments (Reviewer 3 is especially critical on
+this point).}
+
+My response
+
+\end{rebuttal}
+
+%      8888888b.                         d888
+%      888   Y88b                       d8888
+%      888    888                         888
+%      888   d88P .d88b.  888  888        888
+%      8888888P" d8P  Y8b 888  888        888
+%      888 T88b  88888888 Y88  88P        888
+%      888  T88b Y8b.      Y8bd8P         888
+%      888   T88b "Y8888    Y88P        8888888
+
+
+
+\section*{Response to the Comments of Reviewer 1 (23899)}
+\def\thesection{R1}
+\begin{rebuttal}
+\item \reviewtext{- Equations (9), (11) and (12) are incorrect. Paillier is a
+probabilistic cryptosystem which means when you encrypt the same
+message two times it will yield different ciphertexts due to the usage
+of randomness. Thus, you have to equate the decryption of both sides of
+all equations. }
+
+My response
+
+\item \reviewtext{- The paper lacks a clear problem statement and threat model. What are
+the sensitive information estimates, measurement or both?. A portion of
+the threat model is mentioned very late with the proposed solution in
+section IV. The author should mention that collusion between any sensor
+and the aggregator is not considered as the sensor holds the ORE key. }
+
+My response
+
+\item \reviewtext{- According to (18) and (19), the weights would be public information.
+A comment should be made on this privacy leakage.}
+
+My response
+
+\item \reviewtext{- Section IV: The author mentioned, "Since analytical solutions (6)
+require division, they cannot be computed exactly with the given PHE
+encryptions of sensor information vectors and information matrices."I
+disagree with this statement. The Author used an inappropriate encoding
+mechanism. Check the one used in [1]. The author should mention why
+they avoid using such an encoding mechanism to solve the problem
+without going into the proposed direction. }
+
+My response
+
+\item \reviewtext{- I expected to see complexity analysis for n sensor case or show the
+required number of comparisons and the execution time of each one. }
+
+My response
+
+\item \reviewtext{- Section I.A: The author mentioned 
+"Epk(a) and EORE;k(a) denote the public-key pk and ORE key k
+encryptions of a"I suggest to change it to 
+Epk(a) and EORE;k(a) denote the encryption of a using the public-key pk
+and ORE key k, respectively
+
+---
+[1] "CryptoImg: Privacy-preserving processing over encrypted images" M
+Tarek Ibn Ziad, Amr Alanwar, Moustafa Alzantot, Mani Srivastava}
+
+My response
+
+\end{rebuttal}
+
+%      8888888b.                         .d8888b.
+%      888   Y88b                       d88P  Y88b
+%      888    888                              888
+%      888   d88P .d88b.  888  888           .d88P
+%      8888888P" d8P  Y8b 888  888       .od888P"
+%      888 T88b  88888888 Y88  88P      d88P"
+%      888  T88b Y8b.      Y8bd8P       888"
+%      888   T88b "Y8888    Y88P        888888888
+
+
+
+\section*{Response to the Comments of Reviewer 2 (23901)}
+\def\thesection{R2}
+\begin{rebuttal}
+\item \reviewtext{This paper applis the combination of two Encryption strategies, named
+the Partially Homomorphic Encryption (PHE) 
+and Order Revealing Encryption (ORE), to the Fast Covariance
+Intersection (FCI) so as to perform secure state estimation. In the
+proposed method, the algebraic operations of PHE and ORE are utilized
+to find the fusion weight for FCI. Though the topic is for surely
+interesting, I think the authors should address the following problems
+before the subject paper being considered to be published:
+
+1, Though the topic is certainly interesting, the main idea of this
+paper seems to simply combine two existing strategies together. I think
+such idea should be motivated more, e.g., why choosing the mixed PHE
+and ORE strategies? What I can find is that it can reduce computational
+load, but I think this is not enough. Maybe you can say something
+concerning the accuracy preservation? }
+
+My response
+
+\item \reviewtext{2, In the Introduction, the authors should add a short summary of the
+technical novelties of this paper. Currently I cannot find anything.}
+
+My response
+
+\item \reviewtext{3, In simulation the authors only considered FCI and SecFCI. Concerning
+the fact that authors declared that another encryption scheme, named
+Fully Homomorphic Encryption (FHE), will lead to infeasible
+computational load. Furthermore, does the proposed method outperforms
+the encryption scheme in which only PHE or ORE is adopted? I think it
+would be nice to involve all the aforementioned strategies in
+Simulation and report also the computational load of them.}
+
+My response
+
+\end{rebuttal}
+
+%      8888888b.                         .d8888b.
+%      888   Y88b                       d88P  Y88b
+%      888    888                            .d88P
+%      888   d88P .d88b.  888  888          8888"
+%      8888888P" d8P  Y8b 888  888           "Y8b.
+%      888 T88b  88888888 Y88  88P      888    888
+%      888  T88b Y8b.      Y8bd8P       Y88b  d88P
+%      888   T88b "Y8888    Y88P         "Y8888P"
+
+
+
+\section*{Response to the Comments of Reviewer 3 (24111)}
+\def\thesection{R3}
+\begin{rebuttal}
+\item \reviewtext{The paper present a secure algorithm for covariance intersection
+implementation. Order revealing encryption is used to find the optimal
+parameters in the algorithm. Subsequently, the Paillier's encryption, a
+semi-homomorphic encryption method, to implement the algorithm. }
+
+My response
+
+\item \reviewtext{There is a large literature on control, estimation, and optimization
+with homomorphic encryption. The authors have not cited any of those
+studies. This is particularly important as they have dealt with some of
+the issues raised in this paper. For instance, in Section III.C, the
+authors discuss encoding real numbers when dealing with encryptions
+that are implemented on integer rings. This has been investigated and
+discussed at length in those papers, e.g., see secure and private
+control using semi-homomorphic encryption in Control Engineering
+Practice.}
+
+My response
+
+\item \reviewtext{One drawback of encrypted methods is the added overhead to the
+computational complexity. I think the paper benefits more if the
+authors discuss the added complexity. If this algorithm is to be
+implemented in real-time, would we be able to run all the necessary
+computations? Would the increased complexity results in slower
+implementation?}
+
+My response
+
+
+\end{rebuttal}
+
+\includepdf[pages=-]{diff}
+
+\end{document}

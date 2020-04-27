@@ -1,0 +1,551 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%DIF LATEXDIFF DIFFERENCE FILE
+%DIF DEL main_submitted_1.tex   Wed Apr  8 13:25:02 2020
+%DIF ADD main.tex               Wed Apr  8 13:25:02 2020
+%2345678901234567890123456789012345678901234567890123456789012345678901234567890
+%        1         2         3         4         5         6         7         8
+
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
+
+%\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
+
+\IEEEoverridecommandlockouts                              % This command is only needed if 
+                                                          % you want to use the \thanks command
+
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
+
+%In case you encounter the following error:
+%Error 1010 The PDF file may be corrupt (unable to open PDF file) OR
+%Error 1000 An error occurred while parsing a contents stream. Unable to analyze the PDF file.
+%This is a known problem with pdfLaTeX conversion filter. The file cannot be opened with acrobat reader
+%Please use one of the alternatives below to circumvent this error by uncommenting one or the other
+%\pdfobjcompresslevel=0
+%\pdfminorversion=4
+
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
+% The following packages can be found on http:\\www.ctan.org
+%\usepackage{graphics} % for pdf, bitmapped graphics files
+%\usepackage{epsfig} % for postscript graphics files
+%\usepackage{mathptmx} % assumes new font selection scheme installed
+%\usepackage{times} % assumes new font selection scheme installed
+%\usepackage{amsmath} % assumes amsmath package installed
+%\usepackage{amssymb}  % assumes amsmath package installed
+
+% Groups consecutive citations together nicely
+\usepackage{cite}
+
+% ISAS conventions. Underlined vectors, random vectors, etc.
+\usepackage{ISASmacros/isasmathmacros}
+%\usepackage{ISASmacros/isastextmacros} % errors?
+
+% Needed to display images generated with Matplotlib nicely
+\usepackage{pgf}
+
+% Used to make subfigures and fit 3 figures across the page. Command lets sub references be in parentheses
+\usepackage[labelformat=simple]{subcaption}
+\renewcommand\thesubfigure{(\alph{subfigure})}
+
+% Keep the figure captions small
+\usepackage[font=small]{caption}
+
+% Used to make the last page have even height columns
+\usepackage{flushend}
+
+% Condenses everything and also makes it prettier
+\usepackage{microtype}
+
+\title{\LARGE \bf
+Secure Fast Covariance Intersection Using Partially Homomorphic and Order Revealing Encryption Schemes
+}
+
+\author{Marko Ristic, Benjamin Noack, and Uwe D. Hanebeck% <-this % stops a space
+\thanks{Marko Ristic, Benjamin Noack, and Uwe D. Hanebeck are with the Intelligent Sensor-Actuator-Systems Laboratory (ISAS), Institute for Anthropomatics, Karlsruhe Institute of Technology (KIT), Germany.\newline
+{\tt\small \{marko.ristic,noack,uwe.hanebeck\}@kit.edu}%
+}% <-this % stops a space
+}
+%DIF PREAMBLE EXTENSION ADDED BY LATEXDIFF
+%DIF UNDERLINE PREAMBLE %DIF PREAMBLE
+\RequirePackage[normalem]{ulem} %DIF PREAMBLE
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1} %DIF PREAMBLE
+\providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}} %DIF PREAMBLE
+\providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}                      %DIF PREAMBLE
+%DIF SAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddbegin}{} %DIF PREAMBLE
+\providecommand{\DIFaddend}{} %DIF PREAMBLE
+\providecommand{\DIFdelbegin}{} %DIF PREAMBLE
+\providecommand{\DIFdelend}{} %DIF PREAMBLE
+\providecommand{\DIFmodbegin}{} %DIF PREAMBLE
+\providecommand{\DIFmodend}{} %DIF PREAMBLE
+%DIF FLOATSAFE PREAMBLE %DIF PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}} %DIF PREAMBLE
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}} %DIF PREAMBLE
+\providecommand{\DIFaddbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFaddendFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
+\providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+%DIF LISTINGS PREAMBLE %DIF PREAMBLE
+\RequirePackage{listings} %DIF PREAMBLE
+\RequirePackage{color} %DIF PREAMBLE
+\lstdefinelanguage{DIFcode}{ %DIF PREAMBLE
+%DIF DIFCODE_UNDERLINE %DIF PREAMBLE
+  moredelim=[il][\color{red}\sout]{\%DIF\ <\ }, %DIF PREAMBLE
+  moredelim=[il][\color{blue}\uwave]{\%DIF\ >\ } %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstdefinestyle{DIFverbatimstyle}{ %DIF PREAMBLE
+	language=DIFcode, %DIF PREAMBLE
+	basicstyle=\ttfamily, %DIF PREAMBLE
+	columns=fullflexible, %DIF PREAMBLE
+	keepspaces=true %DIF PREAMBLE
+} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim}{\lstset{style=DIFverbatimstyle}}{} %DIF PREAMBLE
+\lstnewenvironment{DIFverbatim*}{\lstset{style=DIFverbatimstyle,showspaces=true}}{} %DIF PREAMBLE
+%DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\pagestyle{empty}
+
+%        d8888 888               888                             888
+%       d88888 888               888                             888
+%      d88P888 888               888                             888
+%     d88P 888 88888b.  .d8888b  888888 888d888 8888b.   .d8888b 888888
+%    d88P  888 888 "88b 88K      888    888P"      "88b d88P"    888
+%   d88P   888 888  888 "Y8888b. 888    888    .d888888 888      888
+%  d8888888888 888 d88P      X88 Y88b.  888    888  888 Y88b.    Y88b.
+% d88P     888 88888P"   88888P'  "Y888 888    "Y888888  "Y8888P  "Y888
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{abstract}
+
+Fast covariance intersection is a widespread technique for state estimate fusion in sensor networks when cross-correlations are not known and fast computations are desired. The common requirement of sending estimates from one party to another during fusion means they do not remain locally private. Current secure fusion algorithms rely on encryption schemes that do not provide sufficient flexibility and as a result require, often undesired, excess communication between estimate producers. We propose a novel method of homomorphically computing the fast covariance intersection algorithm on estimates encrypted with a combination of encryption schemes. Using order revealing encryption, we show how approximate solutions to the fast covariance intersection coefficients can be computed and combined with partially homomorphic encryptions of estimates, to calculate an encryption of the fused result. The described approach allows secure fusion of any number of private estimates, making third-party cloud processing a viable option when working with sensitive state estimates or when performing estimation over untrusted networks.
+
+\end{abstract}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% 8888888          888
+%   888            888
+%   888            888
+%   888   88888b.  888888 888d888 .d88b.
+%   888   888 "88b 888    888P"  d88""88b
+%   888   888  888 888    888    888  888
+%   888   888  888 Y88b.  888    Y88..88P
+% 8888888 888  888  "Y888 888     "Y88P"
+
+
+
+\section{Introduction}
+Sensor data processing and state estimation have been increasingly prevalent in networked systems \cite{ligginsDistributedDataFusion2012,chongFortyYearsDistributed2017}. Bayesian state estimation has become a particularly common application since the beginning of Kalman estimation theory \cite{kalmanNewApproachLinear1960} and has led to a large interest in the field of state estimation fusion \cite{willnerKalmanFilterAlgorithms1976,chongHierarchicalEstimation1979,chongDistributedTrackingDistributed1986,hashemipourDecentralizedStructuresParallel1988,grimeDataFusionDecentralized1994}. Challenges of estimation fusion are closely tied to the handling and merging of estimation error statistics \cite{fouratiMultisensorDataFusion2017}. Cross-correlations between estimation errors characterize dependencies between local estimates and must be considered when performing consistent or optimal fusion \cite{bar-shalomTracktotrackCorrelationProblem1981,sunMultisensorOptimalInformation2004}. Methods that keep track of the cross-correlation of errors may require repeated reconstruction \cite{steinbringOptimalSamplebasedFusion2016} and typically add local computational complexity and limit usability. An alternative strategy sees the approximation of estimate error cross-correlation based on conservative suboptimal strategies, and has been implemented in a variety of methods \cite{carlsonFederatedFilterFaulttolerant1988,julierNondivergentEstimationAlgorithm1997,sijsStateFusionUnknown2012,noackDecentralizedDataFusion2017,niehsenInformationFusionBased2002,frankenImprovedFastCovariance2005}. Covariance Intersection (CI) \cite{julierNondivergentEstimationAlgorithm1997} provides one such popular conservative strategy, from which a less computationally expensive method, the Fast Covariance Intersection (FCI) \cite{niehsenInformationFusionBased2002} has been derived. CI is particularly well paired with the information form of the Kalman filter \cite{mutambaraDecentralizedEstimationControl1998}. This algebraically equivalent form of the standard Kalman filter requires the persistent storing of the information vector and information matrix instead of the usual state estimate and estimate covariance, and reduces fusion operations to simple summations. It has been used to subtract common information between estimates when cross-correlations are known \cite{grimeDataFusionDecentralized1994} and within fully distributed filter implementations \cite{pfaffInformationFormDistributed2017}.
+
+A key step in distributed sensor fusion, and our topic of interest in this paper, is the requirement of transmitting sensor state estimate and covariance information between network nodes for the computation of a final fused result. Network eavesdroppers or curious fusion nodes are not prevented from learning possibly sensitive local state estimates and covariances. Encryption has until recently been primarily used to secure information transfer between communicating parties. Common symmetric-key encryption schemes such as AES \cite{daemonAnnouncingAdvancedEncryption2001} are used to encrypt sent information to its destination, and public-key encryption schemes such as RSA \cite{rivestMethodObtainingDigital1978} to distribute symmetric keys. However, recent developments in public-key Homomorphic Encryption (HE) schemes \cite{gentryFullyHomomorphicEncryption2009,elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}, which allow algebraic operations to be performed on encryptions, are leading to more secure cloud or network applications for signal processing \cite{lagendijkEncryptedSignalProcessing2012,alexandruEncryptedCooperativeControl2019,aristovEncryptedMultisensorInformation2018}. Although implementations of Fully Homomorphic Encryption (FHE) schemes exist \cite{gentryImplementingGentryFullyHomomorphic2011}, and provide all algebraic operations on encryptions, current implementations are still computationally infeasible for large-scale signal processing \cite{duImplementingMLAlgorithms2017,acarSurveyHomomorphicEncryption2018}. Instead, Partially Homomorphic Encryption (PHE) schemes \cite{elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}, providing typically only one algebraic operation, have been a focus for such processing tasks \cite{alexandruEncryptedCooperativeControl2019,aristovEncryptedMultisensorInformation2018}. Most commonly, addition is provided by the Paillier encryption scheme \cite{paillierPublicKeyCryptosystemsBased1999} due to its speed and simplicity. However, due to the limited operations provided, securely computable processing algorithms have thus far been relatively restricted in complexity and application. The recent development of new encryption schemes, such as Order Revealing Encryption (ORE) \cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016,bogatovComparativeEvaluationOrderPreserving2018}, have provided new light on the possible complexity of signal processing algorithms that can be computed securely. Thus far, ORE has found little application in the context of signal processing algorithms or in combination with HE schemes. In this paper, we make use of a combination of ORE and PHE schemes to develop a Secure FCI (SecFCI) fusion method that enables us to protect sensor estimates from both eavesdroppers and other algorithm participants.
+
+\subsection{Notation}
+Throughout this paper we will use the following notation. Lowercase characters represent scalars, lowercase underlined characters, $\vec{x}$, represent vectors. Uppercase bold characters, $\mM$, are reserved for matrices, where $\mM^\top$ denotes the matrix transpose, $\mM^{-1}$ the matrix inverse, and $\tr(\cdot)$ the trace function. Covariance matrices will be represented by $\mP$. $\mathcal{E}_{pk}(a)$ and $\mathcal{E}_{ORE,k}(a)$ denote the public-key $pk$ and ORE key $k$ encryptions of $a$, and similarly with the decryption functions $\mathcal{D}_{pk}(\cdot)$ and $\mathcal{D}_{ORE,k}(\cdot)$, where any required real-number encodings of the number $a$ are assumed to be performed. $\mathcal{E}(a)$ and $\mathcal{E}_{ORE}(a)$ may be used for brevity when the encryption keys can be inferred from context. All encryption of vectors and matrices are defined element-wise, with elements given by $\mathcal{E}(\mP_{i,j}) = \mathcal{E}(\mP)_{i,j}$. Sets are represented as $\{\cdot\}$ while ordered lists with $[\cdot]$.
+
+%  .d8888b. 8888888
+% d88P  Y88b  888
+% 888    888  888
+% 888         888
+% 888         888
+% 888    888  888
+% Y88b  d88P  888
+%  "Y8888P" 8888888
+
+
+
+\section{Covariance Intersection and Approximations} \label{sec:ci}
+Covariance Intersection (CI), introduced in \cite{julierNondivergentEstimationAlgorithm1997}, provides a consistent state estimate fusion algorithm when cross-correlations are not known. The resulting fused estimate $\mean{\vec{x}}$ and estimate covariance $\mP$ can be easily derived from its equations
+\begin{equation}
+   \mP^{-1}=\sum_{i=0}^{n}\omega_i \mP_i^{-1},\ \mP^{-1} \mean{\vec{x}} =\sum_{i=0}^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i\,. \label{eqn:ci_cov_estimate}
+\end{equation}
+Note that \eqref{eqn:ci_cov_estimate} computes the fusion of the information vectors and information matrices defined in \cite{niehsenInformationFusionBased2002} and reduces the fusion to a simple weighted sum.
+Values for $\omega_i$ must satisfy
+\begin{equation}
+   \omega_0 + \omega_1 + \cdots + \omega_n = 1,\ 0 \leq \omega_i \leq 1\,, \label{eqn:ci_omega_sum_bound}
+\end{equation}
+which guarantees consistency of the fused estimates. They are chosen in a way to speed up convergence and minimize error, by minimizing a certain specified property of the resulting fused estimate covariance. One such property, the fused estimate covariance trace, requires the solution to
+\begin{equation}
+   \argmin_{\omega_0,\dots,\omega_n} \{\tr(\mP)\} = \argmin_{\omega_0,\dots,\omega_n} \left\{\tr\left(\left(\sum_{i=0}^{n}\omega_i \mP_i^{-1}\right)^{-1}\right)\right\}\,. \label{eqn:ci_trace_min}
+\end{equation}
+However, minimizing this non-linear cost function can be very costly computationally and has led to the development of the non-iterative approximation technique in \cite{niehsenInformationFusionBased2002}.
+
+
+\subsection{Fast Covariance intersection}
+The Fast Covariance Intersection (FCI) algorithm from \cite{niehsenInformationFusionBased2002} is a common method used for approximating the solution to \eqref{eqn:ci_trace_min} without the loss of guaranteed consistency. It is computed by defining a new constraint
+\begin{equation}
+   \omega_i \tr(\mP_i) - \omega_j \tr(\mP_j) = 0,\ i,j=0,1,\dots,n-1 \label{eqn:fci_eq_big}
+\end{equation}
+on $\omega_i$ and solving the resulting equations instead. In the two sensor case, this results in the solving of
+\begin{equation}
+   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0,\ \omega_0 + \omega_1 = 1\,, \label{eqn:fci_2sen_omega_sum_eq}
+\end{equation}
+with analytical solutions given by
+\begin{equation}
+   \omega_0 = \frac{\tr(\mP_1)}{\tr(\mP_0)+\tr(\mP_1)},\ \omega_1 = \frac{\tr(\mP_0)}{\tr(\mP_0)+\tr(\mP_1)}\,. \label{eqn:fci_2sen_sol}
+\end{equation}
+When computed for the $n$ sensor case, the highly redundant constraint \eqref{eqn:fci_eq_big} can have its largest linearly independent subset represented by
+\begin{equation}
+   \omega_i \tr(\mP_i) - \omega_{i+1} \tr(\mP_{i+1}) = 0,\ i=0,1,\dots,n-2\,, \label{eqn:fci_eq}
+\end{equation}
+and requires the solution to the linear problem
+\begin{equation}
+   \begin{bmatrix}
+      \mathcal{P}_0 & -\mathcal{P}_1 & 0 & \cdots & 0 \\
+      0 & \mathcal{P}_1 & -\mathcal{P}_2 & \cdots & 0 \\
+      \vdots & \vdots & \vdots & \ddots & \vdots & \\
+      0 & \cdots & 0 & \mathcal{P}_{n-1} & -\mathcal{P}_n \\
+      1 & \cdots & 1 & 1 & 1 &
+   \end{bmatrix}
+   \begin{bmatrix}
+      \omega_0 \\
+      \omega_1 \\
+      \vdots \\
+      \omega_{n-1} \\
+      \omega_n
+   \end{bmatrix}
+   =
+   \begin{bmatrix}
+      0 \\
+      0 \\
+      \vdots \\
+      0 \\
+      1
+   \end{bmatrix}\,, \label{eqn:fci_eq_sys}
+\end{equation}
+where we let $\mathcal{P}_i = \tr(\mP_i)$.
+
+Our proposed filter aims to solve FCI fusion, namely \eqref{eqn:ci_cov_estimate} and \eqref{eqn:fci_eq_sys}, homomorphically, such that using only encrypted values from each sensor $i$, we can produce valid encryptions of fused estimates without the need for decryption.
+
+% 8888888b.  888    888 8888888888       .d8888b.            .d88888b.  8888888b.  8888888888
+% 888   Y88b 888    888 888             d88P  "88b          d88P" "Y88b 888   Y88b 888
+% 888    888 888    888 888             Y88b. d88P          888     888 888    888 888
+% 888   d88P 8888888888 8888888          "Y8888P"           888     888 888   d88P 8888888
+% 8888888P"  888    888 888             .d88P88K.d88P       888     888 8888888P"  888
+% 888        888    888 888             888"  Y888P"        888     888 888 T88b   888
+% 888        888    888 888             Y88b .d8888b        Y88b. .d88P 888  T88b  888
+% 888        888    888 8888888888       "Y8888P" Y88b       "Y88888P"  888   T88b 8888888888
+
+
+
+\section{Homomorphic and Order Revealing Encryption} \label{sec:encryption}
+To achieve a secure solution to the FCI fusion problem, we make use of two types of function-providing encryption schemes. Public-key additive Partially Homomorphic Encryption (PHE) schemes \cite{paillierPublicKeyCryptosystemsBased1999,goldwasserProbabilisticEncryption1984} provide a single homomorphic addition operation on cyphertexts such that
+\begin{equation}
+   \mathcal{E}(a) \oplus \mathcal{E}(b) = \mathcal{E}(a+b) \label{eqn:phe_eq}
+\end{equation}
+holds. Symmetric-key Order Revealing Encryption (ORE) schemes \cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016} provide a secure comparison function, allowing the comparison of encrypted values via
+\begin{equation}
+   f(\mathcal{E}_{ORE}(a), \mathcal{E}_{ORE}(b)) = \operatorfont{cmp}(a, b)\,. \label{eqn:ore_eq}
+\end{equation}
+
+The formal security of encryption schemes consists of a security goal and a formal threat model \cite{katzIntroductionModernCryptography2008}. Indistinguishability of ciphertexts under the adaptive chosen ciphertext attack model (IND-CCA2) is commonly considered the strongest security guarantee \cite{bellareRelationsNotionsSecurity1998}. However, no homomorphic encryption scheme provides security against chosen ciphertext attack models due to their apparent ability to create valid cyphertexts via homomorphic operations. Instead, PHE schemes aim to protect against the weaker assumption of the chosen plaintext attack model (IND-CPA) \cite{chaseSecurityHomomorphicEncryption2017}. Similarly, ORE schemes aim to protect against simulation-based security defined in \cite{chenettePracticalOrderRevealingEncryption2016} or the harder to achieve ordered chosen-plaintext attack model (IND-OCPA).
+
+\subsection{Additive Partially Homomorphic Encryption} \label{subsec:paillier}
+The additive PHE scheme we use is the Paillier encryption scheme \cite{paillierPublicKeyCryptosystemsBased1999} due to its implementation simplicity, and computational speed. The Paillier scheme provides two homomorphic operations on encrypted data, 
+\begin{equation}
+   \mathcal{E}_{pk}(a)\mathcal{E}_{pk}(b) \!\!\pmod{N^{2}} = \mathcal{E}_{pk}(a + b \!\!\pmod{N}) \label{eqn:paillier_add}
+\end{equation}
+and
+\begin{equation}
+   \mathcal{E}_{pk}(a)^c \!\!\pmod{N^{2}} = \mathcal{E}_{pk}(c\cdot a \!\!\pmod{N}),\ c \in \mathbb{Z}^*_N\,, \label{eqn:paillier_mult}
+\end{equation}
+where the modulus $N$ is computed as the product of two large primes chosen randomly during key-generation. The public and secret keys are shown as $pk$ and $sk$ respectively, and plaintext messages $a,b \in \mathbb{Z}_N$. The Paillier encryption scheme successfully provides security against the IND-CPA model.
+
+\subsection{Left-Right Order Revealing Encryption} \label{subsec:lewi}
+The ORE scheme we have used is Lewi's symmetric-key Left-Right encryption scheme \cite{lewiOrderRevealingEncryptionNew2016} that has the added property of only allowing certain comparisons between cyphertexts. This property can be used to decide which values may not be compared as will be shown in section \ref{sec:secfci} and is described as follows. Two encryption functions allow integers to be encrypted as either a ``Left'' ($L$) or ``Right'' ($R$) encryption by
+\begin{equation}
+   \begin{gathered} \label{eqn:lewi_l_r}
+      \operatorfont{enc}^L_{ORE}(k, x) = \mathcal{E}^L_{ORE,k}(x) \\
+      \operatorfont{enc}^R_{ORE}(k, y) = \mathcal{E}^R_{ORE,k}(y)\,,
+   \end{gathered}
+\end{equation}
+and only comparisons between an $L$ and an $R$ encryption are possible, by
+\begin{equation}
+   \operatorfont{cmp}_{ORE}(\mathcal{E}^L_{ORE}(x),\ \mathcal{E}^R_{ORE}(y)) = \operatorfont{cmp}(x, y)\,. \label{eqn:lewi_cmp}
+\end{equation}
+Note that no decryption function is provided, as only encryptions are required to provide a means of secure comparison. The Lewi ORE encryption scheme provides security against the simulation-based security model \cite{chenettePracticalOrderRevealingEncryption2016} but is not secure against the IND-OCPA model.
+
+\subsection{Real Number Encoding for Homomorphic Encryption}
+Both encryption schemes in sections \ref{subsec:paillier} and \ref{subsec:lewi} are defined over positive integers, and the Paillier scheme with the upper bound $N$ to the size of an encryptable integer. Due to the prevalence of real numbers in estimation theory, typically stored as floating-point numbers in modern-day hardware, an integer encoding of real number values is required for their encryption. This requires handling both negative and fractional numbers. 
+
+Negative numbers can be handled using the common two's complement method of representing negative integers \cite{liljaDesigningDigitalComputer2004}. This is done by splitting the total range of allowable integers $[0, N)$ in half, and letting the upper half $[\frac{N}{2}, N)$ represent negative integers. From this, we can see that the value of the largest encryptable integer is now given by $N/2-1$ and that the addition of two's complement numbers is automatically preserved due to modulo arithmetic.
+
+The handling of fractional numbers proves to be more complicated, due to the homomorphic multiplication property of the Paillier encryption scheme \eqref{eqn:paillier_mult}. Fractional numbers are represented as integers using the quantising Q number format \cite{oberstarFixedPointRepresentationFractional2007}. The encoding of a real number $a$, with maximum integer bits $i$ and fractional bits $f$ is represented by an $i+f$ bit long integer $e$, such that the maximum encoding is given by $2^{(i+f)}-1$. Encoding is performed by
+\begin{equation}
+   e = \floor{2^f a}\,. \label{eqn:qmn}
+\end{equation}
+While encoded Q numbers are consistent under addition, multiplication requires a factor of $1/2^f$ to be removed. As homomorphic division is not supported by the Paillier encryption scheme, the number of multiplications performed on encrypted values must be bounded and handled when decoding. As will be shown in section \ref{sec:secfci}, our fusion method will always require that a single multiplication factor be removed and leads to the decoding of an integer $e$ to a real number $a$ being given by
+\begin{equation}
+   a = \frac{e}{2^{2f}}\,. \label{eqn:qmn_mult_decode}
+\end{equation}
+
+While the largest encryptable integer is given by $N/2-1$, the largest encodable real number must account for the additional multiplication factor in its encoding. Thus, the integer and fractional bits $i$ and $f$ must be chosen such that
+\begin{equation}
+   (2^{(i+f)}-1)^2 \leq \frac{N}{2}-1 \label{eqn:qmn_max}
+\end{equation}
+holds.
+
+
+%  .d8888b.                    8888888888 .d8888b. 8888888       .d8888b.
+% d88P  Y88b                   888       d88P  Y88b  888        d88P  Y88b
+% Y88b.                        888       888    888  888               888
+%  "Y888b.    .d88b.   .d8888b 8888888   888         888             .d88P        .d8888b   .d88b.  88888b.
+%     "Y88b. d8P  Y8b d88P"    888       888         888         .od888P"         88K      d8P  Y8b 888 "88b
+%       "888 88888888 888      888       888    888  888        d88P"      888888 "Y8888b. 88888888 888  888
+% Y88b  d88P Y8b.     Y88b.    888       Y88b  d88P  888        888"                   X88 Y8b.     888  888 d8b
+%  "Y8888P"   "Y8888   "Y8888P 888        "Y8888P" 8888888      888888888          88888P'  "Y8888  888  888 Y8P
+
+
+
+\section{Two-sensor Secure Fast Covariance Intersection} \label{sec:secfci}
+In this section, we will introduce the Secure FCI (SecFCI) fusion algorithm for the two sensor case, before extending it to the $n$ sensor case in section \ref{sec:multi_secfci}. The network model we will consider is one where all sensors are capable of running local estimators, as well as the PHE and ORE encryption schemes described in section \ref{sec:encryption}. Each sensor $i$ computes its state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$ and sends the relevant encrypted information to a single fusion center that computes the fused state estimate and covariance matrix homomorphically. A third, querying party, can request and use the current encrypted fused information from the fusion center at any time. The querying party is the key holding party in this network and generates the PHE public key $pk$, secret key $sk$, and ORE symmetric key $k$. $pk$ is made available to all parties in the network, and $k$ is made available to the sensors only, via any standard public-key scheme such as RSA \cite{rivestMethodObtainingDigital1978}. When encrypting with ORE key $k$, individual sensors are limited to using only $L$ or $R$ ORE encryption to reduce local information leakage. Thus, consecutive ORE encryptions from any sensor cannot be used to infer local information directly, and can only be compared to encryptions from sensors using the alternate ORE encryption.
+
+From \eqref{eqn:ci_cov_estimate}, we can see that both CI fusion equations can be computed on PHE encryptions of sensor information vectors and information matrices, given valid values for each $\omega_i$. In the two sensor case, homomorphic fusion is computed by
+\begin{equation}
+   \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_0)^{\omega_0}\mathcal{E}(\mP^{-1}_1)^{(1 -\omega_0)} \label{eqn:paillier_ci_cov}
+\end{equation}
+and
+\begin{equation}
+   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_0\mean{\vec{x}}_0)^{\omega_0}\mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{(1 - \omega_0)}\,, \label{eqn:paillier_ci_estimate}
+\end{equation}
+where we note that $\omega_1=1-\omega_0$ due to the CI requirement \eqref{eqn:ci_omega_sum_bound}. We also note that in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}, each resulting value will have exactly one Q encoding multiplication factor to remove, and can be decoded exactly by using \eqref{eqn:qmn_mult_decode}.
+
+In the two sensor case, all that remains for computing CI homomorphically is the calculation of parameter $\omega_0$. For this, we approximate the solution to the FCI fusion algorithm. Since analytical solutions \eqref{eqn:fci_2sen_sol} require division, they cannot be computed exactly with the given PHE encryptions of sensor information vectors and information matrices. Instead, we discretize $\omega_i$ by step-size $s$, such that $s<1$ and $p=1/s \in \mathbb{Z}$, and approximate \eqref{eqn:fci_2sen_omega_sum_eq} with ORE. An ordered discretization of values $\omega^{(x)}$ is defined by
+\begin{equation}
+   [\omega^{(0)},\dots,\omega^{(p)}] = [0,s,\dots,1-s,1]\,,
+\end{equation}
+and computed by each sensor $i$. Each $\omega^{(x)}$ is multiplied by $\tr(\mP_i)$ and encrypted with ORE key $k$. Sensor $0$'s list is defined by 
+\begin{equation}
+   [\mathcal{E}^L_{ORE}(\omega^{(0)}\tr(\mP_0)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_0))]\,, \label{eqn:sen0_ore_list}
+\end{equation}
+and similarly sensor $1$'s by
+\begin{equation}
+   [\mathcal{E}^R_{ORE}(\omega^{(0)}\tr(\mP_1)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_1))]\,. \label{eqn:sen1_ore_list}
+\end{equation}
+Note that Sensor $0$ uses only $L$ ORE while sensor $1$ uses only $R$ ORE and that both lists are ordered. Lists \eqref{eqn:sen0_ore_list} and \eqref{eqn:sen1_ore_list} are sent alongside PHE encryptions of local information vector and information matrix estimates to the fusion center which uses them to estimate the FCI values of $\omega_0$ and $\omega_1$.
+
+From \eqref{eqn:fci_2sen_omega_sum_eq} we know that $\omega_0$ must satisfy
+\begin{equation}
+   \omega_0 \tr(\mP_0) = (1-\omega_0)\tr(\mP_1)\,. \label{eqn:secfci_2sen_intersect}
+\end{equation}
+If we reverse \eqref{eqn:sen1_ore_list}, we obtain the equivalent list
+\begin{equation}
+   [\mathcal{E}^R_{ORE}((1-\omega^{(0)})\tr(\mP_1)),\dots,\mathcal{E}^R_{ORE}((1-\omega^{(p)})\tr(\mP_1))] \label{eqn:sen2_ore_rev_list}
+\end{equation}
+which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:secfci_2sen_intersect} and therefore, \eqref{eqn:fci_2sen_omega_sum_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega^{(x)}$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in $O(log(p))$ by a binary search.
+\begin{figure}[tb]
+   \vspace{-5pt}
+   \begin{center}
+      \input{images/2_sensors.pgf}
+   \end{center}
+   \vspace{-10pt}
+   \caption{Approximation of $\omega_0$ with discretisation step-size $s=0.1$. Only comparisons between line points are used.}
+   \vspace{-\baselineskip}
+   \label{fig:2_sensor_sol}
+\end{figure}
+Consecutive $\omega^{(x)}$ and $\omega^{(x+1)}$ for which list comparisons differ can be used to estimate the true intersection, and $\omega_0$, by
+\begin{equation}
+   \omega_0 \approx \frac{1}{2}(\omega^{(x)} + \omega^{(x+1)})\,. \label{eqn:secfci_2sen_omega}
+\end{equation}
+In the case a comparison returns equality, the exact value of $\omega^{(x)}$ can be taken to be $\omega_0$.
+
+The fusion center can then use its values for $\omega_0$ and $\omega_1 = 1-\omega_0$ and the received PHE encryptions of local information vectors and information matrices to compute \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}.
+
+%  .d8888b.                    8888888888 .d8888b. 8888888
+% d88P  Y88b                   888       d88P  Y88b  888
+% Y88b.                        888       888    888  888
+%  "Y888b.    .d88b.   .d8888b 8888888   888         888
+%     "Y88b. d8P  Y8b d88P"    888       888         888
+%       "888 88888888 888      888       888    888  888
+% Y88b  d88P Y8b.     Y88b.    888       Y88b  d88P  888
+%  "Y8888P"   "Y8888   "Y8888P 888        "Y8888P" 8888888
+
+
+
+\section{Multi-sensor Secure Fast Covariance Intersection} \label{sec:multi_secfci}
+When computing the SecFCI fusion for $n$ sensors, we solve \eqref{eqn:ci_cov_estimate} homomorphically by computing
+\begin{equation}
+   \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_0)^{\omega_0}\cdots\mathcal{E}(\mP^{-1}_n)^{\omega_n} \label{eqn:n_sen_paillier_ci_cov}
+\end{equation}
+and
+\begin{equation}
+   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_0\mean{\vec{x}}_0)^{\omega_0}\cdots\mathcal{E}(\mP^{-1}_n\mean{\vec{x}}_n)^{\omega_n}\,. \label{eqn:n_sen_paillier_ci_estimate}
+\end{equation}
+As with the two sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the weights $\omega_0,\dots,\omega_n$.
+
+Our approach to the $n$ sensor case is to solve each $n-1$ conditions in \eqref{eqn:fci_eq} using the two sensor method, and combining partial solutions to compute the final result. When we consider a Euclidean dimension for each $\omega_i$, partial solutions can be considered geometrically as hyperplanes of $n-2$ dimension, over the $n-1$ dimensional solution space given by \eqref{eqn:ci_omega_sum_bound}. 
+
+This can be visualized in the three sensor case, which requires solving partial solutions
+\begin{equation}
+   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0,\ \omega_0+\omega_1=1-\omega_2 \label{eqn:3_sensor_partial_sol_1}
+\end{equation}
+and
+\begin{equation}
+   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0,\ \omega_1+\omega_2=1-\omega_0\,. \label{eqn:3_sensor_partial_sol_2}
+\end{equation}
+We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{eqn:3_sensor_partial_sol_1} exactly when $\omega_2=0$, and know that when $\omega_2=1$, then $\omega_0=\omega_1=0$. These two points are enough to define the two-dimensional partial solution \eqref{eqn:3_sensor_partial_sol_1} which can be seen plotted over the possible solution space in Fig. \ref{fig:3_sensor_partial_sol}. Fig. \ref{fig:3_sensor_partial_sols} shows both partial solutions \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} plotted over the solution space.
+\begin{figure*}[tb]
+   \begin{subfigure}[t]{0.3\textwidth}
+      \begin{center}
+         \input{images/partial_sol1.pgf}
+      \end{center}
+      \caption{Partial solution to \eqref{eqn:3_sensor_partial_sol_1}.}
+      \label{fig:3_sensor_partial_sol}
+   \end{subfigure}
+   ~
+   \begin{subfigure}[t]{0.3\textwidth}
+      \begin{center}
+         \input{images/partial_sols.pgf}
+      \end{center}
+      \caption{Partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2}.}
+      \label{fig:3_sensor_partial_sols}
+   \end{subfigure}
+   ~
+   \begin{subfigure}[t]{0.3\textwidth}
+      \begin{center}
+         \input{images/partial_sol_planes.pgf}
+      \end{center}
+      \caption{Partial solutions as planes perpendicular to the solution space.}
+      \label{fig:3sen_planes}
+   \end{subfigure}
+   \caption{Partial solutions over $\omega_0$, $\omega_1$, and $\omega_2$ solution space.}
+   \vspace{-\baselineskip}
+   \label{fig:partial_sols_and_planes}
+\end{figure*}
+The final solution from all partial solutions is computed by finding their intersection. This can be seen in Fig. \ref{fig:3_sensor_partial_sols} as the intersection of the $(\omega_0,\omega_1)$ and $(\omega_1,\omega_2)$ partial solution lines.
+
+To simplify computing the partial solution intersection, we define equivalent planes for each partial solution, perpendicular to the solution space, in the form
+\begin{equation}
+   a_0\omega_0 + a_1\omega_1 +a_2\omega_2 + a_3 = 0\,, \label{eqn:3sen_plane_eq}
+\end{equation}
+and solve the resulting linear system for finding the intersection of all planes and the solution space. This is given by
+\begin{equation}
+   \begin{bmatrix}
+      a_0^{(0)} & a_1^{(0)} & a_2^{(0)} \\
+      a_0^{(1)} & a_1^{(1)} & a_2^{(1)} \\
+      1 & 1 & 1
+   \end{bmatrix}
+   \begin{bmatrix}
+      \omega_0 \\
+      \omega_1 \\
+      \omega_2
+   \end{bmatrix}
+   =
+   \begin{bmatrix}
+      a_3^{(0)} \\
+      a_3^{(1)} \\
+      1
+   \end{bmatrix}\,, \label{eqn:3sen_plane_sol_eq}
+\end{equation}
+where $a_i^{(j)}$ denotes parameter $i$ of partial solution $j$.
+
+In the $n$ sensor case, we can similarly solve partial solutions by first using the method from section \ref{sec:secfci} to solve an equation with two parameters $\omega_k$ and $\omega_{k+1}$ when letting all $\omega_i=0,\ i\neq k,k+1$, and can compute a remaining point for each $\omega_i=1,\ i\neq k,k+1$ with $\omega_j=0,\ j\neq i$. Perpendicular hyperplanes can then be similarly defined in the form 
+\begin{equation}
+   a_0\omega_0 + \dots +a_n\omega_n + a_{n+1} = 0\,. \label{eqn:nsen_plane_eq}
+\end{equation}
+Due to their inherent orthogonality, $n-1$ partial solution hyperplanes are guaranteed to intersect at exactly one point when at most $1$ sensor has $\tr(\mP_i)=0$. The hyperplane intersection results in the linear system 
+\begin{equation}
+   \begin{bmatrix}
+      a_0^{(0)} & a_1^{(0)} & \cdots & a_n^{(0)} \\
+      a_0^{(1)} & a_1^{(1)} & \cdots & a_n^{(1)} \\
+      \vdots & \vdots & \ddots & \vdots \\
+      a_0^{(n-1)} & a_1^{(n-1)} & \cdots & a_n^{(n-1)} \\
+      1 & 1 & \cdots & 1
+   \end{bmatrix}
+   \begin{bmatrix}
+      \omega_0 \\
+      \omega_1 \\
+      \vdots \\
+      \omega_{n-1} \\
+      \omega_n
+   \end{bmatrix}
+   =
+   \begin{bmatrix}
+      a_{n+1}^{(0)} \\
+      a_{n+1}^{(1)} \\
+      \vdots \\
+      a_{n+1}^{(n-1)} \\
+      1
+   \end{bmatrix}\,, \label{eqn:hyperplane_sol_eq}
+\end{equation}
+and gives the solution to the SecFCI $\omega_i$ values.
+
+As all ORE comparisons are done between sequential sensors $i$ and $i+1$, seen in \eqref{eqn:fci_eq}, $L$ and $R$ ORE encryptions can be used to the same effect as for the two sensor case. The ORE ordered list sent from each sensor $i$ is given by
+\begin{equation}
+   \begin{gathered} \label{eqn:sensor_lists}
+      [\mathcal{E}^L_{ORE}(\omega^{(0)}\tr(\mP_i)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ even} \\
+      [\mathcal{E}^R_{ORE}(\omega^{(0)}\tr(\mP_i)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ odd}\,.
+   \end{gathered}
+\end{equation}
+When combining \eqref{eqn:sensor_lists} with PHE encryptions of local information vectors and information matrices, SecFCI can be computed entirely homomorphically by \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate}.
+
+% 8888888b.                            888 888
+% 888   Y88b                           888 888
+% 888    888                           888 888
+% 888   d88P .d88b.  .d8888b  888  888 888 888888 .d8888b
+% 8888888P" d8P  Y8b 88K      888  888 888 888    88K
+% 888 T88b  88888888 "Y8888b. 888  888 888 888    "Y8888b.
+% 888  T88b Y8b.          X88 Y88b 888 888 Y88b.       X88
+% 888   T88b "Y8888   88888P'  "Y88888 888  "Y888  88888P'
+
+
+
+\section{Simulation Results} \label{sec:results}
+We have implemented a simulation to demonstrate and compare the SecFCI algorithm. Three sensors independently measure a two-dimensional constant-speed linear process and simultaneously run a linear Kalman filter on their measurements. Estimates are then sent both unencrypted and encrypted to a fusion center which computes the FCI and SecFCI fusions on the received data respectively. Unencrypted estimates consist of the state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$, while encrypted estimates are comprised of PHE encryptions of the information vector $\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$ and information matrix $\mathcal{E}(\mP^{-1}_i)$, and the ORE list given by \eqref{eqn:sensor_lists}. The trajectory and fused estimates are shown in Fig. \ref{fig:fci_secfci_traj}.
+\begin{figure}[tb]
+   \vspace{-5pt}
+   \begin{center}
+      \input{images/fci_secfci_cmp.pgf}
+   \end{center}
+   \vspace{-10pt}
+   \caption{Tracking simulation comparing FCI and SecFCI.}
+   \label{fig:fci_secfci_traj}
+\end{figure}
+
+The traces of the fused covariance matrices from both FCI and SecFCI fusion are shown in Fig. \ref{fig:fci_secfci_trace} where a very small difference in trace can be seen. As SecFCI approximates FCI which in turn is an approximation to the CI's trace minimization function \eqref{eqn:ci_trace_min}, neither method guarantees a resulting trace smaller than the other.
+\begin{figure}[tb]
+   \vspace{-5pt}
+   \begin{center}
+      \input{images/traces_cmp.pgf}
+   \end{center}
+   \vspace{-10pt}
+   \caption{Traces of fused covariance matrices for FCI and SecFCI.}
+   \vspace{-\baselineskip}
+   \label{fig:fci_secfci_trace}
+\end{figure}
+Values of each $\omega_i$ over time have been plotted in Fig. \ref{fig:fci_secfci_omegas}. Due to discretization, as can be expected, SecFCI values of $\omega_i$ stay constant but may jump with sufficient change in true FCI $\omega_i$ values, as can be seen near the start of the simulation.
+\begin{figure}[tb]
+   \vspace{-5pt}
+   \begin{center}
+      \input{images/omegas_cmp.pgf}
+   \end{center}
+   \vspace{-10pt}
+   \caption{FCI and SecFCI $\omega_i$ values and their difference.}
+   \vspace{-\baselineskip}
+   \label{fig:fci_secfci_omegas}
+\end{figure}
+
+%  .d8888b.
+% d88P  Y88b
+% 888    888
+% 888         .d88b.  88888b.   .d8888b
+% 888        d88""88b 888 "88b d88P"
+% 888    888 888  888 888  888 888
+% Y88b  d88P Y88..88P 888  888 Y88b.    d8b
+%  "Y8888P"   "Y88P"  888  888  "Y8888P Y8P
+
+
+
+\section{Conclusion} \label{sec:conclusion}
+FCI is a commonly used, efficiently computable, approximation to the CI optimization problem that requires the sharing of local sensor estimates to compute their fusion. We propose a secure approximation to FCI, SecFCI, to compute the fused estimate homomorphically. The novel encrypted signal processing approach may find uses in various security-critical applications or over untrusted networks. Possible future work includes a run-time comparison between SecFCI and potential FHE implementations, giving a computational bound for its practicality. Also, we hope to further quantify ORE leakage concerning SecFCI fusion and produce formal security proofs and assumptions for the novel algorithm.
+
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEtranBST/IEEEabrv,BibTeX/secure_FCI_cdc2020}
+
+\end{document}
