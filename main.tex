@@ -240,20 +240,20 @@ We consider encoding real numbers representable as rational fixed-point numbers 
 \begin{equation}
    e = \floor{2^f a}\pmod{2^b}\,. \label{eqn:qmn}
 \end{equation}
-While encoded Q numbers are consistent under addition, each multiplication requires a factor of $1/2^f$ to be removed. As shown in \cite{farokhiSecurePrivateControl2017}, particular cases of encoded multiplication can be computed exactly when using the Paillier encryption scheme, however, we simplify decoding by taking advantage of the FCI algorithm, which guarantees only a single homomorphic multiplication as will be shown in section \ref{sec:secfci}, and avoid computing an inversion and exponentiation modulo $N$ operation that would be otherwise neccessary.
+While encoded Q numbers are consistent under addition, each multiplication requires a factor of $1/2^f$ to be removed. As shown in \cite{farokhiSecurePrivateControl2017}, particular cases of encoded multiplication can be computed exactly when using the Paillier encryption scheme, however, we simplify multiplication by taking advantage of the FCI algorithm, which guarantees only a single homomorphic multiplication as will be shown in section \ref{sec:secfci}, and handle this when decoding.
 
-In addition to not removing the multiplication factor homomorphically, we relax the requirement from \cite{farokhiSecurePrivateControl2017} for multiplied encoded numbers not to overflow. We allow any amount of multiplicative overflow (from the single multiplication operation) by decoding positive integers from the range $[0,2^{2b})$ to a real number representable as a rational fixed-point number consisting of a single sign bit, $2i+1$ integer bits, and $2f$ fractional bits. Decoded real numbers are representable as rational fixed-point numbers of $2b$ bits rather than the encodable ones of $b$ bits. Decoding is defined as the conversion from the signed Q number format \cite{oberstarFixedPointRepresentationFractional2007} and defined by
+In addition to not removing the multiplication factor homomorphically, we relax the requirement from \cite{farokhiSecurePrivateControl2017} for multiplied encoded numbers not to overflow. We allow any amount of multiplicative overflow (from the single multiplication operation) by decoding positive integers from the range $[0,2^{2b})$ to a real number representable as a rational fixed-point number consisting of a single sign bit, $2i+1$ integer bits, and $2f$ fractional bits. Decoded real numbers are representable by $2b$ bits rather than the encodable ones of $b$ bits. Decoding is defined as the conversion from the signed Q number format \cite{oberstarFixedPointRepresentationFractional2007} and defined by
 \begin{equation}
-   e=
+   a=
    \begin{cases}
-      a = 2^{-2f}\left(e \pmod{2^{2b}}\right) & e<2^{b-1} \\
-      a = 2^{-2f}\left( 2^{2b} - (e \pmod{2^{2b}}\right) & e\geq 2^{b-1}
+      2^{-2f}\left(e \pmod{2^{2b}}\right) & e<2^{2b-1} \\
+      2^{-2f}\left( 2^{2b} - (e \pmod{2^{2b}}\right) & e\geq 2^{2b-1}
    \end{cases}\,. \label{eqn:qmn_mult_decode}
 \end{equation}
 
 Since the largest encryptable integer is given by $N-1$, the largest encodable real number must account for the additional multiplication factor when encoded. Thus, the number of integer and fractional bits $i$ and $f$ must be chosen such that
 \begin{equation}
-   (2^{(1+i+f)}-1)^2 \leq \frac{N}{2}-1 \label{eqn:qmn_max}
+   (2^{(1+i+f)}-1)^2 \leq N-1 \label{eqn:qmn_max}
 \end{equation}
 holds.
 

@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL main_submitted_1.tex   Mon May  4 19:32:25 2020
-%DIF ADD main.tex               Mon May  4 19:17:22 2020
+%DIF ADD main.tex               Tue May  5 09:35:08 2020
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
@@ -302,26 +302,25 @@ From this, we can see that the value of the largest encryptable integer is now g
 \end{equation}
 While encoded Q numbers are consistent under addition, \DIFaddbegin \DIFadd{each }\DIFaddend multiplication requires a factor of $1/2^f$ to be removed. As \DIFdelbegin \DIFdel{homomorphic division is not supported by }\DIFdelend \DIFaddbegin \DIFadd{shown in \mbox{%DIFAUXCMD
 \cite{farokhiSecurePrivateControl2017}}\hspace{0pt}%DIFAUXCMD
-, particular cases of encoded multiplication can be computed exactly when using }\DIFaddend the Paillier encryption scheme, \DIFdelbegin \DIFdel{the number of multiplications performed on encrypted values must be bounded and handled when decoding . As }\DIFdelend \DIFaddbegin \DIFadd{however, we simplify decoding by taking advantage of the FCI algorithm, which guarantees only a single homomorphic multiplication as }\DIFaddend will be shown in section \ref{sec:secfci}, \DIFdelbegin \DIFdel{our fusion method will always require that a single multiplication factor be removed and leads to the decoding of an integer $e$ }\DIFdelend \DIFaddbegin \DIFadd{and avoid computing an inversion and exponentiation modulo $N$ operation that would be otherwise neccessary.
+, particular cases of encoded multiplication can be computed exactly when using }\DIFaddend the Paillier encryption scheme, \DIFdelbegin \DIFdel{the number of multiplications performed on encrypted values must be bounded and handled when decoding. As }\DIFdelend \DIFaddbegin \DIFadd{however, we simplify multiplication by taking advantage of the FCI algorithm, which guarantees only a single homomorphic multiplication as }\DIFaddend will be shown in section \ref{sec:secfci}, \DIFdelbegin \DIFdel{our fusion method will always require that a single multiplication factor be removed and leads to the decoding of an integer $e$ }\DIFdelend \DIFaddbegin \DIFadd{and handle this when decoding.
 }
 
 \DIFadd{In addition to not removing the multiplication factor homomorphically, we relax the requirement from \mbox{%DIFAUXCMD
 \cite{farokhiSecurePrivateControl2017} }\hspace{0pt}%DIFAUXCMD
-for multiplied encoded numbers not to overflow. We allow any amount of multiplicative overflow (from the single multiplication operation) by decoding positive integers from the range $[0,2^{2b})$ }\DIFaddend to a real number \DIFdelbegin \DIFdel{$a$ being given by
-}\DIFdelend \DIFaddbegin \DIFadd{representable as a rational fixed-point number consisting of a single sign bit, $2i+1$ integer bits, and $2f$ fractional bits. Decoded real numbers are representable as rational fixed-point numbers of $2b$ bits rather than the encodable ones of $b$ bits. Decoding is defined as the conversion from the signed Q number format \mbox{%DIFAUXCMD
+for multiplied encoded numbers not to overflow. We allow any amount of multiplicative overflow (from the single multiplication operation) by decoding positive integers from the range $[0,2^{2b})$ }\DIFaddend to a real number \DIFdelbegin \DIFdel{$a$ being given by }\DIFdelend \DIFaddbegin \DIFadd{representable as a rational fixed-point number consisting of a single sign bit, $2i+1$ integer bits, and $2f$ fractional bits. Decoded real numbers are representable by $2b$ bits rather than the encodable ones of $b$ bits. Decoding is defined as the conversion from the signed Q number format \mbox{%DIFAUXCMD
 \cite{oberstarFixedPointRepresentationFractional2007} }\hspace{0pt}%DIFAUXCMD
 and defined by
 }\DIFaddend \begin{equation}
-   \DIFdelbegin \DIFdel{a }\DIFdelend \DIFaddbegin \DIFadd{e}\DIFaddend =
+   a=
    \DIFdelbegin \DIFdel{\frac{e}{2^{2f}}}\DIFdelend \DIFaddbegin \begin{cases}
-      a = 2^{-2f}\left(e \pmod{2^{2b}}\right) & e<2^{b-1} \\
-      a = 2^{-2f}\left( 2^{2b} - (e \pmod{2^{2b}}\right) & e\geq 2^{b-1}
+      2^{-2f}\left(e \pmod{2^{2b}}\right) & e<2^{2b-1} \\
+      2^{-2f}\left( 2^{2b} - (e \pmod{2^{2b}}\right) & e\geq 2^{2b-1}
    \end{cases}\DIFaddend \,. \label{eqn:qmn_mult_decode}
 \end{equation}
 
 \DIFdelbegin \DIFdel{While }\DIFdelend \DIFaddbegin \DIFadd{Since }\DIFaddend the largest encryptable integer is given by \DIFdelbegin \DIFdel{$N/2-1$}\DIFdelend \DIFaddbegin \DIFadd{$N-1$}\DIFaddend , the largest encodable real number must account for the additional multiplication factor \DIFdelbegin \DIFdel{in its encoding}\DIFdelend \DIFaddbegin \DIFadd{when encoded}\DIFaddend . Thus, the \DIFaddbegin \DIFadd{number of }\DIFaddend integer and fractional bits $i$ and $f$ must be chosen such that
 \begin{equation}
-   (2\DIFdelbegin \DIFdel{^{(i+f)}}\DIFdelend \DIFaddbegin \DIFadd{^{(1+i+f)}}\DIFaddend -1)^2 \leq \frac{N}{2}-1 \label{eqn:qmn_max}
+   (2\DIFdelbegin \DIFdel{^{(i+f)}}\DIFdelend \DIFaddbegin \DIFadd{^{(1+i+f)}}\DIFaddend -1)^2 \leq \DIFdelbegin \DIFdel{\frac{N}{2}-1 }\DIFdelend \DIFaddbegin \DIFadd{N-1 }\DIFaddend \label{eqn:qmn_max}
 \end{equation}
 holds.
 
