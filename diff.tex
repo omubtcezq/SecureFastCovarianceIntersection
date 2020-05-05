@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL main_submitted_1.tex   Mon May  4 19:32:25 2020
-%DIF ADD main.tex               Tue May  5 09:35:08 2020
+%DIF ADD main.tex               Tue May  5 18:02:42 2020
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
@@ -516,6 +516,62 @@ As all ORE comparisons are done between sequential sensors $i$ and $i+1$, seen i
    \end{gathered}
 \end{equation}
 When combining \eqref{eqn:sensor_lists} with PHE encryptions of local information vectors and information matrices, SecFCI can be computed entirely homomorphically by \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate}.
+\DIFaddbegin 
+
+
+\subsection{\DIFadd{Computational Complexity}}
+\DIFadd{Given sensor state estimates, estimate errors, and error traces at each sensor, we wish to show the computational complexity of the SecFCI algorithm for the $n$ sensor case. We will make the assumption that both the Lewi ORE and Paillier PHE schemes use the same length security parameter (and equivalently key size), such that
+}\begin{equation}
+   \DIFadd{\lambda_{Lewi} = \lambda_{Paillier} = \log{N}\,, \label{eqn:keylength}
+}\end{equation}
+\DIFadd{where $\lambda_{s}$ represents encryption scheme $s$'s security parameter, and $N$ the Paillier modulus and encryptable integer limit. We also note the distinction between floating-point or small integer operations, which are typically treated as having $O(1)$ runtime, and large integer operations whose complexities are dependant on bit length. While hardware architectures exist for speeding up encryption bit operations \mbox{%DIFAUXCMD
+\cite{gueronIntelAdvancedEncryption2010}}\hspace{0pt}%DIFAUXCMD
+, we will consider software implementations and treat large integer operations in terms of bit operations explicitly.
+}
+
+\DIFadd{From \mbox{%DIFAUXCMD
+\cite{paillierPublicKeyCryptosystemsBased1999,lewiOrderRevealingEncryptionNew2016}}\hspace{0pt}%DIFAUXCMD
+, and the assumptions made above, we have summarized the operation complixites of the two schemes in Table \ref{tab:complex_ops}.
+}\begin{table}[tb]
+   \centering
+   \caption{\DIFaddFL{Computation complexity of encryption operations.}}
+   \label{tab:complex_ops}
+   \begin{tabular}{ |c|c| }
+      \hline
+      \textbf{\DIFaddFL{Operation}} & \textbf{\DIFaddFL{Complexity}} \\ 
+      \hline
+      \DIFaddFL{Paillier encryption }& \DIFaddFL{$O(\log{N}\log^2{N^2})$ }\\ 
+      \DIFaddFL{Paillier decryption }& \DIFaddFL{$O(\log{N}\log^2{N^2})$ }\\ 
+      \DIFaddFL{Paillier addition }& \DIFaddFL{$O(\log^2{N^2})$ }\\ 
+      \DIFaddFL{Paillier scalar multiplication }& \DIFaddFL{$O(\log{N}\log^2{N^2})$ }\\ 
+      \DIFaddFL{Lewi $L$ encryption }& \DIFaddFL{$O(\log^2{N^2})$ }\\ 
+      \DIFaddFL{Lewi $R$ encryption }& \DIFaddFL{$O(\log^2{N^2})$ }\\ 
+      \DIFaddFL{Lewi comparison }& \DIFaddFL{$O(\log^2{N^2})$ }\\ 
+      \hline
+   \end{tabular}
+\end{table}
+\DIFadd{In contrast to some current FHE schemes, these operations are of a much lower complexity than \mbox{%DIFAUXCMD
+\cite{vandijkFullyHomomorphicEncryption2010a} }\hspace{0pt}%DIFAUXCMD
+which has complexity $O(\lambda^{10})$ for integer operations, or \mbox{%DIFAUXCMD
+\cite{stehleFasterFullyHomomorphic2010} }\hspace{0pt}%DIFAUXCMD
+which computes bit operations in $O(\lambda^{3.5})$.
+}
+
+\DIFadd{Finally, applying the operations from Table \ref{tab:complex_ops} to the SecFCI algorithm, we get the total complexity of SecFCI at the sensors and the fusion center. This has been summarized in Table \ref{tab:complex}, with the unencrypted complexities of FCI shown for reference. 
+}\begin{table}[tb]
+   \centering
+   \caption{\DIFaddFL{Computation complexity at sensors and fusion center.}}
+   \label{tab:complex}
+   \begin{tabular}{ |c|c|c| }
+      \hline
+       & \textbf{\DIFaddFL{FCI}} & \textbf{\DIFaddFL{SecFCI}} \\ 
+      \hline
+      \DIFaddFL{Sensors }& \DIFaddFL{$O(1)$ }& \DIFaddFL{$O\left((p + \log{N})\log^2{N^2}\right)$ }\\ 
+      \DIFaddFL{Fusion }& \DIFaddFL{$O(n^3)$ }& \DIFaddFL{$O\left((\log{p} + \log{N})n\log^2{N^2} + n^3\right)$ }\\ 
+      \hline
+   \end{tabular}
+\end{table}
+\DIFaddend 
 
 % 8888888b.                            888 888
 % 888   Y88b                           888 888
