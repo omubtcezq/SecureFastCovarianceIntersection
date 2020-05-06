@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL main_submitted_1.tex   Mon May  4 19:32:25 2020
-%DIF ADD main.tex               Tue May  5 18:02:42 2020
+%DIF ADD main.tex               Wed May  6 12:27:32 2020
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
@@ -163,16 +163,16 @@ Throughout this paper we will use the following notation. Lowercase characters r
 \section{Covariance Intersection and Approximations} \label{sec:ci}
 Covariance Intersection (CI), introduced in \cite{julierNondivergentEstimationAlgorithm1997}, provides a consistent state estimate fusion algorithm when cross-correlations are not known. The resulting fused estimate $\mean{\vec{x}}$ and estimate covariance $\mP$ can be easily derived from its equations
 \begin{equation}
-   \mP^{-1}=\sum_{i=0}^{n}\omega_i \mP_i^{-1},\ \mP^{-1} \mean{\vec{x}} =\sum_{i=0}^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i\,. \label{eqn:ci_cov_estimate}
+   \mP^{-1}=\sum\DIFdelbegin \DIFdel{_{i=0}}\DIFdelend \DIFaddbegin \DIFadd{_{i=1}}\DIFaddend ^{n}\omega_i \mP_i^{-1},\ \mP^{-1} \mean{\vec{x}} =\sum\DIFdelbegin \DIFdel{_{i=0}}\DIFdelend \DIFaddbegin \DIFadd{_{i=1}}\DIFaddend ^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i\,. \label{eqn:ci_cov_estimate}
 \end{equation}
 Note that \eqref{eqn:ci_cov_estimate} computes the fusion of the information vectors and information matrices defined in \cite{niehsenInformationFusionBased2002} and reduces the fusion to a simple weighted sum.
 Values for $\omega_i$ must satisfy
 \begin{equation}
-   \omega_0 + \omega_1 + \cdots + \omega_n = 1,\ 0 \leq \omega_i \leq 1\,, \label{eqn:ci_omega_sum_bound}
+   \omega\DIFdelbegin \DIFdel{_0 }\DIFdelend \DIFaddbegin \DIFadd{_1 }\DIFaddend + \omega\DIFdelbegin \DIFdel{_1 }\DIFdelend \DIFaddbegin \DIFadd{_2 }\DIFaddend + \cdots + \omega\DIFdelbegin \DIFdel{_n }\DIFdelend \DIFaddbegin \DIFadd{_{n} }\DIFaddend = 1,\ 0 \leq \omega_i \leq 1\,, \label{eqn:ci_omega_sum_bound}
 \end{equation}
 which guarantees consistency of the fused estimates. They are chosen in a way to speed up convergence and minimize error, by minimizing a certain specified property of the resulting fused estimate covariance. One such property, the fused estimate covariance trace, requires the solution to
 \begin{equation}
-   \argmin_{\omega_0,\dots,\omega_n} \{\tr(\mP)\} = \argmin_{\omega_0,\dots,\omega_n} \left\{\tr\left(\left(\sum_{i=0}^{n}\omega_i \mP_i^{-1}\right)^{-1}\right)\right\}\,. \label{eqn:ci_trace_min}
+   \argmin\DIFdelbegin \DIFdel{_{\omega_0,\dots,\omega_n} }\DIFdelend \DIFaddbegin \DIFadd{_{\omega_1,\dots,\omega_{n}} }\DIFaddend \{\tr(\mP)\} = \argmin\DIFdelbegin \DIFdel{_{\omega_0,\dots,\omega_n} }\DIFdelend \DIFaddbegin \DIFadd{_{\omega_1,\dots,\omega_{n}} }\DIFaddend \left\{\tr\left(\left(\sum\DIFdelbegin \DIFdel{_{i=0}}\DIFdelend \DIFaddbegin \DIFadd{_{i=1}}\DIFaddend ^{n}\omega_i \mP_i^{-1}\right)^{-1}\right)\right\}\DIFdelbegin \DIFdel{\,}\DIFdelend . \label{eqn:ci_trace_min}
 \end{equation}
 However, minimizing this non-linear cost function can be very costly computationally and has led to the development of the non-iterative approximation technique in \cite{niehsenInformationFusionBased2002}.
 
@@ -180,36 +180,50 @@ However, minimizing this non-linear cost function can be very costly computation
 \subsection{Fast Covariance intersection}
 The Fast Covariance Intersection (FCI) algorithm from \cite{niehsenInformationFusionBased2002} is a common method used for approximating the solution to \eqref{eqn:ci_trace_min} without the loss of guaranteed consistency. It is computed by defining a new constraint
 \begin{equation}
-   \omega_i \tr(\mP_i) - \omega_j \tr(\mP_j) = 0,\ i,j=0,1,\dots,n-1 \label{eqn:fci_eq_big}
+   \omega_i \tr(\mP_i) - \omega_j \tr(\mP_j) = 0,\ i,j=\DIFdelbegin \DIFdel{0,}\DIFdelend 1,\DIFaddbegin \DIFadd{2,}\DIFaddend \dots,\DIFdelbegin \DIFdel{n-1 }\DIFdelend \DIFaddbegin \DIFadd{n }\DIFaddend \label{eqn:fci_eq_big}
 \end{equation}
 on $\omega_i$ and solving the resulting equations instead. In the two sensor case, this results in the solving of
 \begin{equation}
-   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0,\ \omega_0 + \omega_1 = 1\,, \label{eqn:fci_2sen_omega_sum_eq}
+   \omega\DIFdelbegin \DIFdel{_0 }\DIFdelend \DIFaddbegin \DIFadd{_1 }\DIFaddend \tr(\mP\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend ) - \omega\DIFdelbegin \DIFdel{_1 }\DIFdelend \DIFaddbegin \DIFadd{_2 }\DIFaddend \tr(\mP\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend ) = 0,\ \omega\DIFdelbegin \DIFdel{_0 }\DIFdelend \DIFaddbegin \DIFadd{_1 }\DIFaddend + \omega\DIFdelbegin \DIFdel{_1 }\DIFdelend \DIFaddbegin \DIFadd{_2 }\DIFaddend = 1\,, \label{eqn:fci_2sen_omega_sum_eq}
 \end{equation}
 with analytical solutions given by
 \begin{equation}
-   \omega_0 = \frac{\tr(\mP_1)}{\tr(\mP_0)+\tr(\mP_1)},\ \omega_1 = \frac{\tr(\mP_0)}{\tr(\mP_0)+\tr(\mP_1)}\,. \label{eqn:fci_2sen_sol}
+   \omega\DIFdelbegin \DIFdel{_0 }\DIFdelend \DIFaddbegin \DIFadd{_1 }\DIFaddend = \DIFdelbegin \DIFdel{\frac{\tr(\mP_1)}{\tr(\mP_0)+\tr(\mP_1)}}\DIFdelend \DIFaddbegin \DIFadd{\frac{\tr(\mP_2)}{\tr(\mP_1)+\tr(\mP_2)}}\DIFaddend ,\ \omega\DIFdelbegin \DIFdel{_1 }\DIFdelend \DIFaddbegin \DIFadd{_2 }\DIFaddend = \DIFdelbegin \DIFdel{\frac{\tr(\mP_0)}{\tr(\mP_0)+\tr(\mP_1)}}\DIFdelend \DIFaddbegin \DIFadd{\frac{\tr(\mP_1)}{\tr(\mP_1)+\tr(\mP_2)}}\DIFaddend \,. \label{eqn:fci_2sen_sol}
 \end{equation}
 When computed for the $n$ sensor case, the highly redundant constraint \eqref{eqn:fci_eq_big} can have its largest linearly independent subset represented by
 \begin{equation}
-   \omega_i \tr(\mP_i) - \omega_{i+1} \tr(\mP_{i+1}) = 0,\ i=0,1,\dots,n-2\,, \label{eqn:fci_eq}
+   \omega_i \tr(\mP_i) - \omega_{i+1} \tr(\mP_{i+1}) = 0,\ i=\DIFdelbegin \DIFdel{0,}\DIFdelend 1,\DIFaddbegin \DIFadd{2,}\DIFaddend \dots,\DIFdelbegin \DIFdel{n-2}\DIFdelend \DIFaddbegin \DIFadd{n-1}\DIFaddend \,, \label{eqn:fci_eq}
 \end{equation}
 and requires the solution to the linear problem
 \begin{equation}
-   \begin{bmatrix}
-      \mathcal{P}_0 & -\mathcal{P}_1 & 0 & \cdots & 0 \\
-      0 & \mathcal{P}_1 & -\mathcal{P}_2 & \cdots & 0 \\
-      \vdots & \vdots & \vdots & \ddots & \vdots & \\
-      0 & \cdots & 0 & \mathcal{P}_{n-1} & -\mathcal{P}_n \\
+   \DIFdelbegin %DIFDELCMD < \begin{bmatrix}
+%DIFDELCMD <       \mathcal{P}_0 & -\mathcal{P}_1 & 0 & \cdots & 0 \\
+%DIFDELCMD <       0 & \mathcal{P}_1 & -\mathcal{P}_2 & \cdots & 0 \\
+%DIFDELCMD <       \vdots & \vdots & \vdots & \ddots & \vdots & \\
+%DIFDELCMD <       0 & \cdots & 0 & \mathcal{P}_{n-1} & -\mathcal{P}_n \\
+%DIFDELCMD <       1 & \cdots & 1 & 1 & 1 &
+%DIFDELCMD <    \end{bmatrix}%%%
+\DIFdelend \DIFaddbegin \begin{bmatrix}
+      \mathcal{P}_1 & -\mathcal{P}_2 & 0 & \cdots & 0 \\
+      0 & \mathcal{P}_2 & -\mathcal{P}_3 & \cdots & 0 \\
+      \cdots & \cdots & \cdots & \cdots & \cdots & \\
+      0 & \cdots & 0 & \mathcal{P}_{n-1} & -\mathcal{P}_{n} \\
       1 & \cdots & 1 & 1 & 1 &
-   \end{bmatrix}
-   \begin{bmatrix}
+   \end{bmatrix}\DIFaddend 
+   \DIFdelbegin %DIFDELCMD < \begin{bmatrix}
+%DIFDELCMD <       \omega_0 \\
+%DIFDELCMD <       \omega_1 \\
+%DIFDELCMD <       \vdots \\
+%DIFDELCMD <       \omega_{n-1} \\
+%DIFDELCMD <       \omega_n
+%DIFDELCMD <    \end{bmatrix}%%%
+\DIFdelend \DIFaddbegin \begin{bmatrix}
       \omega_0 \\
       \omega_1 \\
       \vdots \\
       \omega_{n-1} \\
-      \omega_n
-   \end{bmatrix}
+      \omega_{n}
+   \end{bmatrix}\DIFaddend 
    =
    \begin{bmatrix}
       0 \\
@@ -340,54 +354,56 @@ In this section, we will introduce the Secure FCI (SecFCI) fusion algorithm for 
 
 From \eqref{eqn:ci_cov_estimate}, we can see that both CI fusion equations can be computed on PHE encryptions of sensor information vectors and information matrices, given valid values for each $\omega_i$. In the two sensor case, homomorphic fusion is computed by
 \begin{equation}
-   \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_0)^{\omega_0}\mathcal{E}(\mP^{-1}_1)^{(1 -\omega_0)} \label{eqn:paillier_ci_cov}
+   \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend )\DIFdelbegin \DIFdel{^{\omega_0}}\DIFdelend \DIFaddbegin \DIFadd{^{\omega_1}}\DIFaddend \mathcal{E}(\mP^{-1}\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend )\DIFdelbegin \DIFdel{^{(1 -\omega_0)} }\DIFdelend \DIFaddbegin \DIFadd{^{(1 -\omega_1)} }\DIFaddend \label{eqn:paillier_ci_cov}
 \end{equation}
 and
 \begin{equation}
-   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_0\mean{\vec{x}}_0)^{\omega_0}\mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{(1 - \omega_0)}\,, \label{eqn:paillier_ci_estimate}
+   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend \mean{\vec{x}}\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend )\DIFdelbegin \DIFdel{^{\omega_0}}\DIFdelend \DIFaddbegin \DIFadd{^{\omega_1}}\DIFaddend \mathcal{E}(\mP^{-1}\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend \mean{\vec{x}}\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend )\DIFdelbegin \DIFdel{^{(1 - \omega_0)}}\DIFdelend \DIFaddbegin \DIFadd{^{(1 - \omega_1)}}\DIFaddend \,, \label{eqn:paillier_ci_estimate}
 \end{equation}
-where we note that $\omega_1=1-\omega_0$ due to the CI requirement \eqref{eqn:ci_omega_sum_bound}. We also note that in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}, each resulting value will have exactly one Q encoding multiplication factor to remove, and can be decoded exactly by using \eqref{eqn:qmn_mult_decode}.
+where we note that \DIFdelbegin \DIFdel{$\omega_1=1-\omega_0$ }\DIFdelend \DIFaddbegin \DIFadd{$\omega_2=1-\omega_1$ }\DIFaddend due to the CI requirement \eqref{eqn:ci_omega_sum_bound}. We also note that in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}, each resulting value will have exactly one Q encoding multiplication factor to remove, and can be decoded exactly by using \eqref{eqn:qmn_mult_decode}.
 
-In the two sensor case, all that remains for computing CI homomorphically is the calculation of parameter $\omega_0$. For this, we approximate the solution to the FCI fusion algorithm. Since analytical solutions \eqref{eqn:fci_2sen_sol} require division, they cannot be computed exactly with the given PHE encryptions of sensor information vectors and information matrices. Instead, we discretize $\omega_i$ by step-size $s$, such that $s<1$ and $p=1/s \in \mathbb{Z}$, and approximate \eqref{eqn:fci_2sen_omega_sum_eq} with ORE. An ordered discretization of values $\omega^{(x)}$ is defined by
+In the two sensor case, all that remains for computing CI homomorphically is the calculation of parameter \DIFdelbegin \DIFdel{$\omega_0$}\DIFdelend \DIFaddbegin \DIFadd{$\omega_1$}\DIFaddend . For this, we approximate the solution to the FCI fusion algorithm. Since analytical solutions \eqref{eqn:fci_2sen_sol} require division, they cannot be computed exactly with the given PHE encryptions of sensor information vectors and information matrices. Instead, we discretize $\omega_i$ by step-size $s$, such that $s<1$ and $p=1/s \in \mathbb{Z}$, and approximate \eqref{eqn:fci_2sen_omega_sum_eq} with ORE. An ordered discretization of values $\omega^{(x)}$ is defined by
 \begin{equation}
-   [\omega^{(0)},\dots,\omega^{(p)}] = [0,s,\dots,1-s,1]\,,
+   [\omega\DIFdelbegin \DIFdel{^{(0)}}\DIFdelend \DIFaddbegin \DIFadd{^{(1)}}\DIFaddend ,\dots,\omega^{(p)}] = [0,s,\dots,1-s,1]\,,
 \end{equation}
-and computed by each sensor $i$. Each $\omega^{(x)}$ is multiplied by $\tr(\mP_i)$ and encrypted with ORE key $k$. Sensor $0$'s list is defined by 
+and computed by each sensor $i$. Each $\omega^{(x)}$ is multiplied by $\tr(\mP_i)$ and encrypted with ORE key $k$. Sensor \DIFdelbegin \DIFdel{$0$}\DIFdelend \DIFaddbegin \DIFadd{$1$}\DIFaddend 's list is defined by 
 \begin{equation}
-   [\mathcal{E}^L_{ORE}(\omega^{(0)}\tr(\mP_0)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_0))]\,, \label{eqn:sen0_ore_list}
+   [\mathcal{E}^L_{ORE}(\omega\DIFdelbegin \DIFdel{^{(0)}}\DIFdelend \DIFaddbegin \DIFadd{^{(1)}}\DIFaddend \tr(\mP\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend )),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend ))]\,, \label{eqn:sen0_ore_list}
 \end{equation}
-and similarly sensor $1$'s by
+and similarly sensor \DIFdelbegin \DIFdel{$1$}\DIFdelend \DIFaddbegin \DIFadd{$2$}\DIFaddend 's by
 \begin{equation}
-   [\mathcal{E}^R_{ORE}(\omega^{(0)}\tr(\mP_1)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_1))]\,. \label{eqn:sen1_ore_list}
+   [\mathcal{E}^R_{ORE}(\omega\DIFdelbegin \DIFdel{^{(0)}}\DIFdelend \DIFaddbegin \DIFadd{^{(1)}}\DIFaddend \tr(\mP\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend )),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend ))]\,. \label{eqn:sen1_ore_list}
 \end{equation}
-Note that Sensor $0$ uses only $L$ ORE while sensor $1$ uses only $R$ ORE and that both lists are ordered. Lists \eqref{eqn:sen0_ore_list} and \eqref{eqn:sen1_ore_list} are sent alongside PHE encryptions of local information vector and information matrix estimates to the fusion center which uses them to estimate the FCI values of $\omega_0$ and $\omega_1$.
+Note that Sensor \DIFdelbegin \DIFdel{$0$ }\DIFdelend \DIFaddbegin \DIFadd{$1$ }\DIFaddend uses only $L$ ORE while sensor \DIFdelbegin \DIFdel{$1$ }\DIFdelend \DIFaddbegin \DIFadd{$2$ }\DIFaddend uses only $R$ ORE and that both lists are ordered. Lists \eqref{eqn:sen0_ore_list} and \eqref{eqn:sen1_ore_list} are sent alongside PHE encryptions of local information vector and information matrix estimates to the fusion center which uses them to estimate the FCI values of \DIFdelbegin \DIFdel{$\omega_0$ and }\DIFdelend $\omega_1$ \DIFaddbegin \DIFadd{and $\omega_2$}\DIFaddend .
 
-From \eqref{eqn:fci_2sen_omega_sum_eq} we know that $\omega_0$ must satisfy
-\begin{equation}
-   \omega_0 \tr(\mP_0) = (1-\omega_0)\tr(\mP_1)\,. \label{eqn:secfci_2sen_intersect}
+From \eqref{eqn:fci_2sen_omega_sum_eq} we know that \DIFdelbegin \DIFdel{$\omega_0$ must satisfy
+}\DIFdelend \DIFaddbegin \DIFadd{$\omega_1$ must satisfy
+}\DIFaddend \begin{equation}
+   \omega\DIFdelbegin \DIFdel{_0 }\DIFdelend \DIFaddbegin \DIFadd{_1 }\DIFaddend \tr(\mP\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend ) = (1-\omega\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend )\tr(\mP\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend )\,. \label{eqn:secfci_2sen_intersect}
 \end{equation}
 If we reverse \eqref{eqn:sen1_ore_list}, we obtain the equivalent list
 \begin{equation}
-   [\mathcal{E}^R_{ORE}((1-\omega^{(0)})\tr(\mP_1)),\dots,\mathcal{E}^R_{ORE}((1-\omega^{(p)})\tr(\mP_1))] \label{eqn:sen2_ore_rev_list}
+   [\mathcal{E}^R_{ORE}((1-\omega\DIFdelbegin \DIFdel{^{(0)}}\DIFdelend \DIFaddbegin \DIFadd{^{(1)}}\DIFaddend )\tr(\mP\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend )),\dots,\mathcal{E}^R_{ORE}((1-\omega^{(p)})\tr(\mP\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend ))] \label{eqn:sen2_ore_rev_list}
 \end{equation}
-which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:secfci_2sen_intersect} and therefore, \eqref{eqn:fci_2sen_omega_sum_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega^{(x)}$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in $O(log(p))$ by a binary search.
+which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:secfci_2sen_intersect} and therefore, \eqref{eqn:fci_2sen_omega_sum_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega^{(x)}$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in \DIFdelbegin \DIFdel{$O(log(p))$ by }\DIFdelend \DIFaddbegin \DIFadd{$O(\log{p})$ ORE comparisons using }\DIFaddend a binary search.
 \begin{figure}[tb]
    \vspace{-5pt}
    \begin{center}
       \input{images/2_sensors.pgf}
    \end{center}
    \vspace{-10pt}
-   \caption{Approximation of $\omega_0$ with discretisation step-size $s=0.1$. Only comparisons between line points are used.}
+   \caption{Approximation of \DIFdelbeginFL \DIFdelFL{$\omega_0$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$\omega_1$ }\DIFaddendFL with discretisation step-size $s=0.1$. Only comparisons between line points are used.}
    \vspace{-\baselineskip}
    \label{fig:2_sensor_sol}
 \end{figure}
-Consecutive $\omega^{(x)}$ and $\omega^{(x+1)}$ for which list comparisons differ can be used to estimate the true intersection, and $\omega_0$, by
-\begin{equation}
-   \omega_0 \approx \frac{1}{2}(\omega^{(x)} + \omega^{(x+1)})\,. \label{eqn:secfci_2sen_omega}
+Consecutive $\omega^{(x)}$ and $\omega^{(x+1)}$ for which list comparisons differ can be used to estimate the true intersection, and \DIFdelbegin \DIFdel{$\omega_0$, by
+}\DIFdelend \DIFaddbegin \DIFadd{$\omega_1$, by
+}\DIFaddend \begin{equation}
+   \omega\DIFdelbegin \DIFdel{_0 }\DIFdelend \DIFaddbegin \DIFadd{_1 }\DIFaddend \approx \frac{1}{2}(\omega^{(x)} + \omega^{(x+1)})\,. \label{eqn:secfci_2sen_omega}
 \end{equation}
-In the case a comparison returns equality, the exact value of $\omega^{(x)}$ can be taken to be $\omega_0$.
+In the case a comparison returns equality, the exact value of $\omega^{(x)}$ can be taken to be \DIFdelbegin \DIFdel{$\omega_0$}\DIFdelend \DIFaddbegin \DIFadd{$\omega_1$}\DIFaddend .
 
-The fusion center can then use its values for $\omega_0$ and $\omega_1 = 1-\omega_0$ and the received PHE encryptions of local information vectors and information matrices to compute \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}.
+The fusion center can then use its values for \DIFdelbegin \DIFdel{$\omega_0$ and $\omega_1 = 1-\omega_0$ }\DIFdelend \DIFaddbegin \DIFadd{$\omega_1$ and $\omega_2 = 1-\omega_1$ }\DIFaddend and the received PHE encryptions of local information vectors and information matrices to compute \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}.
 
 %  .d8888b.                    8888888888 .d8888b. 8888888
 % d88P  Y88b                   888       d88P  Y88b  888
@@ -403,25 +419,25 @@ The fusion center can then use its values for $\omega_0$ and $\omega_1 = 1-\omeg
 \section{Multi-sensor Secure Fast Covariance Intersection} \label{sec:multi_secfci}
 When computing the SecFCI fusion for $n$ sensors, we solve \eqref{eqn:ci_cov_estimate} homomorphically by computing
 \begin{equation}
-   \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_0)^{\omega_0}\cdots\mathcal{E}(\mP^{-1}_n)^{\omega_n} \label{eqn:n_sen_paillier_ci_cov}
+   \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend )\DIFdelbegin \DIFdel{^{\omega_0}}\DIFdelend \DIFaddbegin \DIFadd{^{\omega_1}}\DIFaddend \cdots\mathcal{E}(\mP^{-1}\DIFdelbegin \DIFdel{_n}\DIFdelend \DIFaddbegin \DIFadd{_{n}}\DIFaddend )\DIFdelbegin \DIFdel{^{\omega_n} }\DIFdelend \DIFaddbegin \DIFadd{^{\omega_{n}} }\DIFaddend \label{eqn:n_sen_paillier_ci_cov}
 \end{equation}
 and
 \begin{equation}
-   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_0\mean{\vec{x}}_0)^{\omega_0}\cdots\mathcal{E}(\mP^{-1}_n\mean{\vec{x}}_n)^{\omega_n}\,. \label{eqn:n_sen_paillier_ci_estimate}
+   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend \mean{\vec{x}}\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend )\DIFdelbegin \DIFdel{^{\omega_0}}\DIFdelend \DIFaddbegin \DIFadd{^{\omega_1}}\DIFaddend \cdots\mathcal{E}(\mP^{-1}\DIFdelbegin \DIFdel{_n}\DIFdelend \DIFaddbegin \DIFadd{_{n}}\DIFaddend \mean{\vec{x}}\DIFdelbegin \DIFdel{_n}\DIFdelend \DIFaddbegin \DIFadd{_{n}}\DIFaddend )\DIFdelbegin \DIFdel{^{\omega_n}}\DIFdelend \DIFaddbegin \DIFadd{^{\omega_{n}}}\DIFaddend \,. \label{eqn:n_sen_paillier_ci_estimate}
 \end{equation}
-As with the two sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the weights $\omega_0,\dots,\omega_n$.
+As with the two sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the weights \DIFdelbegin \DIFdel{$\omega_0,\dots,\omega_n$}\DIFdelend \DIFaddbegin \DIFadd{$\omega_1,\dots,\omega_{n}$}\DIFaddend .
 
 Our approach to the $n$ sensor case is to solve each $n-1$ conditions in \eqref{eqn:fci_eq} using the two sensor method, and combining partial solutions to compute the final result. When we consider a Euclidean dimension for each $\omega_i$, partial solutions can be considered geometrically as hyperplanes of $n-2$ dimension, over the $n-1$ dimensional solution space given by \eqref{eqn:ci_omega_sum_bound}. 
 
 This can be visualized in the three sensor case, which requires solving partial solutions
 \begin{equation}
-   \omega_0 \tr(\mP_0) - \omega_1 \tr(\mP_1) = 0,\ \omega_0+\omega_1=1-\omega_2 \label{eqn:3_sensor_partial_sol_1}
+   \omega\DIFdelbegin \DIFdel{_0 }\DIFdelend \DIFaddbegin \DIFadd{_1 }\DIFaddend \tr(\mP\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend ) - \omega\DIFdelbegin \DIFdel{_1 }\DIFdelend \DIFaddbegin \DIFadd{_2 }\DIFaddend \tr(\mP\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend ) = 0,\ \omega\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend +\omega\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend =1-\omega\DIFdelbegin \DIFdel{_2 }\DIFdelend \DIFaddbegin \DIFadd{_3 }\DIFaddend \label{eqn:3_sensor_partial_sol_1}
 \end{equation}
 and
 \begin{equation}
-   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0,\ \omega_1+\omega_2=1-\omega_0\,. \label{eqn:3_sensor_partial_sol_2}
+   \omega\DIFdelbegin \DIFdel{_1 }\DIFdelend \DIFaddbegin \DIFadd{_2 }\DIFaddend \tr(\mP\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend ) - \omega\DIFdelbegin \DIFdel{_2 }\DIFdelend \DIFaddbegin \DIFadd{_3 }\DIFaddend \tr(\mP\DIFdelbegin \DIFdel{_2}\DIFdelend \DIFaddbegin \DIFadd{_3}\DIFaddend ) = 0,\ \omega\DIFdelbegin \DIFdel{_1}\DIFdelend \DIFaddbegin \DIFadd{_2}\DIFaddend +\omega\DIFdelbegin \DIFdel{_2}\DIFdelend \DIFaddbegin \DIFadd{_3}\DIFaddend =1-\omega\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend \,. \label{eqn:3_sensor_partial_sol_2}
 \end{equation}
-We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{eqn:3_sensor_partial_sol_1} exactly when $\omega_2=0$, and know that when $\omega_2=1$, then $\omega_0=\omega_1=0$. These two points are enough to define the two-dimensional partial solution \eqref{eqn:3_sensor_partial_sol_1} which can be seen plotted over the possible solution space in Fig. \ref{fig:3_sensor_partial_sol}. Fig. \ref{fig:3_sensor_partial_sols} shows both partial solutions \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} plotted over the solution space.
+We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{eqn:3_sensor_partial_sol_1} exactly when \DIFdelbegin \DIFdel{$\omega_2=0$}\DIFdelend \DIFaddbegin \DIFadd{$\omega_3=0$}\DIFaddend , and know that when \DIFdelbegin \DIFdel{$\omega_2=1$, then $\omega_0=\omega_1=0$}\DIFdelend \DIFaddbegin \DIFadd{$\omega_3=1$, then $\omega_1=\omega_2=0$}\DIFaddend . These two points are enough to define the two-dimensional partial solution \eqref{eqn:3_sensor_partial_sol_1} which can be seen plotted over the possible solution space in Fig. \ref{fig:3_sensor_partial_sol}. Fig. \ref{fig:3_sensor_partial_sols} shows both partial solutions \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} plotted over the solution space.
 \begin{figure*}[tb]
    \begin{subfigure}[t]{0.3\textwidth}
       \begin{center}
@@ -446,74 +462,114 @@ We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{e
       \caption{Partial solutions as planes perpendicular to the solution space.}
       \label{fig:3sen_planes}
    \end{subfigure}
-   \caption{Partial solutions over $\omega_0$, $\omega_1$, and $\omega_2$ solution space.}
+   \caption{Partial solutions over \DIFdelbeginFL \DIFdelFL{$\omega_0$, }\DIFdelendFL $\omega_1$, \DIFdelbeginFL \DIFdelFL{and }\DIFdelendFL $\omega_2$\DIFaddbeginFL \DIFaddFL{, and $\omega_3$ }\DIFaddendFL solution space.}
    \vspace{-\baselineskip}
    \label{fig:partial_sols_and_planes}
 \end{figure*}
-The final solution from all partial solutions is computed by finding their intersection. This can be seen in Fig. \ref{fig:3_sensor_partial_sols} as the intersection of the $(\omega_0,\omega_1)$ and $(\omega_1,\omega_2)$ partial solution lines.
+The final solution from all partial solutions is computed by finding their intersection. This can be seen in Fig. \ref{fig:3_sensor_partial_sols} as the intersection of the \DIFdelbegin \DIFdel{$(\omega_0,\omega_1)$ and }\DIFdelend $(\omega_1,\omega_2)$ \DIFaddbegin \DIFadd{and $(\omega_2,\omega_3)$ }\DIFaddend partial solution lines.
 
 To simplify computing the partial solution intersection, we define equivalent planes for each partial solution, perpendicular to the solution space, in the form
 \begin{equation}
-   a_0\omega_0 + a_1\omega_1 +a_2\omega_2 + a_3 = 0\,, \label{eqn:3sen_plane_eq}
+   a\DIFdelbegin \DIFdel{_0\omega_0 + a}\DIFdelend _1\omega_1 + a_2\omega_2 +a_3\DIFaddbegin \DIFadd{\omega_3 + a_4 }\DIFaddend = 0\,, \label{eqn:3sen_plane_eq}
 \end{equation}
 and solve the resulting linear system for finding the intersection of all planes and the solution space. This is given by
 \begin{equation}
-   \begin{bmatrix}
-      a_0^{(0)} & a_1^{(0)} & a_2^{(0)} \\
-      a_0^{(1)} & a_1^{(1)} & a_2^{(1)} \\
+   \DIFdelbegin %DIFDELCMD < \begin{bmatrix}
+%DIFDELCMD <       a_0^{(0)} & a_1^{(0)} & a_2^{(0)} \\
+%DIFDELCMD <       a_0^{(1)} & a_1^{(1)} & a_2^{(1)} \\
+%DIFDELCMD <       1 & 1 & 1
+%DIFDELCMD <    \end{bmatrix}%%%
+\DIFdelend \DIFaddbegin \begin{bmatrix}
+      a_1^{(1)} & a_2^{(1)} & a_3^{(1)} \\
+      a_1^{(2)} & a_2^{(2)} & a_3^{(2)} \\
       1 & 1 & 1
-   \end{bmatrix}
-   \begin{bmatrix}
-      \omega_0 \\
+   \end{bmatrix}\DIFaddend 
+   \DIFdelbegin %DIFDELCMD < \begin{bmatrix}
+%DIFDELCMD <       \omega_0 \\
+%DIFDELCMD <       \omega_1 \\
+%DIFDELCMD <       \omega_2
+%DIFDELCMD <    \end{bmatrix}%%%
+\DIFdelend \DIFaddbegin \begin{bmatrix}
       \omega_1 \\
-      \omega_2
-   \end{bmatrix}
+      \omega_2 \\
+      \omega_3
+   \end{bmatrix}\DIFaddend 
    =
-   \begin{bmatrix}
-      a_3^{(0)} \\
+   \DIFdelbegin %DIFDELCMD < \begin{bmatrix}
+%DIFDELCMD <       a_3^{(0)} \\
+%DIFDELCMD <       a_3^{(1)} \\
+%DIFDELCMD <       1
+%DIFDELCMD <    \end{bmatrix}%%%
+\DIFdelend \DIFaddbegin \begin{bmatrix}
       a_3^{(1)} \\
+      a_4^{(2)} \\
       1
-   \end{bmatrix}\,, \label{eqn:3sen_plane_sol_eq}
+   \end{bmatrix}\DIFaddend \,, \label{eqn:3sen_plane_sol_eq}
 \end{equation}
 where $a_i^{(j)}$ denotes parameter $i$ of partial solution $j$.
 
-In the $n$ sensor case, we can similarly solve partial solutions by first using the method from section \ref{sec:secfci} to solve an equation with two parameters $\omega_k$ and $\omega_{k+1}$ when letting all $\omega_i=0,\ i\neq k,k+1$, and can compute a remaining point for each $\omega_i=1,\ i\neq k,k+1$ with $\omega_j=0,\ j\neq i$. Perpendicular hyperplanes can then be similarly defined in the form 
+In the $n$ sensor case, we can similarly solve partial solutions by first using the method from section \ref{sec:secfci} to solve \DIFdelbegin \DIFdel{an equation }\DIFdelend \DIFaddbegin \DIFadd{equations }\DIFaddend with two parameters $\omega_k$ and $\omega_{k+1}$ when letting all $\omega_i=0,\ i\neq k,k+1$\DIFdelbegin \DIFdel{, and can compute a remaining point for each }\DIFdelend \DIFaddbegin \DIFadd{. For each equation we can then compute remaining partial solution points at }\DIFaddend $\omega_i=1,\ i\neq k,k+1$ with $\omega_j=0,\ j\neq i$. Perpendicular hyperplanes can then be similarly defined in the form 
 \begin{equation}
-   a_0\omega_0 + \dots +a_n\omega_n + a_{n+1} = 0\,. \label{eqn:nsen_plane_eq}
+   a\DIFdelbegin \DIFdel{_0}\DIFdelend \DIFaddbegin \DIFadd{_1}\DIFaddend \omega\DIFdelbegin \DIFdel{_0 }\DIFdelend \DIFaddbegin \DIFadd{_1 }\DIFaddend + \dots +a_n\omega_n + a_{n+1} = 0\,. \label{eqn:nsen_plane_eq}
 \end{equation}
 Due to their inherent orthogonality, $n-1$ partial solution hyperplanes are guaranteed to intersect at exactly one point when at most $1$ sensor has $\tr(\mP_i)=0$. The hyperplane intersection results in the linear system 
 \begin{equation}
-   \begin{bmatrix}
-      a_0^{(0)} & a_1^{(0)} & \cdots & a_n^{(0)} \\
-      a_0^{(1)} & a_1^{(1)} & \cdots & a_n^{(1)} \\
+   \DIFdelbegin %DIFDELCMD < \begin{bmatrix}
+%DIFDELCMD <       a_0^{(0)} & a_1^{(0)} & \cdots & a_n^{(0)} \\
+%DIFDELCMD <       a_0^{(1)} & a_1^{(1)} & \cdots & a_n^{(1)} \\
+%DIFDELCMD <       \vdots & \vdots & \ddots & \vdots \\
+%DIFDELCMD <       a_0^{(n-1)} & a_1^{(n-1)} & \cdots & a_n^{(n-1)} \\
+%DIFDELCMD <       1 & 1 & \cdots & 1
+%DIFDELCMD <    \end{bmatrix}%%%
+\DIFdelend \DIFaddbegin \begin{bmatrix}
+      a_1^{(1)} & a_2^{(1)} & \cdots & a_{n}^{(1)} \\
+      a_1^{(2)} & a_2^{(2)} & \cdots & a_{n}^{(2)} \\
       \vdots & \vdots & \ddots & \vdots \\
-      a_0^{(n-1)} & a_1^{(n-1)} & \cdots & a_n^{(n-1)} \\
+      a_1^{(n-1)} & a_2^{(n-1)} & \cdots & a_{n}^{(n-1)} \\
       1 & 1 & \cdots & 1
-   \end{bmatrix}
-   \begin{bmatrix}
-      \omega_0 \\
+   \end{bmatrix}\DIFaddend 
+   \DIFdelbegin %DIFDELCMD < \begin{bmatrix}
+%DIFDELCMD <       \omega_0 \\
+%DIFDELCMD <       \omega_1 \\
+%DIFDELCMD <       \vdots \\
+%DIFDELCMD <       \omega_{n-1} \\
+%DIFDELCMD <       \omega_n
+%DIFDELCMD <    \end{bmatrix}%%%
+\DIFdelend \DIFaddbegin \begin{bmatrix}
       \omega_1 \\
+      \omega_2 \\
       \vdots \\
       \omega_{n-1} \\
-      \omega_n
-   \end{bmatrix}
+      \omega_{n}
+   \end{bmatrix}\DIFaddend 
    =
-   \begin{bmatrix}
-      a_{n+1}^{(0)} \\
+   \DIFdelbegin %DIFDELCMD < \begin{bmatrix}
+%DIFDELCMD <       a_{n+1}^{(0)} \\
+%DIFDELCMD <       a_{n+1}^{(1)} \\
+%DIFDELCMD <       \vdots \\
+%DIFDELCMD <       a_{n+1}^{(n-1)} \\
+%DIFDELCMD <       1
+%DIFDELCMD <    \end{bmatrix}%%%
+\DIFdelend \DIFaddbegin \begin{bmatrix}
       a_{n+1}^{(1)} \\
+      a_{n+1}^{(2)} \\
       \vdots \\
       a_{n+1}^{(n-1)} \\
       1
-   \end{bmatrix}\,, \label{eqn:hyperplane_sol_eq}
+   \end{bmatrix}\DIFaddend \,, \label{eqn:hyperplane_sol_eq}
 \end{equation}
 and gives the solution to the SecFCI $\omega_i$ values.
 
-As all ORE comparisons are done between sequential sensors $i$ and $i+1$, seen in \eqref{eqn:fci_eq}, $L$ and $R$ ORE encryptions can be used to the same effect as for the two sensor case. The ORE ordered list sent from each sensor $i$ is given by
+As all \DIFaddbegin \DIFadd{$O(n\log{p})$ }\DIFaddend ORE comparisons are done between sequential sensors $i$ and $i+1$, seen in \eqref{eqn:fci_eq}, $L$ and $R$ ORE encryptions can be used to the same effect as for the two sensor case. The ORE ordered list sent from each sensor $i$ is given by
 \begin{equation}
-   \begin{gathered} \label{eqn:sensor_lists}
-      [\mathcal{E}^L_{ORE}(\omega^{(0)}\tr(\mP_i)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ even} \\
-      [\mathcal{E}^R_{ORE}(\omega^{(0)}\tr(\mP_i)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ odd}\,.
-   \end{gathered}
+   \DIFdelbegin %DIFDELCMD < \begin{gathered} \label{eqn:sensor_lists}
+%DIFDELCMD <       [\mathcal{E}^L_{ORE}(\omega^{(0)}\tr(\mP_i)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ even} \\
+%DIFDELCMD <       [\mathcal{E}^R_{ORE}(\omega^{(0)}\tr(\mP_i)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ odd}\,.
+%DIFDELCMD <    \end{gathered}%%%
+\DIFdelend \DIFaddbegin \begin{gathered} \label{eqn:sensor_lists}
+      [\mathcal{E}^L_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ odd} \\
+      [\mathcal{E}^R_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ even}\,.
+   \end{gathered}\DIFaddend 
 \end{equation}
 When combining \eqref{eqn:sensor_lists} with PHE encryptions of local information vectors and information matrices, SecFCI can be computed entirely homomorphically by \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate}.
 \DIFaddbegin 
@@ -551,10 +607,10 @@ When combining \eqref{eqn:sensor_lists} with PHE encryptions of local informatio
    \end{tabular}
 \end{table}
 \DIFadd{In contrast to some current FHE schemes, these operations are of a much lower complexity than \mbox{%DIFAUXCMD
-\cite{vandijkFullyHomomorphicEncryption2010a} }\hspace{0pt}%DIFAUXCMD
-which has complexity $O(\lambda^{10})$ for integer operations, or \mbox{%DIFAUXCMD
-\cite{stehleFasterFullyHomomorphic2010} }\hspace{0pt}%DIFAUXCMD
-which computes bit operations in $O(\lambda^{3.5})$.
+\cite{vandijkFullyHomomorphicEncryption2010a}}\hspace{0pt}%DIFAUXCMD
+, which has complexity $O(\lambda^{10})$ for integer operations, or \mbox{%DIFAUXCMD
+\cite{stehleFasterFullyHomomorphic2010}}\hspace{0pt}%DIFAUXCMD
+, which computes bit operations in $O(\lambda^{3.5})$.
 }
 
 \DIFadd{Finally, applying the operations from Table \ref{tab:complex_ops} to the SecFCI algorithm, we get the total complexity of SecFCI at the sensors and the fusion center. This has been summarized in Table \ref{tab:complex}, with the unencrypted complexities of FCI shown for reference. 
