@@ -166,13 +166,12 @@ complexity of their method and its trade-off with accuracy. All the
 reviewers have similar comments (Reviewer 3 is especially critical on
 this point).}
 
-My response
+You're right; the manuscript was lacking any run times or complexity analysis of the fusion algorithm, as well as any comparison between complexity trade-offs. We have added the complexity run times of the new algorithm and contrasted them with the unencrypted FCI algorithm, as well as noting the comparative differences to homomorphic operation complexities of some current FHE schemes. These changes are included in the newly added Section V.A.
 
-\item \reviewtext{3. It is known that encryption introduces delays, thus affecting
-performance. The authors could add a discussion on the computation
-complexity of their method and its trade-off with accuracy. All the
-reviewers have similar comments (Reviewer 3 is especially critical on
-this point).}
+\item \reviewtext{4. The authors could summarize the main result in a theorem. This would
+help to highlight the method and its properties. As it stands, the
+analysis of Section V is rather fuzzy. This has been pointed out also
+by Reviewer 2.}
 
 My response
 
@@ -226,7 +225,7 @@ We are sorry for having overlooked the existing literature, and appreciate your 
 \item \reviewtext{- I expected to see complexity analysis for n sensor case or show the
 required number of comparisons and the execution time of each one. }
 
-My response
+We apologies for having not included any run times or a complexity analysis in the manuscript. We have added the new Section V.A which gives both homomorphic operation complexities and the complexity of the complete fusion algorithm. Additionally, we have made noted the number of required comparisons in Section V.
 
 \item \reviewtext{- Section I.A: The author mentioned 
 "Epk(a) and EORE;k(a) denote the public-key pk and ORE key k
@@ -287,7 +286,7 @@ the encryption scheme in which only PHE or ORE is adopted? I think it
 would be nice to involve all the aforementioned strategies in
 Simulation and report also the computational load of them.}
 
-My response
+[TODO] Figure out what was meant. Then point out the purpose of simulation (once that's updated) and the new complexity section which gives also gives operation complexities for some current FHE schemes.
 
 \end{rebuttal}
 
@@ -322,7 +321,7 @@ discussed at length in those papers, e.g., see secure and private
 control using semi-homomorphic encryption in Control Engineering
 Practice.}
 
-[TODO] comment on added encoding reference, and other references added to intro...My response
+[TODO] comment on added encoding reference, as well as the other references added to the intro (when done).
 
 \item \reviewtext{One drawback of encrypted methods is the added overhead to the
 computational complexity. I think the paper benefits more if the
@@ -331,7 +330,9 @@ implemented in real-time, would we be able to run all the necessary
 computations? Would the increased complexity results in slower
 implementation?}
 
-My response
+We agree that encrypted methods typically have the drawback of added complexity and apologies for having left this out of the manuscript. We have added a new Section V.A which discusses the added complexity of the fusion algorithm when compared to the unencrypted FCI algorithm, and notes the operation complexities of some current FHE schemes as reference. 
+
+[TODO] Point out the purpose of the simulation (once this is added) and note that a full efficient implementation is outside the intended scope of this short manuscript (and maybe add to future work section?)
 
 
 \end{rebuttal}
