@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL main_submitted_1.tex   Mon May  4 19:32:25 2020
-%DIF ADD main.tex               Wed May  6 12:27:32 2020
+%DIF ADD main.tex               Thu May  7 15:09:13 2020
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
@@ -285,8 +285,8 @@ and only comparisons between an $L$ and an $R$ encryption are possible, by
 \end{equation}
 Note that no decryption function is provided, as only encryptions are required to provide a means of secure comparison. The Lewi ORE encryption scheme provides security against the simulation-based security model \cite{chenettePracticalOrderRevealingEncryption2016} but is not secure against the IND-OCPA model.
 
-\subsection{Real Number Encoding for Homomorphic Encryption}
-Both encryption schemes in sections \ref{subsec:paillier} and \ref{subsec:lewi} are defined over positive integers, and the Paillier scheme \DIFdelbegin \DIFdel{with the upper bound $N$ to the size of an encryptable integer }\DIFdelend \DIFaddbegin \DIFadd{bounds the largest encryptable integer by $N-1$}\DIFaddend . Due to the prevalence of real numbers in estimation theory, \DIFdelbegin \DIFdel{typically stored as floating-point numbers in modern-day hardware, an }\DIFdelend integer encoding of real \DIFdelbegin \DIFdel{number values is required for their encryption. This requires handling both negative and fractional numbers }\DIFdelend \DIFaddbegin \DIFadd{numbers is an active field of research that acommpanies encrypted processing \mbox{%DIFAUXCMD
+\subsection{Real Number Encoding for Homomorphic Encryption} \DIFaddbegin \label{subsec:encoding}
+\DIFaddend Both encryption schemes in sections \ref{subsec:paillier} and \ref{subsec:lewi} are defined over positive integers, and the Paillier scheme \DIFdelbegin \DIFdel{with the upper bound $N$ to the size of an encryptable integer }\DIFdelend \DIFaddbegin \DIFadd{bounds the largest encryptable integer by $N-1$}\DIFaddend . Due to the prevalence of real numbers in estimation theory, \DIFdelbegin \DIFdel{typically stored as floating-point numbers in modern-day hardware, an }\DIFdelend integer encoding of real \DIFdelbegin \DIFdel{number values is required for their encryption. This requires handling both negative and fractional numbers }\DIFdelend \DIFaddbegin \DIFadd{numbers is an active field of research that acommpanies encrypted processing \mbox{%DIFAUXCMD
 \cite{ziadCryptoImgPrivacyPreserving2016,farokhiSecurePrivateControl2017,cheonHomomorphicEncryptionArithmetic2017}}\hspace{0pt}%DIFAUXCMD
 , and a requirement for our estimate fusion algorithm. 
 }
@@ -572,11 +572,10 @@ As all \DIFaddbegin \DIFadd{$O(n\log{p})$ }\DIFaddend ORE comparisons are done b
    \end{gathered}\DIFaddend 
 \end{equation}
 When combining \eqref{eqn:sensor_lists} with PHE encryptions of local information vectors and information matrices, SecFCI can be computed entirely homomorphically by \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate}.
-\DIFaddbegin 
 
 
-\subsection{\DIFadd{Computational Complexity}}
-\DIFadd{Given sensor state estimates, estimate errors, and error traces at each sensor, we wish to show the computational complexity of the SecFCI algorithm for the $n$ sensor case. We will make the assumption that both the Lewi ORE and Paillier PHE schemes use the same length security parameter (and equivalently key size), such that
+\DIFaddbegin \subsection{\DIFadd{Computational Complexity}} \label{subsec:complexity}
+\DIFadd{Given the state estimates and estimate errors at each sensor, we wish to show the computational complexity of the SecFCI algorithm for the $n$ sensor case. We will make the assumption that both the Lewi ORE and Paillier PHE schemes use the same length security parameter (and equivalently key size), such that
 }\begin{equation}
    \DIFadd{\lambda_{Lewi} = \lambda_{Paillier} = \log{N}\,, \label{eqn:keylength}
 }\end{equation}
@@ -627,9 +626,8 @@ When combining \eqref{eqn:sensor_lists} with PHE encryptions of local informatio
       \hline
    \end{tabular}
 \end{table}
-\DIFaddend 
 
-% 8888888b.                            888 888
+\DIFaddend % 8888888b.                            888 888
 % 888   Y88b                           888 888
 % 888    888                           888 888
 % 888   d88P .d88b.  .d8888b  888  888 888 888888 .d8888b
@@ -641,36 +639,62 @@ When combining \eqref{eqn:sensor_lists} with PHE encryptions of local informatio
 
 
 \section{Simulation Results} \label{sec:results}
-We have implemented a simulation to demonstrate and compare the SecFCI algorithm. Three sensors independently measure a two-dimensional constant-speed linear process and simultaneously run a linear Kalman filter on their measurements. Estimates are then sent both unencrypted and encrypted to a fusion center which computes the FCI and SecFCI fusions on the received data respectively. Unencrypted estimates consist of the state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$, while encrypted estimates are comprised of PHE encryptions of the information vector $\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$ and information matrix $\mathcal{E}(\mP^{-1}_i)$, and the ORE list given by \eqref{eqn:sensor_lists}. The trajectory and fused estimates are shown in Fig. \ref{fig:fci_secfci_traj}.
+We have implemented a simulation to demonstrate \DIFdelbegin \DIFdel{and compare the SecFCI algorithm}\DIFdelend \DIFaddbegin \DIFadd{the accuracy of SecFCI and compare it to FCI}\DIFaddend . Three sensors independently measure a two-dimensional constant-speed linear process and simultaneously run a linear Kalman filter on their measurements. Estimates are \DIFdelbegin \DIFdel{then sent both unencrypted and encrypted }\DIFdelend \DIFaddbegin \DIFadd{sent both encrypted and unencrypted }\DIFaddend to a fusion center which computes the \DIFdelbegin \DIFdel{FCI and SecFCI }\DIFdelend \DIFaddbegin \DIFadd{SecFCI and FCI }\DIFaddend fusions on the received data respectively. \DIFdelbegin \DIFdel{Unencrypted estimates consist of the state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$, while encrypted estimates are comprised of PHE encryptions }\DIFdelend \DIFaddbegin \DIFadd{Encrypted estimates are comprised a PHE encryption }\DIFaddend of the information vector \DIFdelbegin \DIFdel{$\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$ }\DIFdelend and information matrix\DIFdelbegin \DIFdel{$\mathcal{E}(\mP^{-1}_i)$, and }\DIFdelend \DIFaddbegin \DIFadd{, $\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$ and $\mathcal{E}(\mP^{-1}_i)$, in addition to }\DIFaddend the ORE list given by \eqref{eqn:sensor_lists} \DIFaddbegin \DIFadd{(discretization step-size $s=0.1$). Unencrypted estimates consist of the state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$}\DIFaddend . The trajectory and fused estimates are shown in Fig. \ref{fig:fci_secfci_traj}.
 \begin{figure}[tb]
    \vspace{-5pt}
    \begin{center}
       \input{images/fci_secfci_cmp.pgf}
    \end{center}
    \vspace{-10pt}
-   \caption{Tracking simulation comparing FCI and SecFCI.}
+   \caption{Tracking simulation comparing \DIFdelbeginFL \DIFdelFL{FCI and }\DIFdelendFL SecFCI \DIFaddbeginFL \DIFaddFL{and FCI}\DIFaddendFL .}
    \label{fig:fci_secfci_traj}
 \end{figure}
 
-The traces of the fused covariance matrices from both FCI and SecFCI fusion are shown in Fig. \ref{fig:fci_secfci_trace} where a very small difference in trace can be seen. As SecFCI approximates FCI which in turn is an approximation to the CI's trace minimization function \eqref{eqn:ci_trace_min}, neither method guarantees a resulting trace smaller than the other.
-\begin{figure}[tb]
-   \vspace{-5pt}
-   \begin{center}
-      \input{images/traces_cmp.pgf}
-   \end{center}
-   \vspace{-10pt}
-   \caption{Traces of fused covariance matrices for FCI and SecFCI.}
-   \vspace{-\baselineskip}
-   \label{fig:fci_secfci_trace}
-\end{figure}
-Values of each $\omega_i$ over time have been plotted in Fig. \ref{fig:fci_secfci_omegas}. Due to discretization, as can be expected, SecFCI values of $\omega_i$ stay constant but may jump with sufficient change in true FCI $\omega_i$ values, as can be seen near the start of the simulation.
+\DIFdelbegin \DIFdel{The traces of the fused covariance matrices from both FCI and SecFCI fusion are shown in Fig. \ref{fig:fci_secfci_trace} where a very small difference in trace can be seen. As SecFCI approximates FCI which in turn is an approximation to the CI's trace minimization function }%DIFDELCMD < \eqref{eqn:ci_trace_min}%%%
+\DIFdel{, neither method guarantees a resulting trace smaller than the other. }%DIFDELCMD < \begin{figure}[tb]
+%DIFDELCMD <    \vspace{-5pt}
+%DIFDELCMD <    \begin{center}
+%DIFDELCMD <       \input{images/traces_cmp.pgf}
+%DIFDELCMD <    \end{center}
+%DIFDELCMD <    \vspace{-10pt}
+%DIFDELCMD <    %%%
+%DIFDELCMD < \caption{%
+{%DIFAUXCMD
+\DIFdelFL{Traces of fused covariance matrices for FCI and SecFCI.}}
+   %DIFAUXCMD
+%DIFDELCMD < \vspace{-\baselineskip}
+%DIFDELCMD <    \label{fig:fci_secfci_trace}
+%DIFDELCMD < \end{figure}
+%DIFDELCMD < %%%
+\DIFdel{Values of each }\DIFdelend \DIFaddbegin \DIFadd{To derive a strict upper bound on the accuracy difference between SecFCI and FCI, we note that the two factors which introduce inconsistency between the two methods are the encoding of real values from Section \ref{subsec:complexity}, and the difference in weights computed by }\eqref{eqn:hyperplane_sol_eq} \DIFadd{and }\eqref{eqn:fci_eq_sys} \DIFadd{respectively. Due to the small error encoding by quantizing introduces to floating-point arithmetic \mbox{%DIFAUXCMD
+\cite{aristovEncryptedMultisensorInformation2018}}\hspace{0pt}%DIFAUXCMD
+, and the possibility of choosing sufficiently large integer and fractional bit lengths $i$ and $f$, we will only consider the error caused by the difference in weights. We will treat this error as the distance between respective weight vectors, denoted
+}\begin{equation}
+   \DIFadd{\vec{\omega}_{SecFCI} = 
+   \begin{bmatrix}
+      \omega_{1,SecFCI} & \cdots & \omega_{n,SecFCI}
+   \end{bmatrix}^\top
+}\end{equation}
+\DIFadd{and
+}\begin{equation}
+   \DIFadd{\vec{\omega}_{FCI} = 
+   \begin{bmatrix}
+      \omega_{1,FCI} & \cdots & \omega_{n,FCI}
+   \end{bmatrix}^\top
+}\end{equation}
+\DIFadd{where $\omega_{i,s}$ denotes weight }\DIFaddend $\omega_i$ \DIFdelbegin \DIFdel{over time }\DIFdelend \DIFaddbegin \DIFadd{from algorithm $s$. From Section \ref{sec:secfci} we see that the largest difference $|\omega_{i,FCI} - \omega_{i,SecFCI}|$ is strictly bounded by $s/2$. Section \ref{sec:multi_secfci} shows that when more sensors are involved, a tighter bound on this difference is dependant on the value of $\vec{\omega}_{i,FCI}$, but will remain strictly bounded by $s/2$. Therefore, we can give a generous upper bound on the distance between weight vectors as
+}\begin{equation}
+   \DIFadd{|\vec{\omega}_{FCI} - \vec{\omega}_{SecFCI}| < \sqrt{n\left(\frac{s}{2}\right)^2}\,. \label{eqn:accuracy_error_bound}
+}\end{equation}
+
+\DIFadd{Finally, the values of $\omega_{i,SecFCI}$, $\omega_{i,FCI}$ and $|\vec{\omega}_{FCI} - \vec{\omega}_{SecFCI}|$ }\DIFaddend have been plotted \DIFaddbegin \DIFadd{over time }\DIFaddend in Fig. \ref{fig:fci_secfci_omegas}\DIFdelbegin \DIFdel{. Due to discretization, as can be expected, SecFCI values of $\omega_i$ stay constant but may jump with sufficient change in true FCI $\omega_i$ values, as can be seen near the start of the simulation}\DIFdelend \DIFaddbegin \DIFadd{, and show the commputed error bound when $n=3$ and $s=0.1$}\DIFaddend .
 \begin{figure}[tb]
    \vspace{-5pt}
    \begin{center}
       \input{images/omegas_cmp.pgf}
    \end{center}
    \vspace{-10pt}
-   \caption{FCI and SecFCI $\omega_i$ values and their difference.}
+   \caption{\DIFdelbeginFL \DIFdelFL{FCI }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$\vec{\omega}_{SecFCI}$ }\DIFaddendFL and \DIFdelbeginFL \DIFdelFL{SecFCI $\omega_i$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$\vec{\omega}_{FCI}$ }\DIFaddendFL values and \DIFdelbeginFL \DIFdelFL{their }\DIFdelendFL difference.}
    \vspace{-\baselineskip}
    \label{fig:fci_secfci_omegas}
 \end{figure}
