@@ -128,11 +128,11 @@ Covariance Intersection (CI), introduced in \cite{julierNondivergentEstimationAl
 Note that \eqref{eqn:ci_cov_estimate} computes the fusion of the information vectors and information matrices defined in \cite{niehsenInformationFusionBased2002} and reduces the fusion to a simple weighted sum.
 Values for $\omega_i$ must satisfy
 \begin{equation}
-   \omega_1 + \omega_2 + \cdots + \omega_{n} = 1,\ 0 \leq \omega_i \leq 1\,, \label{eqn:ci_omega_sum_bound}
+   \omega_1 + \omega_2 + \cdots + \omega_n = 1,\ 0 \leq \omega_i \leq 1\,, \label{eqn:ci_omega_sum_bound}
 \end{equation}
 which guarantees consistency of the fused estimates. They are chosen in a way to speed up convergence and minimize error, by minimizing a certain specified property of the resulting fused estimate covariance. One such property, the fused estimate covariance trace, requires the solution to
 \begin{equation}
-   \argmin_{\omega_1,\dots,\omega_{n}} \{\tr(\mP)\} = \argmin_{\omega_1,\dots,\omega_{n}} \left\{\tr\left(\left(\sum_{i=1}^{n}\omega_i \mP_i^{-1}\right)^{-1}\right)\right\}. \label{eqn:ci_trace_min}
+   \argmin_{\omega_1,\dots,\omega_n} \{\tr(\mP)\} = \argmin_{\omega_1,\dots,\omega_n} \left\{\tr\left(\left(\sum_{i=1}^{n}\omega_i \mP_i^{-1}\right)^{-1}\right)\right\}. \label{eqn:ci_trace_min}
 \end{equation}
 However, minimizing this non-linear cost function can be very costly computationally and has led to the development of the non-iterative approximation technique in \cite{niehsenInformationFusionBased2002}.
 
@@ -336,13 +336,13 @@ The fusion center can then use its values for $\omega_1$ and $\omega_2 = 1-\omeg
 \section{Multi-sensor Secure Fast Covariance Intersection} \label{sec:multi_secfci}
 When computing the SecFCI fusion for $n$ sensors, we solve \eqref{eqn:ci_cov_estimate} homomorphically by computing
 \begin{equation}
-   \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_1)^{\omega_1}\cdots\mathcal{E}(\mP^{-1}_{n})^{\omega_{n}} \label{eqn:n_sen_paillier_ci_cov}
+   \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_1)^{\omega_1}\cdots\mathcal{E}(\mP^{-1}_n)^{\omega_n} \label{eqn:n_sen_paillier_ci_cov}
 \end{equation}
 and
 \begin{equation}
-   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{\omega_1}\cdots\mathcal{E}(\mP^{-1}_{n}\mean{\vec{x}}_{n})^{\omega_{n}}\,. \label{eqn:n_sen_paillier_ci_estimate}
+   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{\omega_1}\cdots\mathcal{E}(\mP^{-1}_n\mean{\vec{x}}_n)^{\omega_n}\,. \label{eqn:n_sen_paillier_ci_estimate}
 \end{equation}
-As with the two sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the weights $\omega_1,\dots,\omega_{n}$.
+As with the two sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the weights $\omega_1,\dots,\omega_n$.
 
 Our approach to the $n$ sensor case is to solve each $n-1$ conditions in \eqref{eqn:fci_eq} using the two sensor method, and combining partial solutions to compute the final result. When we consider a Euclidean dimension for each $\omega_i$, partial solutions can be considered geometrically as hyperplanes of $n-2$ dimension, over the $n-1$ dimensional solution space given by \eqref{eqn:ci_omega_sum_bound}. 
 
