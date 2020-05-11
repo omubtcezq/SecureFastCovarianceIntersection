@@ -167,16 +167,16 @@ complexity of their method and its trade-off with accuracy. All the
 reviewers have similar comments (Reviewer 3 is especially critical on
 this point).}
 
-You're right; the manuscript was lacking any run times or complexity analysis of the fusion algorithm, as well as any comparison between methods. We have added the complexity run times of the new algorithm and contrasted them with the unencrypted FCI algorithm, as well as noting the comparative differences to homomorphic operation complexities of some current FHE schemes. These changes are included in the newly added Section V.A. Additionally, in Section VI we have added a discussion and derivation of the accuracy of the method in terms of algorithms parameters.
+You're right; the manuscript was lacking any run times or complexity analysis of the fusion algorithm, as well as any comparison between methods. We have added the complexity run times of the new algorithm and contrasted them with the unencrypted FCI algorithm, as well as noting the comparative differences to homomorphic operation complexities of some current FHE schemes. These changes are included in the new Section V.A. Additionally, in Section VI we have added a discussion and derivation of the accuracy of the method in terms of algorithms parameters.
 
 \item \reviewtext{4. The authors could summarize the main result in a theorem. This would
 help to highlight the method and its properties. As it stands, the
 analysis of Section V is rather fuzzy. This has been pointed out also
 by Reviewer 2.}
 
-We regret that Section V and results were not made clearer, and have updated Sections V and VI to include an explicit complexity analysis of the novel method, and give an upper bound on accuracy reduction of SecFCI from the FCI algorithm it approximates.
+We regret that Section V and results were not made clearer, and have added the Section V.A and updated Section VI to include an explicit complexity analysis of the novel method, and give an upper bound on the accuracy reduction of SecFCI from the FCI algorithm it approximates.
 
-[TODO] respond to the theorem comment
+[TODO] respond to the theorem comment (it may refer to the results regarding security, respond to that as well once problem motivation w.r.t. security is added.)
 
 \end{rebuttal}
 
@@ -223,12 +223,12 @@ mechanism. Check the one used in [1]. The author should mention why
 they avoid using such an encoding mechanism to solve the problem
 without going into the proposed direction. }
 
-We are sorry for having overlooked the existing literature, and appreciate your comment and precise reference. We agree with your statement and have updated Section III.C and our references accordingly.
+We are sorry for having overlooked the existing literature, and appreciate your comment and reference. We agree with your statement and have updated Section III.C and our references accordingly.
 
 \item \reviewtext{- I expected to see complexity analysis for n sensor case or show the
 required number of comparisons and the execution time of each one. }
 
-We apologies for having not included any run times or a complexity analysis in the manuscript. We have added the new Section V.A which gives both homomorphic operation complexities and the complexity of the complete fusion algorithm. Additionally, we have made noted the number of required comparisons in Section V.
+We apologies for having not included any run times or a complexity analysis in the manuscript. We have added the new Section V.A which gives both homomorphic operation complexities and the complexity of the complete fusion algorithm. Additionally, we have noted the number of required comparisons in Section V.
 
 \item \reviewtext{- Section I.A: The author mentioned 
 "Epk(a) and EORE;k(a) denote the public-key pk and ORE key k
@@ -289,14 +289,7 @@ the encryption scheme in which only PHE or ORE is adopted? I think it
 would be nice to involve all the aforementioned strategies in
 Simulation and report also the computational load of them.}
 
-We agree that using different encryption schemes can greatly affect the computational load of the algorithm and apologize for having left out the comparisons of different methods. We also regret that the intention of the simulation was not made clearer, in that it was primarily intended to discuss accuracy.
-
-We have now added Section V.A where we give the computational complexity of SecFCI, and compare it to the unencrypted FCI algorithm, as well as making comparisons to the complexity of some current FHE scheme operations.
-
-We note that although FHE could be used to implement homomorphic FCI, PHE or ORE alone have, to the best of our knowledge, no known method to do so. We have for this reason not considered methods adopting only one of these schemes in the complexity analysis or simulation.
-
-
-We have also updated Section VI to make the simulation's purpose clearer and to give a more in-depth discussion on the accuracy of the SecFCI method. Run-times have not been given as an efficient implementation of the required encryption schemes is beyond the scope of this paper, and has been addressed as intended future work in Section VII.
+We agree that using different encryption schemes can greatly affect the computational load of the algorithm and apologize for having left out the comparisons of different methods. We also regret that the intention of the simulation was not made clearer, in that it was primarily intended to discuss accuracy. We have now added Section V.A where we give the computational complexity of SecFCI, and compare it to the unencrypted FCI algorithm, as well as making comparisons to the complexity of some current FHE scheme operations. We note that although FHE could be used to implement an encrypted homomorphic FCI, PHE or ORE alone has to the best of our knowledge, no known method to do so. We have for this reason not considered methods adopting only one of these schemes in the complexity analysis or simulation. We have also updated Section VI to make the simulation's purpose clearer and to give a more in-depth discussion on the accuracy of the SecFCI method. Run-times have not been given as an efficient implementation of the required encryption schemes is beyond the scope of this paper, but has been addressed as intended future work in Section VII.
 
 
 \end{rebuttal}
@@ -339,7 +332,7 @@ implemented in real-time, would we be able to run all the necessary
 computations? Would the increased complexity results in slower
 implementation?}
 
-We agree that encrypted methods typically have the drawback of added complexity and apologize for having left this out of the manuscript. We have added a new Section V.A which discusses the added complexity of the fusion algorithm when compared to the unencrypted FCI algorithm. While we have implemented a simulation of the algorithm, its primary purpose was to demonstrate the accuracy of the method, which we have now made clearer in Section VI. Run-times have not been given as an efficient implementation of the required encryption schemes is beyond the scope of this paper, and has been addressed as intended future work in Section VII.
+We agree that encrypted methods typically have the drawback of added complexity and apologize for having left this out of the manuscript. We have added a new Section V.A which discusses the added complexity of the fusion algorithm when compared to the unencrypted FCI algorithm. While we have implemented a simulation of the algorithm, its primary purpose was to demonstrate the accuracy of the method, which we have now made clearer in Section VI. Run-times have not been given as an efficient implementation of the required encryption schemes is beyond the scope of this paper, but has been addressed as intended future work in Section VII.
 
 \end{rebuttal}
 
