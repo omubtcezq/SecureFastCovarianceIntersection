@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
-%DIF DEL main_submitted_1.tex   Thu May  7 16:12:29 2020
-%DIF ADD main.tex               Mon May 11 18:52:55 2020
+%DIF DEL main_submitted_1.tex   Tue May 12 09:13:48 2020
+%DIF ADD main.tex               Tue May 12 15:00:04 2020
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
@@ -123,7 +123,7 @@ Secure Fast Covariance Intersection Using Partially Homomorphic and Order Reveal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-Fast covariance intersection is a widespread technique for state estimate fusion in sensor networks when cross-correlations are not known and fast computations are desired. The common requirement of sending estimates from one party to another during fusion means they do not remain locally private. Current secure fusion algorithms rely on encryption schemes that do not provide sufficient flexibility and as a result require, often undesired, excess communication between estimate producers. We propose a novel method of homomorphically computing the fast covariance intersection algorithm on estimates encrypted with a combination of encryption schemes. Using order revealing encryption, we show how approximate solutions to the fast covariance intersection coefficients can be computed and combined with partially homomorphic encryptions of estimates, to calculate an encryption of the fused result. The described approach allows secure fusion of any number of private estimates, making third-party cloud processing a viable option when working with sensitive state estimates or when performing estimation over untrusted networks.
+Fast covariance intersection is a widespread technique for state estimate fusion in sensor networks when cross-correlations are not known and fast computations are desired. The common requirement of sending estimates from one party to another during fusion means they do not remain locally private. Current secure fusion algorithms rely on encryption schemes that do not provide sufficient flexibility and as a result require, often undesired, excess communication between estimate producers. We propose a novel method of homomorphically computing the fast covariance intersection algorithm on estimates encrypted with a combination of encryption schemes. Using order revealing encryption, we show how approximate solutions to the fast covariance intersection \DIFdelbegin \DIFdel{coefficients }\DIFdelend \DIFaddbegin \DIFadd{weights }\DIFaddend can be computed and combined with partially homomorphic encryptions of estimates, to calculate an encryption of the fused result. The described approach allows secure fusion of any number of private estimates, making third-party cloud processing a viable option when working with sensitive state estimates or when performing estimation over untrusted networks.
 
 \end{abstract}
 
@@ -146,11 +146,11 @@ Sensor data processing and state estimation have been increasingly prevalent in 
 
 \DIFdelbegin \DIFdel{A key step in distributed sensor fusion, and our topic of interest in this paper, is the requirement of transmitting sensor state estimate and covariance information between network nodes for }\DIFdelend \DIFaddbegin \DIFadd{As advancements in distributed algorithms and cloud computing develop, the requirements for privacy and security in such systems has become more apparent \mbox{%DIFAUXCMD
 \cite{renSecurityChallengesPublic2012,brennerSecretProgramExecution2011}}\hspace{0pt}%DIFAUXCMD
-. In particular for sensor networks, }\DIFaddend the \DIFdelbegin \DIFdel{computation of a final fused result. Network eavesdroppers or curious fusion nodes are not prevented from learning possibly sensitive local state estimates and covariances}\DIFdelend \DIFaddbegin \DIFadd{desire for sensitive hardware information or estimation methodology to remain private may require the privacy of local measurements or state estimates as well, which can be difficult to achieve in a network containing eavesdroppers or malicious participants}\DIFaddend . Encryption has until recently been primarily used to secure information transfer between communicating parties. Common symmetric-key encryption schemes such as AES \cite{daemonAnnouncingAdvancedEncryption2001} are used to encrypt sent information to its destination, and public-key encryption schemes such as RSA \cite{rivestMethodObtainingDigital1978} to distribute symmetric keys. However, recent developments in public-key Homomorphic Encryption (HE) schemes \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+. In particular for sensor networks, }\DIFaddend the \DIFdelbegin \DIFdel{computation of a final fused result. Network eavesdroppers or curious fusion nodes are not prevented from learning possibly sensitive local state estimates and covariances}\DIFdelend \DIFaddbegin \DIFadd{desire for sensitive hardware information or estimation methodology to remain private may require the privacy of local measurements or state estimates as well, and is non-trivial in networks containing eavesdroppers, malicious participants, or nodes owned by untrusted parties}\DIFaddend . Encryption has until recently been primarily used to secure information transfer between communicating parties. Common symmetric-key encryption schemes such as AES \cite{daemonAnnouncingAdvancedEncryption2001} are used to encrypt sent information to its destination, and public-key encryption schemes such as RSA \cite{rivestMethodObtainingDigital1978} to distribute symmetric keys. However, recent developments in public-key Homomorphic Encryption (HE) schemes \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
 \cite{gentryFullyHomomorphicEncryption2009,elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}}\hspace{0pt}%DIFAUXCMD
 }\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
 \cite{gentryFullyHomomorphicEncryption2009,vandijkFullyHomomorphicEncryption2010a,stehleFasterFullyHomomorphic2010,elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}}\hspace{0pt}%DIFAUXCMD
-}\DIFaddend , which allow algebraic operations to be performed on encryptions, are leading to \DIFdelbegin \DIFdel{more secure cloud or network }\DIFdelend \DIFaddbegin \DIFadd{many secure }\DIFaddend applications for signal processing \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+}\DIFaddend , which allow algebraic operations to be performed on encryptions, are leading to \DIFdelbegin \DIFdel{more secure cloud or network }\DIFdelend \DIFaddbegin \DIFadd{novel secure }\DIFaddend applications for signal processing \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
 \cite{lagendijkEncryptedSignalProcessing2013,alexandruEncryptedCooperativeControla,aristovEncryptedMultisensorInformation2018}}\hspace{0pt}%DIFAUXCMD
 . Although implementations of }\DIFdelend \DIFaddbegin \DIFadd{in distributed and cloud computing environments \mbox{%DIFAUXCMD
 \cite{lagendijkEncryptedSignalProcessing2013,aristovEncryptedMultisensorInformation2018,farokhiSecurePrivateControl2017,alexandruEncryptedCooperativeControla,kogisoCyberSecurityEnhancementNetworked2015,kerschbaumOutsourcedPrivateSet2012}}\hspace{0pt}%DIFAUXCMD
@@ -158,37 +158,28 @@ Sensor data processing and state estimation have been increasingly prevalent in 
 \cite{gentryImplementingGentryFullyHomomorphic2011}}\hspace{0pt}%DIFAUXCMD
 , and }\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
 \cite{gentryFullyHomomorphicEncryption2009,vandijkFullyHomomorphicEncryption2010a,stehleFasterFullyHomomorphic2010} }\hspace{0pt}%DIFAUXCMD
-}\DIFaddend provide all algebraic operations \DIFdelbegin \DIFdel{on encryptions, }\DIFdelend \DIFaddbegin \DIFadd{over encryptions, and are often theoretically suitable to processing tasks in a distributed environment securely. However, }\DIFaddend current implementations are still computationally infeasible for large-scale \DIFdelbegin \DIFdel{signal }\DIFdelend \DIFaddbegin \DIFadd{or real-time }\DIFaddend processing \cite{duImplementingMLAlgorithms2017,acarSurveyHomomorphicEncryption2018}. \DIFdelbegin \DIFdel{Instead, }\DIFdelend Partially Homomorphic Encryption (PHE) schemes \cite{elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}, providing \DIFdelbegin \DIFdel{typically only one algebraic operation, have }\DIFdelend \DIFaddbegin \DIFadd{only a subset of these operations, have instead }\DIFaddend been a focus for such \DIFdelbegin \DIFdel{processing tasks \mbox{%DIFAUXCMD
+}\DIFaddend provide all algebraic operations \DIFdelbegin \DIFdel{on encryptions, }\DIFdelend \DIFaddbegin \DIFadd{over encryptions, and are often theoretically suitable for secure processing in distributed environments. However, }\DIFaddend current implementations are still computationally infeasible for large-scale \DIFdelbegin \DIFdel{signal }\DIFdelend \DIFaddbegin \DIFadd{or real-time }\DIFaddend processing \cite{duImplementingMLAlgorithms2017,acarSurveyHomomorphicEncryption2018}. \DIFdelbegin \DIFdel{Instead, }\DIFdelend Partially Homomorphic Encryption (PHE) schemes \cite{elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}, providing \DIFdelbegin \DIFdel{typically only one algebraic operation, have }\DIFdelend \DIFaddbegin \DIFadd{only a subset of these operations, have instead }\DIFaddend been a focus for such \DIFdelbegin \DIFdel{processing tasks \mbox{%DIFAUXCMD
 \cite{alexandruEncryptedCooperativeControla,aristovEncryptedMultisensorInformation2018}}\hspace{0pt}%DIFAUXCMD
 . Most commonly, addition is provided by the Paillier encryption scheme \mbox{%DIFAUXCMD
 \cite{paillierPublicKeyCryptosystemsBased1999} }\hspace{0pt}%DIFAUXCMD
 due to its speed and simplicity. However, }\DIFdelend \DIFaddbegin \DIFadd{tasks due to their reduced computational requirements. \mbox{%DIFAUXCMD
 \cite{aristovEncryptedMultisensorInformation2018} }\hspace{0pt}%DIFAUXCMD
-use PHE to compute a private distributed Information Filter, \mbox{%DIFAUXCMD
+use PHE to run a private distributed Information Filter, \mbox{%DIFAUXCMD
 \cite{alexandruEncryptedCooperativeControla,farokhiSecurePrivateControl2017} }\hspace{0pt}%DIFAUXCMD
 to compute private distributed control aggregation, \mbox{%DIFAUXCMD
 \cite{kogisoCyberSecurityEnhancementNetworked2015} }\hspace{0pt}%DIFAUXCMD
-for private matrix multiplications, and \mbox{%DIFAUXCMD
+for private matrix multiplication, and \mbox{%DIFAUXCMD
 \cite{kerschbaumOutsourcedPrivateSet2012} }\hspace{0pt}%DIFAUXCMD
-for private set intersection. These works are, however, }\DIFaddend due to the limited operations provided \DIFdelbegin \DIFdel{, securely computable processing algorithms have thus far been }\DIFdelend \DIFaddbegin \DIFadd{by PHE, }\DIFaddend relatively restricted in complexity and application. \DIFdelbegin \DIFdel{The recent development of }\DIFdelend \DIFaddbegin \DIFadd{Recent developments in }\DIFaddend new encryption schemes, such as Order Revealing Encryption (ORE) \cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016,bogatovComparativeEvaluationOrderPreserving}, \DIFdelbegin \DIFdel{have provided }\DIFdelend \DIFaddbegin \DIFadd{are providing }\DIFaddend new light on the possible complexity of \DIFdelbegin \DIFdel{signal processing algorithms that can be computed securely . Thus far, ORE has found little application in the context of }\DIFdelend \DIFaddbegin \DIFadd{securely computable }\DIFaddend signal processing algorithms\DIFdelbegin \DIFdel{or in combination with HE schemes}\DIFdelend . In this paper, we \DIFdelbegin \DIFdel{make use of a combination of ORE and PHE schemes to develop a Secure FCI }\DIFdelend \DIFaddbegin \DIFadd{develop a method for secure FCI fusion }\DIFaddend (SecFCI)\DIFdelbegin \DIFdel{fusion method that enables us to protect sensor estimates from both eavesdroppers and other algorithm participants. }\DIFdelend \DIFaddbegin \DIFadd{, such that local and state measurements are kept private to sensors and only fusion weights are made known to the otherwise untrusted fusion center. This is achieved using a combination of ORE and PHE schemes only, and has to the best of our knowledge, not been achieved without the reliance on computationally expensive FHE schemes before.
-}\DIFaddend 
+for private set intersection. These works are, however, }\DIFaddend due to the limited operations provided \DIFdelbegin \DIFdel{, securely computable processing algorithms have thus far been }\DIFdelend \DIFaddbegin \DIFadd{by PHE, }\DIFaddend relatively restricted in complexity and application. \DIFdelbegin \DIFdel{The recent development of }\DIFdelend \DIFaddbegin \DIFadd{Recent developments in }\DIFaddend new encryption schemes, such as Order Revealing Encryption (ORE) \cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016,bogatovComparativeEvaluationOrderPreserving}, \DIFdelbegin \DIFdel{have provided }\DIFdelend \DIFaddbegin \DIFadd{are now providing }\DIFaddend new light on the possible complexity of \DIFdelbegin \DIFdel{signal processing algorithms that can be computed securely . Thus far, ORE has found little application in the context of }\DIFdelend \DIFaddbegin \DIFadd{securely computable }\DIFaddend signal processing algorithms\DIFdelbegin \DIFdel{or in combination with HE schemes}\DIFdelend . In this paper, we \DIFdelbegin \DIFdel{make use of a }\DIFdelend \DIFaddbegin \DIFadd{develop a method for secure FCI fusion, such that local sensor information is kept private, using a }\DIFaddend combination of ORE and PHE schemes \DIFdelbegin \DIFdel{to develop a Secure FCI (SecFCI) fusionmethod that enables us to protect sensor estimates from both eavesdroppers and other algorithm participants}\DIFdelend \DIFaddbegin \DIFadd{only, which has to the best of our knowledge not been achieved without the reliance on computationally expensive FHE schemes.
+}
 
+\subsection{\DIFadd{Problem Formulation}} \label{subsec:problem_formulation}
+\DIFadd{Our paper is motivated by a key step in multi-sensor fusion, the requirement of transmitting local sensor state estimates and covariance information over a network for the computation of their fused result. In particular, we consider centralised FCI fusion, where a party responsible for many networked sensors capable of computing their local state estimates, wishes to have their fused state estimate and covariance computed securely on an untrusted cloud. The same party may query the cloud fusion center for the fused result at any time. To preserve the privacy of local sensor measurements and state estimates, we aim to provide a secure FCI fusion algorithm such that the fusion center does not learn individual sensor measurements, state estimates or covariances. This will be achieved by encrypted homomorphic fusion, whereby the untrusted cloud learns only the FCI aggregation weights, as will be shown in Section \ref{sec:secfci}.
+}
 
-\DIFaddbegin \subsection{\DIFadd{Problem Formulation}}
-%DIF >  A key step in distributed sensor fusion, and our topic of interest in this paper, is the requirement of transmitting sensor state estimate and covariance information between network nodes for the computation of a final fused result. 
+\DIFadd{As we assume that the querying party is the owner of all individual sensors, the threat model we consider is one where only network eavesdroppers and a malicious fusion center are possible, and no collusion between sensors and a malicious cloud are examined}\DIFaddend .
 
-%DIF >  Network eavesdroppers and malicious participants in distributed estimation and control are 
-
-%DIF >  Network eavesdroppers or curious fusion nodes are not prevented from learning possibly sensitive local state estimates and covariances. 
-
-
-
-%DIF >  Consider cloud computing setup such that ..
-%DIF >  what we want to hide, what we don't hide (details in section iv)
-%DIF >  collusions and threat model
-
-
-\DIFaddend \subsection{Notation}
+\subsection{Notation}
 Throughout this paper we will use the following notation. Lowercase characters represent scalars, lowercase underlined characters, $\vec{x}$, represent vectors. Uppercase bold characters, $\mM$, are reserved for matrices, where $\mM^\top$ denotes the matrix transpose, $\mM^{-1}$ the matrix inverse, and $\tr(\cdot)$ the trace function. Covariance matrices will be represented by $\mP$. $\mathcal{E}_{pk}(a)$ and $\mathcal{E}_{ORE,k}(a)$ denote the \DIFaddbegin \DIFadd{encryption of $a$ using the }\DIFaddend public-key $pk$ and ORE key $k$\DIFdelbegin \DIFdel{encryptions of $a$, }\DIFdelend \DIFaddbegin \DIFadd{, respectively, }\DIFaddend and similarly with the decryption functions $\mathcal{D}_{pk}(\cdot)$ and $\mathcal{D}_{ORE,k}(\cdot)$, where any required real-number encodings of the number $a$ are assumed to be performed. $\mathcal{E}(a)$ and $\mathcal{E}_{ORE}(a)$ may be used for brevity when the encryption keys can be inferred from context. All encryption of vectors and matrices are defined element-wise, with elements given by $\mathcal{E}(\mP_{i,j}) = \mathcal{E}(\mP)_{i,j}$. Sets are represented as $\{\cdot\}$ while ordered lists with $[\cdot]$.
 
 %  .d8888b. 8888888
@@ -208,7 +199,7 @@ Covariance Intersection (CI), introduced in \cite{julierNondivergentEstimationAl
    \mP^{-1}=\sum_{i=1}^{n}\omega_i \mP_i^{-1},\ \mP^{-1} \mean{\vec{x}} =\sum_{i=1}^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i\,. \label{eqn:ci_cov_estimate}
 \end{equation}
 Note that \eqref{eqn:ci_cov_estimate} computes the fusion of the information vectors and information matrices defined in \cite{niehsenInformationFusionBased2002} and reduces the fusion to a simple weighted sum.
-Values for $\omega_i$ must satisfy
+Values for \DIFaddbegin \DIFadd{weights }\DIFaddend $\omega_i$ must satisfy
 \begin{equation}
    \omega_1 + \omega_2 + \cdots + \omega_n = 1,\ 0 \leq \omega_i \leq 1\,, \label{eqn:ci_omega_sum_bound}
 \end{equation}
@@ -277,7 +268,7 @@ and requires the solution to the linear problem
 \end{equation}
 where we let $\mathcal{P}_i = \tr(\mP_i)$.
 
-Our proposed filter aims to solve FCI fusion, namely \eqref{eqn:ci_cov_estimate} and \eqref{eqn:fci_eq_sys}, homomorphically, such that using only encrypted values from each sensor $i$, we can produce valid encryptions of fused estimates without the need for decryption.
+Our proposed filter aims to solve FCI fusion, namely \eqref{eqn:ci_cov_estimate} and \eqref{eqn:fci_eq_sys}, \DIFdelbegin \DIFdel{homomorphically, such that }\DIFdelend using only encrypted values from each sensor $i$, \DIFdelbegin \DIFdel{we can produce valid encryptions of fused estimates without the need for decryption}\DIFdelend \DIFaddbegin \DIFadd{and leaking only the weight values $\omega_1,\dots,\omega_n$}\DIFaddend .
 
 % 8888888b.  888    888 8888888888       .d8888b.            .d88888b.  8888888b.  8888888888
 % 888   Y88b 888    888 888             d88P  "88b          d88P" "Y88b 888   Y88b 888
@@ -333,7 +324,7 @@ Note that no decryption function is provided, as only encryptions are required t
 , and a requirement for our estimate fusion algorithm. 
 }
 
-\DIFadd{While some encoding schemes for additive homomorphic encryption provide additional operations such as homomorphic right bit shifting \mbox{%DIFAUXCMD
+\DIFadd{While some encoding schemes for additive homomorphic encryption provide additional operations such as homomorphic division \mbox{%DIFAUXCMD
 \cite{ziadCryptoImgPrivacyPreserving2016}}\hspace{0pt}%DIFAUXCMD
 , they typically complicate the homomorphic operations, and in the case of \mbox{%DIFAUXCMD
 \cite{ziadCryptoImgPrivacyPreserving2016} }\hspace{0pt}%DIFAUXCMD
@@ -358,8 +349,8 @@ From this, we can see that the value of the largest encryptable integer is now g
 \end{equation}
 While encoded Q numbers are consistent under addition, \DIFaddbegin \DIFadd{each }\DIFaddend multiplication requires a factor of $1/2^f$ to be removed. As \DIFdelbegin \DIFdel{homomorphic division is not supported by }\DIFdelend \DIFaddbegin \DIFadd{shown in \mbox{%DIFAUXCMD
 \cite{farokhiSecurePrivateControl2017}}\hspace{0pt}%DIFAUXCMD
-, particular cases of encoded multiplication can be computed exactly when using }\DIFaddend the Paillier encryption scheme, \DIFdelbegin \DIFdel{the number of multiplications performed on encrypted values must be bounded and handled when decoding. As }\DIFdelend \DIFaddbegin \DIFadd{however, we simplify multiplication by taking advantage of the FCI algorithm, which guarantees only a single homomorphic multiplication as }\DIFaddend will be shown in section \ref{sec:secfci}, \DIFdelbegin \DIFdel{our fusion method will always require that a single multiplication factor be removed and leads to the decoding of an integer $e$ }\DIFdelend \DIFaddbegin \DIFadd{and handle this when decoding.
-}
+, particular cases of encoded multiplication can be computed exactly when using }\DIFaddend the Paillier encryption scheme, \DIFdelbegin \DIFdel{the number of multiplications performed on encrypted values must be bounded and handled }\DIFdelend \DIFaddbegin \DIFadd{however, we simplify multiplication by taking advantage of the FCI algorithm, which guarantees only a single homomorphic multiplication and handle this }\DIFaddend when decoding.
+\DIFdelbegin \DIFdel{As will be shown in section \ref{sec:secfci}, our fusion method will always require that a single multiplication factor be removed and leads to the decoding of an integer $e$ }\DIFdelend \DIFaddbegin 
 
 \DIFadd{In addition to not removing the multiplication factor homomorphically, we relax the requirement from \mbox{%DIFAUXCMD
 \cite{farokhiSecurePrivateControl2017} }\hspace{0pt}%DIFAUXCMD
@@ -392,9 +383,9 @@ holds.
 
 
 \section{Two-sensor Secure Fast Covariance Intersection} \label{sec:secfci}
-In this section, we will introduce the Secure FCI (SecFCI) fusion algorithm for the two sensor case, before extending it to the $n$ sensor case in section \ref{sec:multi_secfci}. The network model we will consider is one where all sensors are capable of running local estimators, as well as the PHE and ORE encryption schemes described in section \ref{sec:encryption}. Each sensor $i$ computes its state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$ and sends the relevant encrypted information to a single fusion center that computes the fused state estimate and covariance matrix homomorphically. A third, querying party, can request and use the current encrypted fused information from the fusion center at any time. The querying party is the key holding party in this network and generates the PHE public key $pk$, secret key $sk$, and ORE symmetric key $k$. $pk$ is made available to all parties in the network, and $k$ is made available to the sensors only, via any standard public-key scheme such as RSA \cite{rivestMethodObtainingDigital1978}. When encrypting with ORE key $k$, individual sensors are limited to using only $L$ or $R$ ORE encryption to reduce local information leakage. Thus, consecutive ORE encryptions from any sensor cannot be used to infer local information directly, and can only be compared to encryptions from sensors using the alternate ORE encryption.
+In this section, we will introduce the Secure FCI (SecFCI) fusion algorithm for the two sensor case, before extending it to the $n$ sensor case in section \ref{sec:multi_secfci}. The network model we \DIFdelbegin \DIFdel{will consider is one where all }\DIFdelend \DIFaddbegin \DIFadd{consider is described in Section \ref{subsec:problem_formulation}, where }\DIFaddend sensors are capable of running local estimators, as well as the PHE and ORE encryption schemes described in section \ref{sec:encryption}. Each sensor $i$ computes its state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$ and sends \DIFdelbegin \DIFdel{the }\DIFdelend relevant encrypted information to \DIFdelbegin \DIFdel{a single fusion centerthat computes the fused state estimate and covariance matrix homomorphically. A third, querying party, can request and use the current encrypted fused information from the fusion center at any time. }\DIFdelend \DIFaddbegin \DIFadd{an untrusted cloud fusion center. }\DIFaddend The querying party is the key holding party in this network and generates the PHE public key $pk$, secret key $sk$, and ORE symmetric key $k$. $pk$ is made available to all parties in the network, and $k$ is made available to the sensors only, via any standard public-key scheme such as RSA \cite{rivestMethodObtainingDigital1978}. When encrypting with ORE key $k$, individual sensors are limited to using only $L$ or $R$ ORE encryption to reduce local information leakage. Thus, consecutive ORE encryptions from any sensor cannot be used to infer local information directly, and can only be compared to encryptions from sensors using the alternate ORE encryption.
 
-From \eqref{eqn:ci_cov_estimate}, we can see that both CI fusion equations can be computed on PHE encryptions of sensor information vectors and information matrices, given valid values for each $\omega_i$. In the two sensor case, homomorphic fusion is computed by
+From \eqref{eqn:ci_cov_estimate}, we can see that both CI fusion equations can be computed on PHE encryptions of sensor information vectors and information matrices, given valid \DIFaddbegin \DIFadd{unencrypted }\DIFaddend values for each $\omega_i$. \DIFdelbegin \DIFdel{In the }\DIFdelend \DIFaddbegin \DIFadd{For this reason, we allow the leakage of all weights $\omega_i$. Thus, in the }\DIFaddend two sensor case, homomorphic fusion is computed by
 \begin{equation}
    \mathcal{E}(\mP^{-1}) = \mathcal{E}(\mP^{-1}_1)^{\omega_1}\mathcal{E}(\mP^{-1}_2)^{(1 -\omega_1)} \label{eqn:paillier_ci_cov}
 \end{equation}
@@ -404,7 +395,7 @@ and
 \end{equation}
 where we note that $\omega_2=1-\omega_1$ due to the CI requirement \eqref{eqn:ci_omega_sum_bound}. We also note that in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}, each resulting value will have exactly one Q encoding multiplication factor to remove, and can be decoded exactly by using \eqref{eqn:qmn_mult_decode}.
 
-In the two sensor case, all that remains for computing CI homomorphically is the calculation of parameter $\omega_1$. For this, we approximate the solution to the FCI fusion algorithm. Since analytical solutions \eqref{eqn:fci_2sen_sol} require division, they cannot be computed exactly with the given PHE encryptions of sensor information vectors and information matrices. Instead, we discretize $\omega_i$ by step-size $s$, such that $s<1$ and $p=1/s \in \mathbb{Z}$, and approximate \eqref{eqn:fci_2sen_omega_sum_eq} with ORE. An ordered discretization of values $\omega^{(x)}$ is defined by
+\DIFdelbegin \DIFdel{In the two sensor case, all }\DIFdelend \DIFaddbegin \DIFadd{All }\DIFaddend that remains for computing CI homomorphically\DIFaddbegin \DIFadd{, in the two sensor case, }\DIFaddend is the calculation of parameter $\omega_1$. For this, we approximate the solution to \DIFdelbegin \DIFdel{the FCIfusion algorithm. Since analytical solutions }\DIFdelend \DIFaddbegin \DIFadd{FCI. Since our encoding scheme in Section \ref{subsec:encoding} does not provide division, the exact result of }\DIFaddend \eqref{eqn:fci_2sen_sol} \DIFdelbegin \DIFdel{require division, they cannot be computed exactly with the given PHE encryptions of sensor information vectors and information matrices. Instead, we discretize }\DIFdelend \DIFaddbegin \DIFadd{is approximated. This is accomplished by discretizing }\DIFaddend $\omega_i$ by step-size $s$, such that $s<1$ and $p=1/s \in \mathbb{Z}$, and \DIFdelbegin \DIFdel{approximate }\DIFdelend \DIFaddbegin \DIFadd{approximating }\DIFaddend \eqref{eqn:fci_2sen_omega_sum_eq} with ORE. An ordered discretization of values $\omega^{(x)}$ is defined by
 \begin{equation}
    [\omega^{(1)},\dots,\omega^{(p)}] = [0,s,\dots,1-s,1]\,,
 \end{equation}
@@ -426,7 +417,7 @@ If we reverse \eqref{eqn:sen1_ore_list}, we obtain the equivalent list
 \begin{equation}
    [\mathcal{E}^R_{ORE}((1-\omega^{(1)})\tr(\mP_2)),\dots,\mathcal{E}^R_{ORE}((1-\omega^{(p)})\tr(\mP_2))] \label{eqn:sen2_ore_rev_list}
 \end{equation}
-which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows that the intersecting point gives the solution to \eqref{eqn:secfci_2sen_intersect} and therefore, \eqref{eqn:fci_2sen_omega_sum_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega^{(x)}$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in \DIFdelbegin \DIFdel{$O(log(p))$ by }\DIFdelend \DIFaddbegin \DIFadd{$O(\log{p})$ ORE comparisons using }\DIFaddend a binary search.
+which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows \DIFdelbegin \DIFdel{that the intersecting point }\DIFdelend \DIFaddbegin \DIFadd{the intersection }\DIFaddend gives the solution to \eqref{eqn:secfci_2sen_intersect} and therefore, \eqref{eqn:fci_2sen_omega_sum_eq}. However, \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_rev_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating the consecutive $\omega^{(x)}$ discretisations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in \DIFdelbegin \DIFdel{$O(log(p))$ by }\DIFdelend \DIFaddbegin \DIFadd{$O(\log{p})$ ORE comparisons using }\DIFaddend a binary search.
 \begin{figure}[tb]
    \vspace{-5pt}
    \begin{center}
@@ -465,7 +456,7 @@ and
 \begin{equation}
    \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{\omega_1}\cdots\mathcal{E}(\mP^{-1}_n\mean{\vec{x}}_n)^{\omega_n}\,. \label{eqn:n_sen_paillier_ci_estimate}
 \end{equation}
-As with the two sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the weights $\omega_1,\dots,\omega_n$.
+As with the two sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with computing the \DIFaddbegin \DIFadd{plaintext }\DIFaddend weights $\omega_1,\dots,\omega_n$.
 
 Our approach to the $n$ sensor case is to solve each $n-1$ conditions in \eqref{eqn:fci_eq} using the two sensor method, and combining partial solutions to compute the final result. When we consider a Euclidean dimension for each $\omega_i$, partial solutions can be considered geometrically as hyperplanes of $n-2$ dimension, over the $n-1$ dimensional solution space given by \eqref{eqn:ci_omega_sum_bound}. 
 
@@ -592,8 +583,12 @@ As all \DIFaddbegin \DIFadd{$O(n\log{p})$ }\DIFaddend ORE comparisons are done b
 \end{equation}
 When combining \eqref{eqn:sensor_lists} with PHE encryptions of local information vectors and information matrices, SecFCI can be computed entirely homomorphically by \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate}.
 
+\DIFaddbegin \DIFadd{Breifly considering the security of our scheme, we note that any leaked information from ORE lists }\eqref{eqn:sensor_lists}\DIFadd{, as described in \mbox{%DIFAUXCMD
+\cite{chenettePracticalOrderRevealingEncryption2016}}\hspace{0pt}%DIFAUXCMD
+, can be considered a subset of the estimated fusion weights $\omega_1,\dots,\omega_n$, which specify relative sizes of sensor covariance traces, and we already consider public. Thus only IND-CPA and IND-OCPA (after accounting for leakage through public weights) encryptions are made availiable to the fusion center.
+}
 
-\DIFaddbegin \subsection{\DIFadd{Computational Complexity}} \label{subsec:complexity}
+\subsection{\DIFadd{Computational Complexity}} \label{subsec:complexity}
 \DIFadd{Given the state estimates and estimate errors at each sensor, we wish to show the computational complexity of the SecFCI algorithm for the $n$ sensor case. We will make the assumption that both the Lewi ORE and Paillier PHE schemes use the same length security parameter (and equivalently key size), such that
 }\begin{equation}
    \DIFadd{\lambda_{Lewi} = \lambda_{Paillier} = \log{N}\,, \label{eqn:keylength}
@@ -658,7 +653,7 @@ When combining \eqref{eqn:sensor_lists} with PHE encryptions of local informatio
 
 
 \section{Simulation Results} \label{sec:results}
-We have implemented a simulation to demonstrate \DIFdelbegin \DIFdel{and compare the SecFCI algorithm}\DIFdelend \DIFaddbegin \DIFadd{the accuracy of SecFCI and compare it to FCI}\DIFaddend . Three sensors independently measure a two-dimensional constant-speed linear process and simultaneously run a linear Kalman filter on their measurements. Estimates are \DIFdelbegin \DIFdel{then sent both unencrypted and encrypted }\DIFdelend \DIFaddbegin \DIFadd{sent both encrypted and unencrypted }\DIFaddend to a fusion center which computes the \DIFdelbegin \DIFdel{FCI and SecFCI }\DIFdelend \DIFaddbegin \DIFadd{SecFCI and FCI }\DIFaddend fusions on the received data respectively. \DIFdelbegin \DIFdel{Unencrypted estimates consist of the state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$, while encrypted estimates are comprised of PHE encryptions }\DIFdelend \DIFaddbegin \DIFadd{Encrypted estimates are comprised a PHE encryption }\DIFaddend of the information vector \DIFdelbegin \DIFdel{$\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$ }\DIFdelend and information matrix\DIFdelbegin \DIFdel{$\mathcal{E}(\mP^{-1}_i)$, and }\DIFdelend \DIFaddbegin \DIFadd{, $\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$ and $\mathcal{E}(\mP^{-1}_i)$, in addition to }\DIFaddend the ORE list given by \eqref{eqn:sensor_lists} \DIFaddbegin \DIFadd{(discretization step-size $s=0.1$). Unencrypted estimates consist of the state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$}\DIFaddend . The trajectory and fused estimates are shown in Fig. \ref{fig:fci_secfci_traj}.
+We have implemented a simulation to demonstrate \DIFdelbegin \DIFdel{and compare the SecFCI algorithm}\DIFdelend \DIFaddbegin \DIFadd{the accuracy of SecFCI and compare it to FCI}\DIFaddend . Three sensors independently measure a two-dimensional constant-speed linear process and simultaneously run a linear Kalman filter on their measurements. Estimates are \DIFdelbegin \DIFdel{then sent both unencrypted and encrypted }\DIFdelend \DIFaddbegin \DIFadd{sent both encrypted and unencrypted }\DIFaddend to a fusion center which computes the \DIFdelbegin \DIFdel{FCI and SecFCI }\DIFdelend \DIFaddbegin \DIFadd{SecFCI and FCI }\DIFaddend fusions on the received data respectively. \DIFdelbegin \DIFdel{Unencrypted estimates consist of the state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$, while encrypted estimates }\DIFdelend \DIFaddbegin \DIFadd{Encrypted estimates }\DIFaddend are comprised of PHE encryptions of the information vector \DIFdelbegin \DIFdel{$\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$ }\DIFdelend and information matrix\DIFdelbegin \DIFdel{$\mathcal{E}(\mP^{-1}_i)$, and }\DIFdelend \DIFaddbegin \DIFadd{, $\mathcal{E}(\mP^{-1}_i\mean{\vec{x}}_i)$ and $\mathcal{E}(\mP^{-1}_i)$, in addition to }\DIFaddend the ORE list given by \eqref{eqn:sensor_lists} \DIFaddbegin \DIFadd{(discretization step-size $s=0.1$). Unencrypted estimates consist of the state estimate $\mean{\vec{x}}_i$ and covariance matrix $\mP_i$}\DIFaddend . The trajectory and fused estimates are shown in Fig. \ref{fig:fci_secfci_traj}.
 \begin{figure}[tb]
    \vspace{-5pt}
    \begin{center}
@@ -730,7 +725,7 @@ We have implemented a simulation to demonstrate \DIFdelbegin \DIFdel{and compare
 
 
 \section{Conclusion} \label{sec:conclusion}
-FCI is a commonly used, efficiently computable, approximation to the CI optimization problem that requires the sharing of local sensor estimates to compute their fusion. We propose a secure approximation to FCI, SecFCI, to compute the fused estimate homomorphically. The novel encrypted signal processing approach may find uses in various security-critical applications or over untrusted networks. Possible future work includes a run-time comparison between SecFCI and potential FHE implementations, giving a computational bound for its practicality. Also, we hope to further quantify ORE leakage concerning SecFCI fusion and produce formal security proofs and assumptions for the novel algorithm.
+FCI is a commonly used, efficiently computable, approximation to the CI optimization problem that requires the sharing of local sensor estimates to compute their fusion. We propose a secure approximation to FCI, SecFCI, to compute the fused estimate homomorphically. The novel encrypted signal processing approach may find uses in various security-critical applications or over untrusted networks. Possible future work includes \DIFdelbegin \DIFdel{a }\DIFdelend run-time \DIFdelbegin \DIFdel{comparison }\DIFdelend \DIFaddbegin \DIFadd{comparisons }\DIFaddend between SecFCI and \DIFdelbegin \DIFdel{potential }\DIFdelend FHE implementations, giving a computational bound for its practicality. Also, we hope to further quantify \DIFdelbegin \DIFdel{ORE leakage concerning SecFCI fusion }\DIFdelend \DIFaddbegin \DIFadd{fusion weight leakages concerning SecFCI }\DIFaddend and produce formal security proofs and assumptions for the novel algorithm.
 
 \bibliographystyle{IEEEtran}
 \bibliography{IEEEtranBST/IEEEabrv,BibTeX/secure_FCI_cdc2020}
