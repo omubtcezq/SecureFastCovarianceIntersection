@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL main_submitted_1.tex   Tue May 12 09:13:48 2020
-%DIF ADD main.tex               Tue May 12 17:07:01 2020
+%DIF ADD main.tex               Tue May 12 17:21:07 2020
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
@@ -177,7 +177,7 @@ for private set intersection. These works are, however, }\DIFaddend due to the l
 }
 
 \subsection{\DIFadd{Problem Formulation}} \label{subsec:problem_formulation}
-\DIFadd{Our paper is motivated by a key step in multi-sensor fusion, the requirement of transmitting local sensor state estimates and covariance information over a network for the computation of their fused result. In particular, we consider centralised FCI fusion, where a party responsible for many networked sensors capable of computing their local state estimates, wishes to have their fused state estimate and covariance computed securely on an untrusted cloud. The same party may query the cloud fusion center for the fused result at any time. To preserve the privacy of local sensor measurements and state estimates, we aim to provide a secure FCI fusion algorithm such that the fusion center does not learn individual sensor measurements, state estimates or covariances. This will be achieved by encrypted homomorphic fusion, whereby the untrusted cloud learns only the FCI aggregation weights, as will be shown in Section \ref{sec:secfci}.
+\DIFadd{Our paper is motivated by a key step in multi-sensor fusion, the requirement of transmitting local sensor state estimates and covariance information over a network for the computation of their fused result. In particular, we consider centralized FCI fusion, where a party responsible for many networked sensors capable of computing their local state estimates, wishes to have their fused state estimate and covariance computed securely on an untrusted cloud. The same party may query the cloud fusion center for the fused result at any time. To preserve the privacy of local sensor measurements and state estimates, we aim to provide a secure FCI fusion algorithm such that the fusion center does not learn individual sensor measurements, state estimates or covariances. This will be achieved by encrypted homomorphic fusion, whereby the untrusted cloud learns only the FCI aggregation weights, as will be shown in Section \ref{sec:secfci}.
 }
 
 \DIFadd{As we assume that the querying party is the owner of all individual sensors, the threat model we consider is one where only network eavesdroppers and a malicious fusion center are possible, and no collusion between sensors and a malicious cloud are examined}\DIFaddend .
@@ -610,7 +610,7 @@ As all \DIFaddbegin \DIFadd{$O(n\log{p})$ }\DIFaddend ORE comparisons are done b
 \end{equation}
 When combining \eqref{eqn:sensor_lists} with PHE encryptions of local information vectors and information matrices, SecFCI can be computed entirely homomorphically by \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate}.
 
-\DIFaddbegin \DIFadd{Breifly considering the security of our scheme, we note that any leaked information from ORE lists }\eqref{eqn:sensor_lists}\DIFadd{, as described in \mbox{%DIFAUXCMD
+\DIFaddbegin \DIFadd{Briefly considering the security of our scheme, we note that any leaked information from ORE lists }\eqref{eqn:sensor_lists}\DIFadd{, as described in \mbox{%DIFAUXCMD
 \cite{chenettePracticalOrderRevealingEncryption2016}}\hspace{0pt}%DIFAUXCMD
 , can be considered a subset of the estimated fusion weights $\omega_1,\dots,\omega_n$, which specify relative sizes of sensor covariance traces, and we already consider public. Thus only IND-CPA and IND-OCPA (after accounting for leakage through public weights) encryptions are made available to the fusion center.
 }
