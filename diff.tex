@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL main_submitted_1.tex   Tue May 12 09:13:48 2020
-%DIF ADD main.tex               Tue May 12 15:00:04 2020
+%DIF ADD main.tex               Tue May 12 17:07:01 2020
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
@@ -104,6 +104,9 @@ Secure Fast Covariance Intersection Using Partially Homomorphic and Order Reveal
 %DIF END PREAMBLE EXTENSION ADDED BY LATEXDIFF
 
 \begin{document}
+%DIF >  Use the template bibtex features
+\DIFaddbegin \bstctlcite{IEEEexample:BSTcontrol}
+\DIFaddend 
 
 \maketitle
 \thispagestyle{empty}
@@ -180,7 +183,7 @@ for private set intersection. These works are, however, }\DIFaddend due to the l
 \DIFadd{As we assume that the querying party is the owner of all individual sensors, the threat model we consider is one where only network eavesdroppers and a malicious fusion center are possible, and no collusion between sensors and a malicious cloud are examined}\DIFaddend .
 
 \subsection{Notation}
-Throughout this paper we will use the following notation. Lowercase characters represent scalars, lowercase underlined characters, $\vec{x}$, represent vectors. Uppercase bold characters, $\mM$, are reserved for matrices, where $\mM^\top$ denotes the matrix transpose, $\mM^{-1}$ the matrix inverse, and $\tr(\cdot)$ the trace function. Covariance matrices will be represented by $\mP$. $\mathcal{E}_{pk}(a)$ and $\mathcal{E}_{ORE,k}(a)$ denote the \DIFaddbegin \DIFadd{encryption of $a$ using the }\DIFaddend public-key $pk$ and ORE key $k$\DIFdelbegin \DIFdel{encryptions of $a$, }\DIFdelend \DIFaddbegin \DIFadd{, respectively, }\DIFaddend and similarly with the decryption functions $\mathcal{D}_{pk}(\cdot)$ and $\mathcal{D}_{ORE,k}(\cdot)$, where any required real-number encodings of the number $a$ are assumed to be performed. $\mathcal{E}(a)$ and $\mathcal{E}_{ORE}(a)$ may be used for brevity when the encryption keys can be inferred from context. All encryption of vectors and matrices are defined element-wise, with elements given by $\mathcal{E}(\mP_{i,j}) = \mathcal{E}(\mP)_{i,j}$. Sets are represented as $\{\cdot\}$ while ordered lists with $[\cdot]$.
+Throughout this paper we will use the following notation. Lowercase characters represent scalars, lowercase underlined characters, $\vec{x}$, represent vectors. Uppercase bold characters, $\mM$, are reserved for matrices, where \DIFdelbegin \DIFdel{$\mM^\top$ }\DIFdelend \DIFaddbegin \DIFadd{$\mM^{-1}$ }\DIFaddend denotes the matrix \DIFdelbegin \DIFdel{transpose, $\mM^{-1}$ the matrix }\DIFdelend inverse, and $\tr(\cdot)$ the trace function. Covariance matrices will be represented by $\mP$. $\mathcal{E}_{pk}(a)$ and $\mathcal{E}_{ORE,k}(a)$ denote the \DIFaddbegin \DIFadd{encryption of $a$ using the }\DIFaddend public-key $pk$ and ORE key $k$\DIFdelbegin \DIFdel{encryptions of $a$, }\DIFdelend \DIFaddbegin \DIFadd{, respectively, }\DIFaddend and similarly with the decryption functions $\mathcal{D}_{pk}(\cdot)$ and $\mathcal{D}_{ORE,k}(\cdot)$, where any required real-number encodings of the number $a$ are assumed to be performed. $\mathcal{E}(a)$ and $\mathcal{E}_{ORE}(a)$ may be used for brevity when the encryption keys can be inferred from context. All encryption of vectors and matrices are defined element-wise, with elements given by $\mathcal{E}(\mP_{i,j}) = \mathcal{E}(\mP)_{i,j}$. Sets are represented as $\{\cdot\}$ while ordered lists with $[\cdot]$.
 
 %  .d8888b. 8888888
 % d88P  Y88b  888
@@ -238,7 +241,6 @@ and requires the solution to the linear problem
 %DIFDELCMD <    \end{bmatrix}%%%
 \DIFdelend \DIFaddbegin \begin{bmatrix}
       \mathcal{P}_1 & -\mathcal{P}_2 & 0 & \cdots & 0 \\
-      0 & \mathcal{P}_2 & -\mathcal{P}_3 & \cdots & 0 \\
       \cdots & \cdots & \cdots & \cdots & \cdots & \\
       0 & \cdots & 0 & \mathcal{P}_{n-1} & -\mathcal{P}_{n} \\
       1 & \cdots & 1 & 1 & 1 &
@@ -252,19 +254,24 @@ and requires the solution to the linear problem
 %DIFDELCMD <    \end{bmatrix}%%%
 \DIFdelend \DIFaddbegin \begin{bmatrix}
       \omega_1 \\
-      \omega_2 \\
       \vdots \\
       \omega_{n-1} \\
       \omega_{n}
    \end{bmatrix}\DIFaddend 
    =
-   \begin{bmatrix}
-      0 \\
+   \DIFdelbegin %DIFDELCMD < \begin{bmatrix}
+%DIFDELCMD <       0 \\
+%DIFDELCMD <       0 \\
+%DIFDELCMD <       \vdots \\
+%DIFDELCMD <       0 \\
+%DIFDELCMD <       1
+%DIFDELCMD <    \end{bmatrix}%%%
+\DIFdelend \DIFaddbegin \begin{bmatrix}
       0 \\
       \vdots \\
       0 \\
       1
-   \end{bmatrix}\,, \label{eqn:fci_eq_sys}
+   \end{bmatrix}\DIFaddend \,, \label{eqn:fci_eq_sys}
 \end{equation}
 where we let $\mathcal{P}_i = \tr(\mP_i)$.
 
@@ -307,10 +314,14 @@ where the modulus $N$ is computed as the product of two large primes chosen rand
 \subsection{Left-Right Order Revealing Encryption} \label{subsec:lewi}
 The ORE scheme we have used is Lewi's symmetric-key Left-Right encryption scheme \cite{lewiOrderRevealingEncryptionNew2016} that has the added property of only allowing certain comparisons between cyphertexts. This property can be used to decide which values may not be compared as will be shown in section \ref{sec:secfci} and is described as follows. Two encryption functions allow integers to be encrypted as either a ``Left'' ($L$) or ``Right'' ($R$) encryption by
 \begin{equation}
-   \begin{gathered} \label{eqn:lewi_l_r}
-      \operatorfont{enc}^L_{ORE}(k, x) = \mathcal{E}^L_{ORE,k}(x) \\
-      \operatorfont{enc}^R_{ORE}(k, y) = \mathcal{E}^R_{ORE,k}(y)\,,
-   \end{gathered}
+   \DIFdelbegin %DIFDELCMD < \begin{gathered} \label{eqn:lewi_l_r}
+%DIFDELCMD <       \operatorfont{enc}^L_{ORE}(k, x) = \mathcal{E}^L_{ORE,k}(x) \\
+%DIFDELCMD <       \operatorfont{enc}^R_{ORE}(k, y) = \mathcal{E}^R_{ORE,k}(y)\,,
+%DIFDELCMD <    \end{gathered}%%%
+\DIFdelend \DIFaddbegin \begin{aligned} \label{eqn:lewi_l_r}
+      &\operatorfont{enc}^L_{ORE}(k, x) = \mathcal{E}^L_{ORE,k}(x) \\
+      &\operatorfont{enc}^R_{ORE}(k, y) = \mathcal{E}^R_{ORE,k}(y)\,,
+   \end{aligned}\DIFaddend 
 \end{equation}
 and only comparisons between an $L$ and an $R$ encryption are possible, by
 \begin{equation}
@@ -423,14 +434,16 @@ which when decrypted and plotted over \eqref{eqn:sen0_ore_list} shows \DIFdelbeg
    \begin{center}
       \input{images/2_sensors.pgf}
    \end{center}
-   \vspace{-10pt}
-   \caption{Approximation of $\omega_1$ with discretisation step-size $s=0.1$. Only comparisons between line points are used.}
+   \DIFdelbeginFL %DIFDELCMD < \vspace{-10pt}
+%DIFDELCMD <    %%%
+\DIFdelendFL \DIFaddbeginFL \vspace{-15pt}
+   \DIFaddendFL \caption{Approximation of $\omega_1$ with discretisation step-size $s=0.1$. Only comparisons between line points are used.}
    \vspace{-\baselineskip}
    \label{fig:2_sensor_sol}
 \end{figure}
 Consecutive $\omega^{(x)}$ and $\omega^{(x+1)}$ for which list comparisons differ can be used to estimate the true intersection, and $\omega_1$, by
 \begin{equation}
-   \omega_1 \approx \frac{1}{2}(\omega^{(x)} + \omega^{(x+1)})\,. \label{eqn:secfci_2sen_omega}
+   \omega_1 \approx \DIFdelbegin \DIFdel{\frac{1}{2}}\DIFdelend \DIFaddbegin \DIFadd{0.5}\DIFaddend (\omega^{(x)} + \omega^{(x+1)})\,. \label{eqn:secfci_2sen_omega}
 \end{equation}
 In the case a comparison returns equality, the exact value of $\omega^{(x)}$ can be taken to be $\omega_1$.
 
@@ -471,26 +484,32 @@ and
 We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{eqn:3_sensor_partial_sol_1} exactly when $\omega_3=0$, and know that when $\omega_3=1$, then $\omega_1=\omega_2=0$. These two points are enough to define the two-dimensional partial solution \eqref{eqn:3_sensor_partial_sol_1} which can be seen plotted over the possible solution space in Fig. \ref{fig:3_sensor_partial_sol}. Fig. \ref{fig:3_sensor_partial_sols} shows both partial solutions \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} plotted over the solution space.
 \begin{figure*}[tb]
    \begin{subfigure}[t]{0.3\textwidth}
-      \begin{center}
+      \DIFaddbeginFL \vspace{-5pt}
+      \DIFaddendFL \begin{center}
          \input{images/partial_sol1.pgf}
       \end{center}
-      \caption{Partial solution to \eqref{eqn:3_sensor_partial_sol_1}.}
+      \DIFaddbeginFL \vspace{-10pt}
+      \DIFaddendFL \caption{Partial solution to \eqref{eqn:3_sensor_partial_sol_1}.}
       \label{fig:3_sensor_partial_sol}
    \end{subfigure}
    ~
    \begin{subfigure}[t]{0.3\textwidth}
-      \begin{center}
+      \DIFaddbeginFL \vspace{-5pt}
+      \DIFaddendFL \begin{center}
          \input{images/partial_sols.pgf}
       \end{center}
-      \caption{Partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2}.}
+      \DIFaddbeginFL \vspace{-10pt}
+      \DIFaddendFL \caption{Partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2}.}
       \label{fig:3_sensor_partial_sols}
    \end{subfigure}
    ~
    \begin{subfigure}[t]{0.3\textwidth}
-      \begin{center}
+      \DIFaddbeginFL \vspace{-5pt}
+      \DIFaddendFL \begin{center}
          \input{images/partial_sol_planes.pgf}
       \end{center}
-      \caption{Partial solutions as planes perpendicular to the solution space.}
+      \DIFaddbeginFL \vspace{-10pt}
+      \DIFaddendFL \caption{Partial solutions as planes\DIFdelbeginFL \DIFdelFL{perpendicular to the solution space}\DIFdelendFL .}
       \label{fig:3sen_planes}
    \end{subfigure}
    \caption{Partial solutions over $\omega_1$, $\omega_2$, and $\omega_3$ solution space.}
@@ -544,7 +563,6 @@ Due to their inherent orthogonality, $n-1$ partial solution hyperplanes are guar
 %DIFDELCMD <    \end{bmatrix}%%%
 \DIFdelend \DIFaddbegin \begin{bmatrix}
       a_1^{(1)} & a_2^{(1)} & \cdots & a_{n}^{(1)} \\
-      a_1^{(2)} & a_2^{(2)} & \cdots & a_{n}^{(2)} \\
       \vdots & \vdots & \ddots & \vdots \\
       a_1^{(n-1)} & a_2^{(n-1)} & \cdots & a_{n}^{(n-1)} \\
       1 & 1 & \cdots & 1
@@ -558,34 +576,43 @@ Due to their inherent orthogonality, $n-1$ partial solution hyperplanes are guar
 %DIFDELCMD <    \end{bmatrix}%%%
 \DIFdelend \DIFaddbegin \begin{bmatrix}
       \omega_1 \\
-      \omega_2 \\
       \vdots \\
       \omega_{n-1} \\
       \omega_{n}
    \end{bmatrix}\DIFaddend 
    =
-   \begin{bmatrix}
+   \DIFdelbegin %DIFDELCMD < \begin{bmatrix}
+%DIFDELCMD <       a_{n+1}^{(1)} \\
+%DIFDELCMD <       a_{n+1}^{(2)} \\
+%DIFDELCMD <       \vdots \\
+%DIFDELCMD <       a_{n+1}^{(n-1)} \\
+%DIFDELCMD <       1
+%DIFDELCMD <    \end{bmatrix}%%%
+\DIFdelend \DIFaddbegin \begin{bmatrix}
       a_{n+1}^{(1)} \\
-      a_{n+1}^{(2)} \\
       \vdots \\
       a_{n+1}^{(n-1)} \\
       1
-   \end{bmatrix}\,, \label{eqn:hyperplane_sol_eq}
+   \end{bmatrix}\DIFaddend \,, \label{eqn:hyperplane_sol_eq}
 \end{equation}
 and gives the solution to the SecFCI $\omega_i$ values.
 
 As all \DIFaddbegin \DIFadd{$O(n\log{p})$ }\DIFaddend ORE comparisons are done between sequential sensors $i$ and $i+1$, seen in \eqref{eqn:fci_eq}, $L$ and $R$ ORE encryptions can be used to the same effect as for the two sensor case. The ORE ordered list sent from each sensor $i$ is given by
 \begin{equation}
-   \begin{gathered} \label{eqn:sensor_lists}
-      [\mathcal{E}^L_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ odd} \\
-      [\mathcal{E}^R_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ even}\,.
-   \end{gathered}
+   \DIFdelbegin %DIFDELCMD < \begin{gathered} \label{eqn:sensor_lists}
+%DIFDELCMD <       [\mathcal{E}^L_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ odd} \\
+%DIFDELCMD <       [\mathcal{E}^R_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_i))],\ i\text{ even}\,.
+%DIFDELCMD <    \end{gathered}%%%
+\DIFdelend \DIFaddbegin \begin{aligned} \label{eqn:sensor_lists}
+      &[\mathcal{E}^L_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_i))],\,i\text{ odd} \\
+      &[\mathcal{E}^R_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_i))],\,i\text{ even}.
+   \end{aligned}\DIFaddend 
 \end{equation}
 When combining \eqref{eqn:sensor_lists} with PHE encryptions of local information vectors and information matrices, SecFCI can be computed entirely homomorphically by \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate}.
 
 \DIFaddbegin \DIFadd{Breifly considering the security of our scheme, we note that any leaked information from ORE lists }\eqref{eqn:sensor_lists}\DIFadd{, as described in \mbox{%DIFAUXCMD
 \cite{chenettePracticalOrderRevealingEncryption2016}}\hspace{0pt}%DIFAUXCMD
-, can be considered a subset of the estimated fusion weights $\omega_1,\dots,\omega_n$, which specify relative sizes of sensor covariance traces, and we already consider public. Thus only IND-CPA and IND-OCPA (after accounting for leakage through public weights) encryptions are made availiable to the fusion center.
+, can be considered a subset of the estimated fusion weights $\omega_1,\dots,\omega_n$, which specify relative sizes of sensor covariance traces, and we already consider public. Thus only IND-CPA and IND-OCPA (after accounting for leakage through public weights) encryptions are made available to the fusion center.
 }
 
 \subsection{\DIFadd{Computational Complexity}} \label{subsec:complexity}
@@ -602,6 +629,7 @@ When combining \eqref{eqn:sensor_lists} with PHE encryptions of local informatio
 \cite{paillierPublicKeyCryptosystemsBased1999,lewiOrderRevealingEncryptionNew2016}}\hspace{0pt}%DIFAUXCMD
 , and the assumptions made above, we have summarized the operation complixites of the two schemes in Table \ref{tab:complex_ops}.
 }\begin{table}[tb]
+   %DIF > \vspace{-5pt}
    \centering
    \caption{\DIFaddFL{Computation complexity of encryption operations.}}
    \label{tab:complex_ops}
@@ -618,6 +646,7 @@ When combining \eqref{eqn:sensor_lists} with PHE encryptions of local informatio
       \DIFaddFL{Lewi comparison }& \DIFaddFL{$O(\log^2{N^2})$ }\\ 
       \hline
    \end{tabular}
+   \vspace{-\baselineskip}
 \end{table}
 \DIFadd{In contrast to some current FHE schemes, these operations are of a much lower complexity than \mbox{%DIFAUXCMD
 \cite{vandijkFullyHomomorphicEncryption2010a}}\hspace{0pt}%DIFAUXCMD
@@ -628,6 +657,7 @@ When combining \eqref{eqn:sensor_lists} with PHE encryptions of local informatio
 
 \DIFadd{Finally, applying the operations from Table \ref{tab:complex_ops} to the SecFCI algorithm, we get the total complexity of SecFCI at the sensors and the fusion center. This has been summarized in Table \ref{tab:complex}, with the unencrypted complexities of FCI shown for reference. 
 }\begin{table}[tb]
+   %DIF > \vspace{-5pt}
    \centering
    \caption{\DIFaddFL{Computation complexity at sensors and fusion center.}}
    \label{tab:complex}
@@ -639,6 +669,7 @@ When combining \eqref{eqn:sensor_lists} with PHE encryptions of local informatio
       \DIFaddFL{Fusion }& \DIFaddFL{$O(n^3)$ }& \DIFaddFL{$O\left((\log{p} + \log{N})n\log^2{N^2} + n^3\right)$ }\\ 
       \hline
    \end{tabular}
+   %DIF > \vspace{-\baselineskip}
 \end{table}
 
 \DIFaddend % 8888888b.                            888 888
@@ -659,9 +690,12 @@ We have implemented a simulation to demonstrate \DIFdelbegin \DIFdel{and compare
    \begin{center}
       \input{images/fci_secfci_cmp.pgf}
    \end{center}
-   \vspace{-10pt}
-   \caption{Tracking simulation comparing \DIFdelbeginFL \DIFdelFL{FCI and }\DIFdelendFL SecFCI \DIFaddbeginFL \DIFaddFL{and FCI}\DIFaddendFL .}
-   \label{fig:fci_secfci_traj}
+   \DIFdelbeginFL %DIFDELCMD < \vspace{-10pt}
+%DIFDELCMD <    %%%
+\DIFdelendFL \DIFaddbeginFL \vspace{-15pt}
+   \DIFaddendFL \caption{Tracking simulation comparing \DIFdelbeginFL \DIFdelFL{FCI and }\DIFdelendFL SecFCI \DIFaddbeginFL \DIFaddFL{and FCI}\DIFaddendFL .}
+   \DIFaddbeginFL \vspace{-\baselineskip}
+   \DIFaddendFL \label{fig:fci_secfci_traj}
 \end{figure}
 
 \DIFdelbegin \DIFdel{The traces of the fused covariance matrices from both FCI and SecFCI fusion are shown in Fig. \ref{fig:fci_secfci_trace} where a very small difference in trace can be seen. As SecFCI approximates FCI which in turn is an approximation to the CI's trace minimization function }%DIFDELCMD < \eqref{eqn:ci_trace_min}%%%
@@ -682,23 +716,16 @@ We have implemented a simulation to demonstrate \DIFdelbegin \DIFdel{and compare
 %DIFDELCMD < %%%
 \DIFdel{Values of each }\DIFdelend \DIFaddbegin \DIFadd{To derive a strict upper bound on the accuracy difference between SecFCI and FCI, we note that the two factors which introduce inconsistency between the two methods are the encoding of real values from Section \ref{subsec:complexity}, and the difference in weights computed by }\eqref{eqn:hyperplane_sol_eq} \DIFadd{and }\eqref{eqn:fci_eq_sys} \DIFadd{respectively. Due to the small error encoding by quantizing introduces to floating-point arithmetic \mbox{%DIFAUXCMD
 \cite{aristovEncryptedMultisensorInformation2018}}\hspace{0pt}%DIFAUXCMD
-, and the possibility of choosing sufficiently large integer and fractional bit lengths $i$ and $f$, we will only consider the error caused by the difference in weights. We will treat this error as the distance between respective weight vectors, denoted
+, and the possibility of choosing sufficiently large integer and fractional bit lengths $i$ and $f$, we will only consider the error caused by the difference in weights. We will treat this error as the distance between respective weight vectors
 }\begin{equation}
-   \DIFadd{\vec{\omega}_{SecFCI} = 
-   \begin{bmatrix}
-      \omega_{1,SecFCI} & \cdots & \omega_{n,SecFCI}
-   \end{bmatrix}^\top
-}\end{equation}
-\DIFadd{and
-}\begin{equation}
-   \DIFadd{\vec{\omega}_{FCI} = 
-   \begin{bmatrix}
-      \omega_{1,FCI} & \cdots & \omega_{n,FCI}
-   \end{bmatrix}^\top
+   \DIFadd{\begin{aligned}
+      &\vec{\omega}_{SecFCI} = (\omega_{1,SecFCI},\dots,\omega_{n,SecFCI})\,, \\
+      &\vec{\omega}_{FCI} = (\omega_{1,FCI},\dots,\omega_{n,FCI})
+   \end{aligned}
 }\end{equation}
 \DIFadd{where $\omega_{i,s}$ denotes weight }\DIFaddend $\omega_i$ \DIFdelbegin \DIFdel{over time }\DIFdelend \DIFaddbegin \DIFadd{from algorithm $s$. From Section \ref{sec:secfci} we see that the largest difference $|\omega_{i,FCI} - \omega_{i,SecFCI}|$ is strictly bounded by $s/2$. Section \ref{sec:multi_secfci} shows that when more sensors are involved, a tighter bound on this difference is dependant on the value of $\vec{\omega}_{i,FCI}$, but will remain strictly bounded by $s/2$. Therefore, we can give a generous upper bound on the distance between weight vectors as
 }\begin{equation}
-   \DIFadd{|\vec{\omega}_{FCI} - \vec{\omega}_{SecFCI}| < \sqrt{n\left(\frac{s}{2}\right)^2}\,. \label{eqn:accuracy_error_bound}
+   \DIFadd{|\vec{\omega}_{FCI} - \vec{\omega}_{SecFCI}| < 0.5\sqrt{ns^2}\,. \label{eqn:accuracy_error_bound}
 }\end{equation}
 
 \DIFadd{Finally, the values of $\omega_{i,SecFCI}$, $\omega_{i,FCI}$ and $|\vec{\omega}_{FCI} - \vec{\omega}_{SecFCI}|$ }\DIFaddend have been plotted \DIFaddbegin \DIFadd{over time }\DIFaddend in Fig. \ref{fig:fci_secfci_omegas}\DIFdelbegin \DIFdel{. Due to discretization, as can be expected, SecFCI values of $\omega_i$ stay constant but may jump with sufficient change in true FCI $\omega_i$ values, as can be seen near the start of the simulation}\DIFdelend \DIFaddbegin \DIFadd{, and show the commputed error bound when $n=3$ and $s=0.1$}\DIFaddend .
@@ -707,8 +734,10 @@ We have implemented a simulation to demonstrate \DIFdelbegin \DIFdel{and compare
    \begin{center}
       \input{images/omegas_cmp.pgf}
    \end{center}
-   \vspace{-10pt}
-   \caption{\DIFdelbeginFL \DIFdelFL{FCI }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$\vec{\omega}_{SecFCI}$ }\DIFaddendFL and \DIFdelbeginFL \DIFdelFL{SecFCI $\omega_i$ }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$\vec{\omega}_{FCI}$ }\DIFaddendFL values and \DIFdelbeginFL \DIFdelFL{their }\DIFdelendFL difference.}
+   \DIFdelbeginFL %DIFDELCMD < \vspace{-10pt}
+%DIFDELCMD <    %%%
+\DIFdelendFL \DIFaddbeginFL \vspace{-15pt}
+   \DIFaddendFL \caption{\DIFdelbeginFL \DIFdelFL{FCI }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$\vec{\omega}_{SecFCI}$ }\DIFaddendFL and \DIFdelbeginFL \DIFdelFL{SecFCI $\omega_i$ values and their difference}\DIFdelendFL \DIFaddbeginFL \DIFaddFL{$\vec{\omega}_{FCI}$ components}\DIFaddendFL .}
    \vspace{-\baselineskip}
    \label{fig:fci_secfci_omegas}
 \end{figure}
@@ -728,6 +757,9 @@ We have implemented a simulation to demonstrate \DIFdelbegin \DIFdel{and compare
 FCI is a commonly used, efficiently computable, approximation to the CI optimization problem that requires the sharing of local sensor estimates to compute their fusion. We propose a secure approximation to FCI, SecFCI, to compute the fused estimate homomorphically. The novel encrypted signal processing approach may find uses in various security-critical applications or over untrusted networks. Possible future work includes \DIFdelbegin \DIFdel{a }\DIFdelend run-time \DIFdelbegin \DIFdel{comparison }\DIFdelend \DIFaddbegin \DIFadd{comparisons }\DIFaddend between SecFCI and \DIFdelbegin \DIFdel{potential }\DIFdelend FHE implementations, giving a computational bound for its practicality. Also, we hope to further quantify \DIFdelbegin \DIFdel{ORE leakage concerning SecFCI fusion }\DIFdelend \DIFaddbegin \DIFadd{fusion weight leakages concerning SecFCI }\DIFaddend and produce formal security proofs and assumptions for the novel algorithm.
 
 \bibliographystyle{IEEEtran}
-\bibliography{IEEEtranBST/IEEEabrv,BibTeX/secure_FCI_cdc2020}
+\DIFdelbegin %DIFDELCMD < \bibliography{IEEEtranBST/IEEEabrv,BibTeX/secure_FCI_cdc2020}
+%DIFDELCMD < %%%
+\DIFdelend \DIFaddbegin \bibliography{IEEEtranBST/IEEEabrv,BibTeX/IEEEBibControls,BibTeX/secure_FCI_cdc2020}
+\DIFaddend 
 
 \end{document}
