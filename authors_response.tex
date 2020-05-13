@@ -153,13 +153,13 @@ confidentiality of data in sensor networks is less evident. The authors
 could discuss some concrete applications related to sensor networks
 where data confidentiality is important.}
 
-My response
+We are sorry that the role of encryption in sensor networks was not made more clearer in our introduction, and agree with the reviewer that a stronger motivation for our work was lacking. We have changed the introduction to include a discussion on when encryption may be desired in sensor networks specifically, and have added Section I.A describing the scenario motivating our work.
 
 \item \reviewtext{2. On a similar vein, the paper lacks a clear problem statement
 defining what is the sensitive information (and why). This has been
 pointed out also by Reviewer 1.}
 
-My response
+We agree that a problem statement was missing and in the added new Section I.A, we give the scenario motivating our work, as well as a stronger definition of our problem. In this section, we specify which information is treated as sensitive and which collusions we consider.
 
 \item \reviewtext{3. It is known that encryption introduces delays, thus affecting
 performance. The authors could add a discussion on the computation
@@ -174,9 +174,7 @@ help to highlight the method and its properties. As it stands, the
 analysis of Section V is rather fuzzy. This has been pointed out also
 by Reviewer 2.}
 
-We regret that Section V and results were not made clearer, and have added the Section V.A and updated Section VI to include an explicit complexity analysis of the novel method, and give an upper bound on the accuracy reduction of SecFCI from the FCI algorithm it approximates.
-
-[TODO] respond to the theorem comment (it may refer to the results regarding security, respond to that as well once problem motivation w.r.t. security is added.)
+We regret that Section V and our results were not made clearer, and have added Section V.A and updated Section VI to include an explicit complexity analysis of the novel method, and give an upper bound on the accuracy reduction of SecFCI from the FCI algorithm it approximates. We have not stated any explicit theorems as their proofs are beyond the scope of this short manuscript, but have aimed to summarize our results with the added security comments, complexity analysis, and accuracy bound in Sections V and VI.
 
 \end{rebuttal}
 
@@ -208,12 +206,12 @@ the threat model is mentioned very late with the proposed solution in
 section IV. The author should mention that collusion between any sensor
 and the aggregator is not considered as the sensor holds the ORE key. }
 
-My response
+We thank the reviewer for their comment, and agree that a problem statement was lacking in detail, and missing earlier in the manuscript. We have added Section I.A that states our problem explicitly, as well as the information we treat sensitive and the collusions we consider.
 
 \item \reviewtext{- According to (18) and (19), the weights would be public information.
 A comment should be made on this privacy leakage.}
 
-My response
+We have now stated that weights are leaked in the problem statement, and when explaining SecFCI.Thank you for pointing this out.
 
 \item \reviewtext{- Section IV: The author mentioned, "Since analytical solutions (6)
 require division, they cannot be computed exactly with the given PHE
@@ -223,12 +221,12 @@ mechanism. Check the one used in [1]. The author should mention why
 they avoid using such an encoding mechanism to solve the problem
 without going into the proposed direction. }
 
-We are sorry for having overlooked the existing literature, and appreciate your comment and reference. We agree with your statement and have updated Section III.C and our references accordingly.
+We are sorry for having overlooked the existing literature, and appreciate your comment and reference. We agree with your statement and have updated Section III.C and our references to motivate and justify our choice of encoding.
 
 \item \reviewtext{- I expected to see complexity analysis for n sensor case or show the
 required number of comparisons and the execution time of each one. }
 
-We apologies for having not included any run times or a complexity analysis in the manuscript. We have added the new Section V.A which gives both homomorphic operation complexities and the complexity of the complete fusion algorithm. Additionally, we have noted the number of required comparisons in Section V.
+We apologies for having not included any run times or a complexity analysis in the manuscript. We have added the new Section V.A which gives both homomorphic operation complexities and the complexity of the complete fusion algorithm. We have also now noted the number of required comparisons in Section V.
 
 \item \reviewtext{- Section I.A: The author mentioned 
 "Epk(a) and EORE;k(a) denote the public-key pk and ORE key k
@@ -274,12 +272,12 @@ and ORE strategies? What I can find is that it can reduce computational
 load, but I think this is not enough. Maybe you can say something
 concerning the accuracy preservation? }
 
-My response
+We thank the reviewer for their comment, and regret that our reasoning was not made clearer. We have updated the introduction to more accurately motivate our work. FHE is a very computationally expensive method of homomorphic computation, and is the primary reason for the development of a private fusion method which does not rely on it. We have made this clearer with a complexity discussion in the added Section V.A as well. PHE and ORE are used to achieve this as their combined properties were suited to defining the new SecFCI fusion method.
 
 \item \reviewtext{2, In the Introduction, the authors should add a short summary of the
 technical novelties of this paper. Currently I cannot find anything.}
 
-My response
+We apologies for not stating the novelty clearly, and have updated the introduction accordingly.
 
 \item \reviewtext{3, In simulation the authors only considered FCI and SecFCI. Concerning
 the fact that authors declared that another encryption scheme, named
@@ -323,7 +321,7 @@ discussed at length in those papers, e.g., see secure and private
 control using semi-homomorphic encryption in Control Engineering
 Practice.}
 
-[TODO] comment on added encoding reference, as well as the other references added to the intro (when done).
+We apologies for having missed references in homomorphic signal processing, and thank the reviewer for providing a reference. In particular, we agree that our encoding discussion in Section III.C was heavily lacking in references on encoding for homomorphic encryption. The introduction has been updated to include more references regarding homomorphic and partially homomorphic encryption in signal processing, and Section III.C has been updated to include relevant references and justifications for the encoding scheme used.
 
 \item \reviewtext{One drawback of encrypted methods is the added overhead to the
 computational complexity. I think the paper benefits more if the
