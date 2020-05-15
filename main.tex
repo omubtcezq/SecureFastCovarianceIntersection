@@ -238,24 +238,28 @@ and only comparisons between an $L$ and an $R$ encryption are possible, by
 Note that no decryption function is provided as only encryptions are required to provide a secure comparison. The Lewi ORE encryption scheme provides security against the simulation-based security model \cite{chenettePracticalOrderRevealingEncryption2016} but is not secure against the IND-OCPA model.
 
 \subsection{Real Number Encoding for Homomorphic Encryption} \label{subsec:encoding}
-Both encryption schemes in sections \ref{subsec:paillier} and \ref{subsec:lewi} are defined over positive integers, and the Paillier scheme bounds the largest encryptable integer by $N-1$. Due to the prevalence of real numbers in estimation theory, integer encoding of real numbers is an active field of research that acommpanies encrypted processing \cite{ziadCryptoImgPrivacyPreserving2016,farokhiSecurePrivateControl2017,cheonHomomorphicEncryptionArithmetic2017}, and a requirement for our estimate fusion algorithm. While some encoding schemes for additive homomorphic encryption provide additional operations such as homomorphic division \cite{ziadCryptoImgPrivacyPreserving2016}, they typically complicate the homomorphic operations, and in \cite{ziadCryptoImgPrivacyPreserving2016} leak exponent information of the encrypted real number. We have instead relied on a simplified version of the encoding in \cite{farokhiSecurePrivateControl2017}. 
+Both encryption schemes in sections \ref{subsec:paillier} and \ref{subsec:lewi} are defined over positive integers, and the Paillier scheme bounds the largest encryptable integer by $N-1$. Due to the prevalence of real numbers in estimation theory, integer encoding of real numbers is an active field of research that acommpanies encrypted processing \cite{ziadCryptoImgPrivacyPreserving2016,farokhiSecurePrivateControl2017,cheonHomomorphicEncryptionArithmetic2017}, and a requirement for our estimate fusion algorithm. While some encoding schemes for additive homomorphic encryption provide additional operations such as homomorphic division \cite{ziadCryptoImgPrivacyPreserving2016}, they typically complicate the homomorphic operations, and in \cite{ziadCryptoImgPrivacyPreserving2016} leak exponent information of the encrypted real number. We have instead relied on the simpler encoding in \cite{farokhiSecurePrivateControl2017}. 
 
-We consider encoding real numbers representable as rational fixed-point numbers consising of a single sign bit, $i$ integer bits and $f$ fractional bits. Each encodable rational number defined by its $b=1+i+f$ bits, is encoded to the positive integer range $[0,2^b)$. This is computed by conversion to the signed Q number format \cite{oberstarFixedPointRepresentationFractional2007} and is equivalent to the encoding from \cite{farokhiSecurePrivateControl2017}. The conversion of any real number $a$ to an encoded fixed-point rational is given by
+We consider encoding real numbers representable as rational fixed-point numbers of $b$ bits, consisting of a single sign bit, $i$ integer bits, and $f$ fractional bits. Thus, each encodable rational number is defined by its $b=1+i+f$ bits. As in \cite{farokhiSecurePrivateControl2017}, encoding is performed to allow for multiplication, which requires an operation modulus of $b+2f$ to avoid the requirement for comparisons. Conversion of any real number $a$ to an encoded rational fixed-point number is given by
 \begin{equation}
-   e = \floor{2^f a}\pmod{2^b}\,. \label{eqn:qmn}
+   e = \floor{2^f a}\pmod{2^{b + 2f}}\,. \label{eqn:qmn}
 \end{equation}
-While encoded Q numbers are consistent under addition, each multiplication requires a factor of $1/2^f$ to be removed. As shown in \cite{farokhiSecurePrivateControl2017}, cases of encoded multiplication can be computed exactly when using Paillier encryption, however, FCI guarantees only one homomorphic multiplication which we handle when decoding for simplicity. Additionally, knowing the number of multiplications allows us to relax the requirement for multiplied encoded numbers not to overflow \cite{farokhiSecurePrivateControl2017}. We decode real numbers representable by $2b$ bits, which corresponds to the range of $b$ bit encoded numbers after a single multiplication. Decoding is defined as the conversion from the signed Q number format and defined by
+Multiplication of such encoded numbers requires a factor of $1/2^f$ to be removed. As shown in \cite{farokhiSecurePrivateControl2017}, cases of encoded multiplication can be computed exactly when using Paillier encryption, however, FCI guarantees only one homomorphic multiplication which we handle when decoding for simplicity. Decoding is defined by
 \begin{equation}
    a=
    \begin{cases}
-      2^{-2f}\left(e \pmod{2^{2b}}\right) & e<2^{2b-1} \\
-      2^{-2f}\left((e \pmod{2^{2b}}) - 2^{2b}\right) & e\geq 2^{2b-1}
+      2^{-2f}\left(e \!\!\pmod{2^{b+2f}}\right) & e<2^{b+2f-1} \\
+      2^{-2f}\left((e \!\!\pmod{2^{b+2f}}) - 2^{b+2f}\right) & e\geq 2^{b+2f-1}
    \end{cases}\,. \label{eqn:qmn_mult_decode}
 \end{equation}
+and will be correct given only a single encoded multiplication has occurred.
 
-Since the largest encryptable integer is given by $N-1$, the largest encodable real number must account for the additional multiplication factor when encoded. Thus, the integer bits $i$ and fractional bits $f$ must be chosen such that
-\begin{equation}
-   (2^{(1+i+f)}-1)^2 \leq N-1\,. \label{eqn:qmn_max}
+Since the largest encryptable integer is given by $N-1$, the largest encodable real number must account for this. Thus, the integer bits $i$ and fractional bits $f$ must be chosen such that
+\begin{equation}\label{eqn:qmn_max}
+   \begin{aligned}
+      N &\geq 2^{b+2f}\\
+      &\geq 2^{1+i+3f}
+   \end{aligned}\,.
 \end{equation}
 
 %  .d8888b.                    8888888888 .d8888b. 8888888       .d8888b.
@@ -280,7 +284,7 @@ and
 \begin{equation}
    \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{\omega_1}\mathcal{E}(\mP^{-1}_2\mean{\vec{x}}_2)^{(1 - \omega_1)}\,, \label{eqn:paillier_ci_estimate}
 \end{equation}
-where we note that $\omega_2=1-\omega_1$ due to the CI requirement \eqref{eqn:ci_omega_sum_bound}. We also note that in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}, each resulting value will have exactly one Q encoding multiplication factor to remove, and can be decoded exactly by using \eqref{eqn:qmn_mult_decode}.
+where we note that $\omega_2=1-\omega_1$ due to the CI requirement \eqref{eqn:ci_omega_sum_bound}. We also note that in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}, each resulting value will have exactly one encoding multiplication factor to remove, and can be decoded exactly by using \eqref{eqn:qmn_mult_decode}.
    
 All that remains for computing CI homomorphically, in the two sensor case, is the calculation of parameter $\omega_1$. For this, we approximate the solution to FCI. Since our encoding scheme in section \ref{subsec:encoding} does not provide division, the exact result of \eqref{eqn:fci_2sen_omega_sum_eq} is approximated. This is accomplished by discretizing $\omega_i$ by step-size $s$, such that $s<1$ and $p=1/s \in \mathbb{Z}$, and approximating \eqref{eqn:fci_2sen_omega_sum_eq} with ORE. An ordered discretization of values $\omega^{(x)}$ is defined by
 \begin{equation}
