@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
-%DIF DEL main_submitted_1.tex   Tue May 12 09:13:48 2020
-%DIF ADD main.tex               Fri May 15 15:41:16 2020
+%DIF DEL main_submitted_1.tex   Sat May 16 12:21:20 2020
+%DIF ADD main.tex               Sat May 16 09:25:58 2020
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
@@ -167,11 +167,7 @@ Sensor data processing and state estimation have been increasingly prevalent in 
 \cite{willnerKalmanFilterAlgorithms1976,chongHierarchicalEstimation1979,chongDistributedTrackingDistributed1986,hashemipourDecentralizedStructuresParallel1988,grimeDataFusionDecentralized1994}}\hspace{0pt}%DIFAUXCMD
 }\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
 \cite{willnerKalmanFilterAlgorithms1976,hashemipourDecentralizedStructuresParallel1988,chongFortyYearsDistributed2017}}\hspace{0pt}%DIFAUXCMD
-}\DIFaddend . Challenges of estimation fusion are closely tied to the handling and merging of estimation error statistics \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
-\cite{fouratiMultisensorDataFusion2017}}\hspace{0pt}%DIFAUXCMD
-}\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
-\cite{noackTreatmentDependentInformation2017}}\hspace{0pt}%DIFAUXCMD
-}\DIFaddend . Cross-correlations between estimation errors characterize dependencies between local estimates and must be considered when performing consistent or optimal fusion \cite{bar-shalomTracktotrackCorrelationProblem1981,sunMultisensorOptimalInformation2004}. Methods that keep track of \DIFdelbegin \DIFdel{the cross-correlation of errors }\DIFdelend \DIFaddbegin \DIFadd{these cross-correlations }\DIFaddend may require repeated reconstruction \cite{steinbringOptimalSamplebasedFusion2016} and typically add local computational complexity\DIFdelbegin \DIFdel{and limit usability}\DIFdelend . An alternative strategy sees the approximation of \DIFdelbegin \DIFdel{estimate }\DIFdelend error cross-correlation based on conservative suboptimal strategies, and has been implemented in a variety of methods \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
+}\DIFaddend . Challenges of estimation fusion are closely tied to the handling and merging of estimation error statistics \cite{noackTreatmentDependentInformation2017}. Cross-correlations between estimation errors characterize dependencies between local estimates and must be considered when performing consistent or optimal fusion \cite{bar-shalomTracktotrackCorrelationProblem1981,sunMultisensorOptimalInformation2004}. Methods that keep track of \DIFdelbegin \DIFdel{the cross-correlation of errors }\DIFdelend \DIFaddbegin \DIFadd{these cross-correlations }\DIFaddend may require repeated reconstruction \cite{steinbringOptimalSamplebasedFusion2016} and typically add local computational complexity\DIFdelbegin \DIFdel{and limit usability}\DIFdelend . An alternative strategy sees the approximation of \DIFdelbegin \DIFdel{estimate }\DIFdelend error cross-correlation based on conservative suboptimal strategies, and has been implemented in a variety of methods \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
 \cite{carlsonFederatedFilterFaulttolerant1988,julierNondivergentEstimationAlgorithm1997,sijsStateFusionUnknown2012,noackDecentralizedDataFusion2017,niehsenInformationFusionBased2002,frankenImprovedFastCovariance2005}}\hspace{0pt}%DIFAUXCMD
 }\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
 \cite{julierNondivergentEstimationAlgorithm1997,noackDecentralizedDataFusion2017,niehsenInformationFusionBased2002}}\hspace{0pt}%DIFAUXCMD
@@ -198,7 +194,7 @@ and within fully distributed filter implementations \mbox{%DIFAUXCMD
 }\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
 \cite{gentryFullyHomomorphicEncryption2009,stehleFasterFullyHomomorphic2010,elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}}\hspace{0pt}%DIFAUXCMD
 }\DIFaddend , which allow algebraic operations to be performed on encryptions, are leading to \DIFdelbegin \DIFdel{more secure cloud or network }\DIFdelend \DIFaddbegin \DIFadd{novel secure }\DIFaddend applications for signal processing \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
-\cite{lagendijkEncryptedSignalProcessing2013,alexandruEncryptedCooperativeControla,aristovEncryptedMultisensorInformation2018}}\hspace{0pt}%DIFAUXCMD
+\cite{lagendijkEncryptedSignalProcessing2012,alexandruEncryptedCooperativeControl2019,aristovEncryptedMultisensorInformation2018}}\hspace{0pt}%DIFAUXCMD
 . Although implementations of }\DIFdelend \DIFaddbegin \DIFadd{in distributed and cloud computing environments \mbox{%DIFAUXCMD
 \cite{lagendijkEncryptedSignalProcessing2012,aristovEncryptedMultisensorInformation2018,farokhiSecurePrivateControl2017,alexandruEncryptedCooperativeControl2019,kogisoCyberSecurityEnhancementNetworked2015,kerschbaumOutsourcedPrivateSet2012}}\hspace{0pt}%DIFAUXCMD
 . }\DIFaddend Fully Homomorphic Encryption (FHE) schemes \DIFdelbegin \DIFdel{exist \mbox{%DIFAUXCMD
@@ -210,7 +206,7 @@ and within fully distributed filter implementations \mbox{%DIFAUXCMD
 . Instead, }\DIFdelend \DIFaddbegin \DIFadd{or real-time processing \mbox{%DIFAUXCMD
 \cite{acarSurveyHomomorphicEncryption2018}}\hspace{0pt}%DIFAUXCMD
 . }\DIFaddend Partially Homomorphic Encryption (PHE) schemes \cite{elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}, providing \DIFdelbegin \DIFdel{typically only one algebraic operation}\DIFdelend \DIFaddbegin \DIFadd{only a subset of these operations}\DIFaddend , have been a focus for such \DIFdelbegin \DIFdel{processing tasks \mbox{%DIFAUXCMD
-\cite{alexandruEncryptedCooperativeControla,aristovEncryptedMultisensorInformation2018}}\hspace{0pt}%DIFAUXCMD
+\cite{alexandruEncryptedCooperativeControl2019,aristovEncryptedMultisensorInformation2018}}\hspace{0pt}%DIFAUXCMD
 . Most commonly, addition is provided by the Paillier encryption scheme \mbox{%DIFAUXCMD
 \cite{paillierPublicKeyCryptosystemsBased1999} }\hspace{0pt}%DIFAUXCMD
 due to its speed and simplicity. However, }\DIFdelend \DIFaddbegin \DIFadd{tasks due to their reduced computational requirements. \mbox{%DIFAUXCMD
@@ -221,11 +217,7 @@ to compute private distributed control aggregation, \mbox{%DIFAUXCMD
 \cite{kogisoCyberSecurityEnhancementNetworked2015} }\hspace{0pt}%DIFAUXCMD
 for private matrix multiplication, and \mbox{%DIFAUXCMD
 \cite{kerschbaumOutsourcedPrivateSet2012} }\hspace{0pt}%DIFAUXCMD
-for private set intersection. These works are, however, }\DIFaddend due to the limited operations provided \DIFdelbegin \DIFdel{, securely computable processing algorithms have thus far been }\DIFdelend \DIFaddbegin \DIFadd{by PHE, }\DIFaddend relatively restricted in \DIFdelbegin \DIFdel{complexity and application. The recent development of }\DIFdelend \DIFaddbegin \DIFadd{application. Recent developments in }\DIFaddend new encryption schemes, such as Order Revealing Encryption (ORE) \DIFdelbegin \DIFdel{\mbox{%DIFAUXCMD
-\cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016,bogatovComparativeEvaluationOrderPreserving}}\hspace{0pt}%DIFAUXCMD
-, have provided }\DIFdelend \DIFaddbegin \DIFadd{\mbox{%DIFAUXCMD
-\cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016,bogatovComparativeEvaluationOrderPreserving2018}}\hspace{0pt}%DIFAUXCMD
-, are now providing }\DIFaddend new light on the possible complexity of \DIFdelbegin \DIFdel{signal processing algorithms that can be computed securely . Thus far, ORE has found little application in the context of signal processing algorithmsor in combination with HE schemes}\DIFdelend \DIFaddbegin \DIFadd{securely computable algorithms}\DIFaddend . In this paper, we \DIFdelbegin \DIFdel{make use of a }\DIFdelend \DIFaddbegin \DIFadd{develop a method for secure FCI fusion, such that local sensor information is kept private, using a }\DIFaddend combination of ORE and PHE schemes \DIFdelbegin \DIFdel{to develop a Secure FCI (SecFCI) fusionmethod that enables us to protect sensor estimates from both eavesdroppers and other algorithm participants}\DIFdelend \DIFaddbegin \DIFadd{only, which has to the best of our knowledge not been achieved without the reliance on computationally expensive FHE schemes.
+for private set intersection. These works are, however, }\DIFaddend due to the limited operations provided \DIFdelbegin \DIFdel{, securely computable processing algorithms have thus far been }\DIFdelend \DIFaddbegin \DIFadd{by PHE, }\DIFaddend relatively restricted in \DIFdelbegin \DIFdel{complexity and application. The recent development of }\DIFdelend \DIFaddbegin \DIFadd{application. Recent developments in }\DIFaddend new encryption schemes, such as Order Revealing Encryption (ORE) \cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016,bogatovComparativeEvaluationOrderPreserving2018}, \DIFdelbegin \DIFdel{have provided }\DIFdelend \DIFaddbegin \DIFadd{are now providing }\DIFaddend new light on the possible complexity of \DIFdelbegin \DIFdel{signal processing algorithms that can be computed securely . Thus far, ORE has found little application in the context of signal processing algorithmsor in combination with HE schemes}\DIFdelend \DIFaddbegin \DIFadd{securely computable algorithms}\DIFaddend . In this paper, we \DIFdelbegin \DIFdel{make use of a }\DIFdelend \DIFaddbegin \DIFadd{develop a method for secure FCI fusion, such that local sensor information is kept private, using a }\DIFaddend combination of ORE and PHE schemes \DIFdelbegin \DIFdel{to develop a Secure FCI (SecFCI) fusionmethod that enables us to protect sensor estimates from both eavesdroppers and other algorithm participants}\DIFdelend \DIFaddbegin \DIFadd{only, which has to the best of our knowledge not been achieved without the reliance on computationally expensive FHE schemes.
 }
 
 \subsection{\DIFadd{Problem Formulation}} \label{subsec:problem_formulation}
