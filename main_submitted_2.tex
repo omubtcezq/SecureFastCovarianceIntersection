@@ -2,14 +2,14 @@
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
-\documentclass[letterpaper, 10 pt, journal, twoside]{ieeetran}  % Comment this line out if you need a4paper
+\documentclass[letterpaper, 10 pt, conference]{ieeeconf}  % Comment this line out if you need a4paper
 
 %\documentclass[a4paper, 10pt, conference]{ieeeconf}      % Use this line for a4 paper
 
 \IEEEoverridecommandlockouts                              % This command is only needed if 
                                                           % you want to use the \thanks command
 
-%\overrideIEEEmargins                                      % Needed to meet printer requirements.
+\overrideIEEEmargins                                      % Needed to meet printer requirements.
 
 %In case you encounter the following error:
 %Error 1010 The PDF file may be corrupt (unable to open PDF file) OR
@@ -53,19 +53,20 @@
 % Condenses everything and also makes it prettier
 \usepackage{microtype}
 
+% Dodgy method for saving more space
+%\usepackage[subtle]{savetrees}
+
 \AtBeginDocument{%
-   % defaults
-   % \abovedisplayskip=10pt plus2pt minus 5pt
-   % \belowdisplayskip=10pt plus2pt minus 5pt
-   % \abovedisplayshortskip=0pt plus 3pt
-   % \belowdisplayshortskip=6pt plus 3pt minus 3pt
-   \abovedisplayskip=6pt plus 2pt minus 5pt
-   \belowdisplayskip=6pt plus 2pt minus 5pt
-   \abovedisplayshortskip=0pt plus 3pt
-   \belowdisplayshortskip=4pt plus 3pt minus 3pt
+   \abovedisplayskip=2pt plus 3pt
+   \belowdisplayskip=2pt plus 3pt
+   \abovedisplayshortskip=2pt plus 3pt
+   \belowdisplayshortskip=2pt plus 3pt
+
+   % Use the template Bibtex features
+   %\bstctlcite{IEEEexample:BSTcontrol}
 }
 
-\title{
+\title{\LARGE \bf
 Secure Fast Covariance Intersection Using Partially Homomorphic and Order Revealing Encryption Schemes
 }
 
@@ -78,8 +79,8 @@ Secure Fast Covariance Intersection Using Partially Homomorphic and Order Reveal
 \begin{document}
 
 \maketitle
-\pagestyle{empty}
 \thispagestyle{empty}
+\pagestyle{empty}
 
 %        d8888 888               888                             888
 %       d88888 888               888                             888
@@ -99,10 +100,6 @@ Fast covariance intersection is a widespread technique for state estimate fusion
 
 \end{abstract}
 
-\begin{IEEEkeywords}
-Sensor fusion, Estimation, Kalman filtering
-\end{IEEEkeywords}
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -118,7 +115,7 @@ Sensor fusion, Estimation, Kalman filtering
 
 
 \section{Introduction}
-\IEEEPARstart{S}{ensor} data processing and state estimation have been increasingly prevalent in networked systems \cite{ligginsDistributedDataFusion2012}. Bayesian state estimation has become a particularly common application since the beginning of Kalman estimation theory and has led to a large interest in the field of state estimation fusion \cite{willnerKalmanFilterAlgorithms1976,hashemipourDecentralizedStructuresParallel1988,chongFortyYearsDistributed2017}. Challenges of estimation fusion are closely tied to the handling and merging of estimation error statistics \cite{noackTreatmentDependentInformation2017}. Cross-correlations between estimation errors characterize dependencies between local estimates and must be considered when performing consistent or optimal fusion \cite{bar-shalomTracktotrackCorrelationProblem1981,sunMultisensorOptimalInformation2004}. Methods that keep track of these cross-correlations may require repeated reconstruction \cite{steinbringOptimalSamplebasedFusion2016} and typically add local computational complexity. An alternative strategy sees the approximation of error cross-correlation based on conservative suboptimal strategies, and has been implemented in a variety of methods \cite{julierNondivergentEstimationAlgorithm1997,noackDecentralizedDataFusion2017,niehsenInformationFusionBased2002}. Covariance Intersection (CI) \cite{julierNondivergentEstimationAlgorithm1997} provides one such popular conservative strategy, from which a less computationally expensive method, the Fast Covariance Intersection (FCI) \cite{niehsenInformationFusionBased2002} has been derived. CI is particularly well paired with the information form of the Kalman filter \cite{mutambaraDecentralizedEstimationControl1998,pfaffInformationFormDistributed2017}. This algebraically equivalent form of the standard Kalman filter requires the persistent storing of the information vector and information matrix instead of the usual state estimate and estimate covariance, and reduces fusion operations to simple summations. 
+Sensor data processing and state estimation have been increasingly prevalent in networked systems \cite{ligginsDistributedDataFusion2012}. Bayesian state estimation has become a particularly common application since the beginning of Kalman estimation theory and has led to a large interest in the field of state estimation fusion \cite{willnerKalmanFilterAlgorithms1976,hashemipourDecentralizedStructuresParallel1988,chongFortyYearsDistributed2017}. Challenges of estimation fusion are closely tied to the handling and merging of estimation error statistics \cite{noackTreatmentDependentInformation2017}. Cross-correlations between estimation errors characterize dependencies between local estimates and must be considered when performing consistent or optimal fusion \cite{bar-shalomTracktotrackCorrelationProblem1981,sunMultisensorOptimalInformation2004}. Methods that keep track of these cross-correlations may require repeated reconstruction \cite{steinbringOptimalSamplebasedFusion2016} and typically add local computational complexity. An alternative strategy sees the approximation of error cross-correlation based on conservative suboptimal strategies, and has been implemented in a variety of methods \cite{julierNondivergentEstimationAlgorithm1997,noackDecentralizedDataFusion2017,niehsenInformationFusionBased2002}. Covariance Intersection (CI) \cite{julierNondivergentEstimationAlgorithm1997} provides one such popular conservative strategy, from which a less computationally expensive method, the Fast Covariance Intersection (FCI) \cite{niehsenInformationFusionBased2002} has been derived. CI is particularly well paired with the information form of the Kalman filter \cite{mutambaraDecentralizedEstimationControl1998,pfaffInformationFormDistributed2017}. This algebraically equivalent form of the standard Kalman filter requires the persistent storing of the information vector and information matrix instead of the usual state estimate and estimate covariance, and reduces fusion operations to simple summations. 
 
 As advancements in distributed algorithms and cloud computing develop, the requirements for privacy and security in such systems have become more apparent \cite{renSecurityChallengesPublic2012,brennerSecretProgramExecution2011}. In particular for sensor networks, the desire for sensitive hardware information or estimation methodology to remain private may require the privacy of local measurements and estimates as well, and is a non-trivial problem in networks containing eavesdroppers or untrusted parties. Encryption has until recently been primarily used to secure information transfer between communicating parties. Common symmetric-key encryption schemes such as AES \cite{gueronIntelAdvancedEncryption2010} are used to encrypt sent information, and public-key schemes such as RSA \cite{rivestMethodObtainingDigital1978} to distribute symmetric keys. However, recent developments in public-key Homomorphic Encryption (HE) schemes \cite{gentryFullyHomomorphicEncryption2009,stehleFasterFullyHomomorphic2010,elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}, which allow algebraic operations to be performed on encryptions, are leading to novel secure applications for signal processing in distributed and cloud computing environments \cite{lagendijkEncryptedSignalProcessing2012,aristovEncryptedMultisensorInformation2018,farokhiSecurePrivateControl2017,alexandruEncryptedCooperativeControl2019,kogisoCyberSecurityEnhancementNetworked2015,kerschbaumOutsourcedPrivateSet2012}. Fully Homomorphic Encryption (FHE) schemes \cite{gentryFullyHomomorphicEncryption2009,stehleFasterFullyHomomorphic2010} provide all algebraic operations over encryptions, and are often theoretically suitable for secure processing in distributed environments. However, current implementations are still computationally infeasible for large-scale or real-time processing \cite{acarSurveyHomomorphicEncryption2018}. Partially Homomorphic Encryption (PHE) schemes \cite{elgamalPublicKeyCryptosystem1985,paillierPublicKeyCryptosystemsBased1999}, providing only a subset of these operations, have been a focus for such tasks due to their reduced computational requirements. \cite{aristovEncryptedMultisensorInformation2018} use PHE to run a private distributed Information Filter, \cite{alexandruEncryptedCooperativeControl2019,farokhiSecurePrivateControl2017} to compute private distributed control aggregation, \cite{kogisoCyberSecurityEnhancementNetworked2015} for private matrix multiplication, and \cite{kerschbaumOutsourcedPrivateSet2012} for private set intersection. These works are, however, due to the limited operations provided by PHE, relatively restricted in application. Recent developments in new encryption schemes, such as Order Revealing Encryption (ORE) \cite{chenettePracticalOrderRevealingEncryption2016,lewiOrderRevealingEncryptionNew2016,bogatovComparativeEvaluationOrderPreserving2018}, are now providing new light on the possible complexity of securely computable algorithms. In this paper, we develop a method for secure FCI fusion, such that local sensor information is kept private, using a combination of ORE and PHE schemes only, which has to the best of our knowledge not been achieved without the reliance on computationally expensive FHE schemes.
 
