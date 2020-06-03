@@ -475,13 +475,13 @@ From \cite{paillierPublicKeyCryptosystemsBased1999,lewiOrderRevealingEncryptionN
       \hline
       \textbf{Operation} & \textbf{Complexity} \\ 
       \hline
-      Paillier enc. & $O(\log{N}\log^2{N^2})$ \\ 
-      Paillier dec. & $O(\log{N}\log^2{N^2})$ \\ 
-      Paillier add. & $O(\log^2{N^2})$ \\ 
-      Paillier scalar mult. & $O(\log{N}\log^2{N^2})$ \\ 
-      Lewi $L$ enc. & $O(\log^2{N^2})$ \\ 
-      Lewi $R$ enc. & $O(\log^2{N^2})$ \\ 
-      Lewi comp. & $O(\log^2{N^2})$ \\ 
+      Paillier enc. & $O(\log^3{N})$ \\ 
+      Paillier dec. & $O(\log^3{N})$ \\ 
+      Paillier add. & $O(\log^2{N})$ \\ 
+      Paillier scalar mult. & $O(\log^3{N})$ \\ 
+      Lewi $L$ enc. & $O(\log^2{N})$ \\ 
+      Lewi $R$ enc. & $O(\log^2{N})$ \\ 
+      Lewi comp. & $O(\log^2{N})$ \\ 
       \hline
    \end{tabular}
    \vspace{-5pt}
@@ -499,8 +499,8 @@ Finally, applying the operations from Table \ref{tab:complex_ops} to the SecFCI 
       \hline
        & \textbf{FCI} & \textbf{SecFCI} \\ 
       \hline
-      Sensors & $O(1)$ & $O\left((p + \log{N})\log^2{N^2}\right)$ \\ 
-      Fusion & $O(n^3)$ & $O\left((\log{p} + \log{N})n\log^2{N^2} + n^3\right)$ \\ 
+      Sensors & $O(1)$ & $O\left(p\log^2{N} + \log^3{N}\right)$ \\ 
+      Fusion & $O(n^3)$ & $O\left(n\log{p}\log^2{N} + n\log^3{N} + n^3\right)$ \\ 
       \hline
    \end{tabular}
    %\vspace{-5pt}
