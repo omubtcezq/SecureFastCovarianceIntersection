@@ -38,7 +38,7 @@
 %\usepackage{ISASmacros/isastextmacros} % errors?
 
 % Needed to display images generated with Matplotlib nicely
-\usepackage{pgf}
+\usepackage{graphicx}
 
 % Used to make subfigures and fit 3 figures across the page. Command lets sub references be in parentheses
 \usepackage[labelformat=simple]{subcaption}
@@ -311,7 +311,7 @@ If we reverse \eqref{eqn:sen2_ore_list}, we obtain a list equivalent to one with
 \begin{figure}[tb]
    \vspace{-5pt}
    \begin{center}
-      \input{images/2_sensors.pgf}
+      \includegraphics{images/2_sensors.pdf}
    \end{center}
    \vspace{-15pt}
    \caption{Approximation of $\omega_1$ with discretization step-size $s=0.1$. Only comparisons between line points are used.}
@@ -363,7 +363,7 @@ We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{e
    \begin{subfigure}[t]{0.3\textwidth}
       \vspace{-5pt}
       \begin{center}
-         \input{images/partial_sol1.pgf}
+         \includegraphics{images/partial_sol1.pdf}
       \end{center}
       \vspace{-10pt}
       \caption{Partial solution to \eqref{eqn:3_sensor_partial_sol_1}.}
@@ -373,7 +373,7 @@ We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{e
    \begin{subfigure}[t]{0.3\textwidth}
       \vspace{-5pt}
       \begin{center}
-         \input{images/partial_sols.pgf}
+         \includegraphics{images/partial_sols.pdf}
       \end{center}
       \vspace{-10pt}
       \caption{Partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2}.}
@@ -383,7 +383,7 @@ We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{e
    \begin{subfigure}[t]{0.3\textwidth}
       \vspace{-5pt}
       \begin{center}
-         \input{images/partial_sol_planes.pgf}
+         \includegraphics{images/partial_sol_planes.pdf}
       \end{center}
       \vspace{-10pt}
       \caption{Partial solutions as planes.}
@@ -524,7 +524,7 @@ We have implemented a simulation to demonstrate the accuracy of SecFCI approxima
    %\vspace{-5pt}
    \vspace{-10pt}
    \begin{center}
-      \input{images/fci_secfci_cmp.pgf}
+      \includegraphics{images/fci_secfci_cmp.pdf}
    \end{center}
    \vspace{-15pt}
    \caption{Tracking simulation comparing SecFCI and FCI.}
@@ -549,7 +549,7 @@ Finally, components of $\omega_{i,SecFCI}$, $\omega_{i,FCI}$ and the errors $|\v
    %\vspace{-5pt}
    %\vspace{-10pt}
    \begin{center}
-      \input{images/omegas_cmp.pgf}
+      \includegraphics{images/omegas_cmp.pdf}
    \end{center}
    \vspace{-15pt}
    \caption{$\vec{\omega}_{SecFCI}$ and $\vec{\omega}_{FCI}$ components.}
