@@ -95,12 +95,12 @@ Secure Fast Covariance Intersection Using Partially Homomorphic and Order Reveal
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-Fast covariance intersection is a widespread technique for state estimate fusion in sensor networks when cross-correlations are not known and fast computations are desired. The common requirement of sending estimates from one party to another during fusion forfeits local privacy. Current secure fusion algorithms rely on encryption schemes that do not provide sufficient flexibility and as a result require excess communication between estimate producers which is often undesirable. We propose a novel method of homomorphically computing the fast covariance intersection algorithm on estimates encrypted with a combination of encryption schemes. Using order revealing encryption, we show how an approximate solution to the fast covariance intersection weights can be computed and combined with partially homomorphic encryptions of estimates, to calculate an encryption of the fused result. The described approach allows secure fusion of any number of private estimates, making third-party cloud processing a viable option when working with sensitive state estimates or when performing estimation over untrusted networks.
+Fast covariance intersection is a widespread technique for state estimate fusion in sensor networks when cross-correlations are not known and fast computations are desired. The common requirement of sending estimates from one party to another during fusion forfeits local privacy. Current secure fusion algorithms rely on encryption schemes that do not provide sufficient flexibility. As a result, excess communication between estimate producers is required, which is often undesirable. We propose a novel method of homomorphically computing the fast covariance intersection algorithm on estimates encrypted with a combination of encryption schemes. Using order revealing encryption, we show how an approximate solution to the fast covariance intersection weights can be computed and combined with partially homomorphic encryptions of estimates, to calculate an encryption of the fused result. The described approach allows secure fusion of any number of private estimates, making third-party cloud processing a viable option when working with sensitive state estimates or when performing estimation over untrusted networks.
 
 \end{abstract}
 
 \begin{IEEEkeywords}
-Sensor fusion, Estimation, Kalman filtering
+Sensor fusion, Secure estimation, Homomorphic encryption, Covariance intersection
 \end{IEEEkeywords}
 
 
@@ -144,11 +144,11 @@ Throughout this paper we will use the following notation. Lowercase characters r
 \section{Covariance Intersection and Approximations} \label{sec:ci}
 Covariance Intersection (CI), introduced in \cite{julierNondivergentEstimationAlgorithm1997}, provides a consistent state estimate fusion algorithm when cross-correlations are not known. The resulting fused estimate $\mean{\vec{x}}$ and covariance $\mP$ can be easily derived from its equations
 \begin{equation}
-   \mP^{-1}=\sum_{i=1}^{n}\omega_i \mP_i^{-1},\ \mP^{-1} \mean{\vec{x}} =\sum_{i=1}^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i\,. \label{eqn:ci_cov_estimate}
+   \mP^{-1}=\sum_{i=1}^{n}\omega_i \mP_i^{-1},\ \mP^{-1} \mean{\vec{x}} =\sum_{i=1}^{n}\omega_i \mP_i^{-1} \mean{\vec{x}}_i\enspace. \label{eqn:ci_cov_estimate}
 \end{equation}
 Note that \eqref{eqn:ci_cov_estimate} computes the fusion of the information vectors and information matrices defined in \cite{niehsenInformationFusionBased2002} and reduces the fusion to a weighted sum. Values for weights $\omega_i$ must satisfy
 \begin{equation}
-   \omega_1 + \omega_2 + \cdots + \omega_n = 1,\ 0 \leq \omega_i \leq 1\,, \label{eqn:ci_omega_sum_bound}
+   \omega_1 + \omega_2 + \cdots + \omega_n = 1,\ 0 \leq \omega_i \leq 1\enspace, \label{eqn:ci_omega_sum_bound}
 \end{equation}
 which guarantees consistency of the fused estimates. They are chosen in a way to speed up convergence and minimize error by minimizing a certain specified property of the resulting fused estimate covariance. One such property, the covariance trace, requires the solution to
 \begin{equation}
@@ -164,11 +164,11 @@ The Fast Covariance Intersection (FCI) algorithm from \cite{niehsenInformationFu
 \end{equation}
 on $\omega_i$ and solving the resulting equations instead. In the two sensor case, this results in the solving of
 \begin{equation}
-   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0,\ \omega_1 + \omega_2 = 1\,. \label{eqn:fci_2sen_omega_sum_eq}
+   \omega_1 \tr(\mP_1) - \omega_2 \tr(\mP_2) = 0,\ \omega_1 + \omega_2 = 1\enspace. \label{eqn:fci_2sen_omega_sum_eq}
 \end{equation}
 When computed for $n$ sensors, the highly redundant \eqref{eqn:fci_eq_big} can have its largest linearly independent subset represented by
 \begin{equation}
-   \omega_i \tr(\mP_i) - \omega_{i+1} \tr(\mP_{i+1}) = 0,\ i=1,2,\dots,n-1\,, \label{eqn:fci_eq}
+   \omega_i \tr(\mP_i) - \omega_{i+1} \tr(\mP_{i+1}) = 0,\ i=1,2,\dots,n-1\enspace, \label{eqn:fci_eq}
 \end{equation}
 and requires the solution to the linear problem
 \begin{equation}
@@ -192,7 +192,7 @@ and requires the solution to the linear problem
       \vdots \\
       0 \\
       1
-   \end{bmatrix}\,, \label{eqn:fci_eq_sys}
+   \end{bmatrix}\enspace, \label{eqn:fci_eq_sys}
    \endgroup
 \end{equation}
 where we let $\mathcal{P}_i = \tr(\mP_i)$.
@@ -211,7 +211,7 @@ Our proposed filter aims to solve FCI fusion, namely \eqref{eqn:ci_cov_estimate}
 
 
 \section{Homomorphic and Order Revealing Encryption} \label{sec:encryption}
-To achieve a secure solution to the FCI fusion problem, we make use of two types of function-providing encryption schemes. The Paillier additive PHE scheme \cite{paillierPublicKeyCryptosystemsBased1999} which provides a single homomorphic addition operation, and the Lewi ORE scheme \cite{lewiOrderRevealingEncryptionNew2016} which provides a secure comparison function.
+To achieve a secure solution to the FCI fusion problem, we make use of two types of function-providing encryption schemes: the Paillier additive PHE scheme \cite{paillierPublicKeyCryptosystemsBased1999} that provides a single homomorphic addition operation and the Lewi ORE scheme \cite{lewiOrderRevealingEncryptionNew2016} that provides a secure comparison function.
 
 The formal security of an encryption scheme consists of a security goal and a formal threat model \cite{katzIntroductionModernCryptography2008}. Indistinguishability of ciphertexts under the adaptive chosen ciphertext attack model (IND-CCA2) is commonly considered the strongest security guarantee, however no homomorphic encryption scheme provides security against IND-CCA2 due to their apparent ability to create valid cyphertexts via homomorphic operations. Instead, PHE schemes aim to protect against the weaker assumption of the chosen plaintext attack model (IND-CPA) \cite{chaseSecurityHomomorphicEncryption2017}. Similarly, ORE schemes aim to protect against simulation-based security defined in \cite{chenettePracticalOrderRevealingEncryption2016} or the harder to achieve ordered chosen-plaintext attack model (IND-OCPA).
 
@@ -222,7 +222,7 @@ We use the Paillier additive PHE scheme due to its implementation simplicity, an
 \end{equation}
 and
 \begin{equation}
-   \mathcal{D}_{sk}(\mathcal{E}_{pk}(a)^c \!\!\pmod{N^{2}}) = c\cdot a \!\!\pmod{N},\ c \in \mathbb{Z}_N\,, \label{eqn:paillier_mult}
+   \mathcal{D}_{sk}(\mathcal{E}_{pk}(a)^c \!\!\pmod{N^{2}}) = c\cdot a \!\!\pmod{N},\ c \in \mathbb{Z}_N\enspace, \label{eqn:paillier_mult}
 \end{equation}
 where the modulus $N$ is computed as the product of two large random primes chosen at key-generation. The public and secret keys are shown as $pk$ and $sk$ respectively, and plaintext messages $a,b \in \mathbb{Z}_N$. The Paillier encryption scheme successfully provides security against the IND-CPA model.
 
@@ -230,13 +230,13 @@ where the modulus $N$ is computed as the product of two large random primes chos
 For ORE, we use the Lewi symmetric-key Left-Right ORE scheme as it has the added property of only allowing certain comparisons between cyphertexts. This property can be used to decide which values may not be compared, which will be shown in section \ref{sec:secfci}. It is described as follows: two encryption functions allow integers to be encrypted as either a ``Left'' ($L$) or ``Right'' ($R$) encryption by
 \begin{equation}
    \begin{aligned} \label{eqn:lewi_l_r}
-      &\operatorfont{enc}^L_{ORE}(k, x) = \mathcal{E}^L_{ORE,k}(x) \\
-      &\operatorfont{enc}^R_{ORE}(k, y) = \mathcal{E}^R_{ORE,k}(y)
-   \end{aligned}\,,
+      &\operatorfont{enc}^L_{ORE}(k, x) = \mathcal{E}^L_{ORE,k}(x)\enspace, \\
+      &\operatorfont{enc}^R_{ORE}(k, y) = \mathcal{E}^R_{ORE,k}(y)\enspace,
+   \end{aligned}
 \end{equation}
 and only comparisons between an $L$ and an $R$ encryption are possible, by
 \begin{equation}
-   \operatorfont{cmp}_{ORE}(\mathcal{E}^L_{ORE}(x),\ \mathcal{E}^R_{ORE}(y)) = \operatorfont{cmp}(x, y)\,. \label{eqn:lewi_cmp}
+   \operatorfont{cmp}_{ORE}(\mathcal{E}^L_{ORE}(x),\ \mathcal{E}^R_{ORE}(y)) = \operatorfont{cmp}(x, y)\enspace. \label{eqn:lewi_cmp}
 \end{equation}
 Note that no decryption function is provided as only encryptions are required to provide a secure comparison. The Lewi ORE encryption scheme provides security against the simulation-based security model \cite{chenettePracticalOrderRevealingEncryption2016} but is not secure against the IND-OCPA model.
 
@@ -245,7 +245,7 @@ Both encryption schemes in sections \ref{subsec:paillier} and \ref{subsec:lewi} 
 
 We consider encoding real numbers representable as rational fixed-point numbers of $b$ bits, consisting of a single sign bit, $i$ integer bits, and $f$ fractional bits. Thus, each encodable rational number is defined by its $b=1+i+f$ bits. As in \cite{farokhiSecurePrivateControl2017}, encoding is performed to allow for multiplication, which requires an operation modulus of $b+2f$ to avoid the requirement for comparisons. Conversion of any real number $a$ to an encoded rational fixed-point number is given by
 \begin{equation}
-   e = \floor{2^f a}\pmod{2^{b + 2f}}\,. \label{eqn:qmn}
+   e = \floor{2^f a}\pmod{2^{b + 2f}}\enspace. \label{eqn:qmn}
 \end{equation}
 Multiplication of such encoded numbers requires a factor of $1/2^f$ to be removed. As shown in \cite{farokhiSecurePrivateControl2017}, cases of encoded multiplication can be computed exactly when using Paillier encryption, however, FCI guarantees only one homomorphic multiplication which we handle when decoding for simplicity. Decoding is defined by
 \begin{equation}
@@ -253,7 +253,7 @@ Multiplication of such encoded numbers requires a factor of $1/2^f$ to be remove
    \begin{cases}
       2^{-2f}\left(e \!\!\pmod{2^{b+2f}}\right) & e<2^{b+2f-1} \\
       2^{-2f}\left((e \!\!\pmod{2^{b+2f}}) - 2^{b+2f}\right) & e\geq 2^{b+2f-1}
-   \end{cases}\,. \label{eqn:qmn_mult_decode}
+   \end{cases} \label{eqn:qmn_mult_decode}
 \end{equation}
 and will be correct given only a single encoded multiplication has occurred.
 
@@ -261,8 +261,8 @@ Since the largest encryptable integer is given by $N-1$, the largest encodable r
 \begin{equation}\label{eqn:qmn_max}
    \begin{aligned}
       N &\geq 2^{b+2f}\\
-      &\geq 2^{1+i+3f}
-   \end{aligned}\,.
+      &\geq 2^{1+i+3f}\enspace.
+   \end{aligned}
 \end{equation}
 
 %  .d8888b.                    8888888888 .d8888b. 8888888       .d8888b.
@@ -285,27 +285,27 @@ From \eqref{eqn:ci_cov_estimate}, we can see that both CI fusion equations can b
 \end{equation}
 and
 \begin{equation}
-   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{\omega_1}\mathcal{E}(\mP^{-1}_2\mean{\vec{x}}_2)^{(1 - \omega_1)}\,, \label{eqn:paillier_ci_estimate}
+   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{\omega_1}\mathcal{E}(\mP^{-1}_2\mean{\vec{x}}_2)^{(1 - \omega_1)}\enspace, \label{eqn:paillier_ci_estimate}
 \end{equation}
 where we note that $\omega_2=1-\omega_1$ due to the CI requirement \eqref{eqn:ci_omega_sum_bound}. We also note that in \eqref{eqn:paillier_ci_cov} and \eqref{eqn:paillier_ci_estimate}, each resulting value will have exactly one encoding multiplication factor to remove, and can be decoded exactly by using \eqref{eqn:qmn_mult_decode}.
    
 All that remains for computing CI homomorphically, in the two sensor case, is the calculation of parameter $\omega_1$. For this, we approximate the solution to FCI. Since our encoding scheme in section \ref{subsec:encoding} does not allow division, the exact result of \eqref{eqn:fci_2sen_omega_sum_eq} is approximated. This is accomplished by discretizing $\omega_i$ by step-size $s$, such that $s<1$ and $p=1/s \in \mathbb{Z}$, and approximating \eqref{eqn:fci_2sen_omega_sum_eq} with ORE. An ordered discretization of values $\omega^{(x)}$ is defined by
 \begin{equation}
-   [\omega^{(1)},\dots,\omega^{(p)}] = [0,s,\dots,1-s,1]\,,
+   [\omega^{(1)},\dots,\omega^{(p)}] = [0,s,\dots,1-s,1]\enspace,
 \end{equation}
 and computed by each sensor $i$. Each $\omega^{(x)}$ is multiplied by $\tr(\mP_i)$ and encrypted with ORE key $k$. Sensor $1$'s list is defined by 
 \begin{equation}
-   [\mathcal{E}^L_{ORE}(\omega^{(1)}\tr(\mP_1)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_1))]\,, \label{eqn:sen1_ore_list}
+   [\mathcal{E}^L_{ORE}(\omega^{(1)}\tr(\mP_1)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_1))]\enspace, \label{eqn:sen1_ore_list}
 \end{equation}
 and similarly sensor $2$'s by
 \begin{equation}
-   [\mathcal{E}^R_{ORE}(\omega^{(1)}\tr(\mP_2)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_2))]\,. \label{eqn:sen2_ore_list}
+   [\mathcal{E}^R_{ORE}(\omega^{(1)}\tr(\mP_2)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_2))]\enspace. \label{eqn:sen2_ore_list}
 \end{equation}
 Note that Sensor $1$ uses only $L$ ORE while sensor $2$ uses only $R$ ORE, and that both lists are ordered. Lists \eqref{eqn:sen1_ore_list} and \eqref{eqn:sen2_ore_list} are sent alongside PHE encryptions of local information vector and information matrix estimates to the fusion center which uses them to estimate the FCI values of $\omega_1$ and $\omega_2$.
 
 From \eqref{eqn:fci_2sen_omega_sum_eq} we know that $\omega_1$ must satisfy
 \begin{equation}
-   \omega_1 \tr(\mP_1) = (1-\omega_1)\tr(\mP_2)\,. \label{eqn:secfci_2sen_intersect}
+   \omega_1 \tr(\mP_1) = (1-\omega_1)\tr(\mP_2)\enspace. \label{eqn:secfci_2sen_intersect}
 \end{equation}
 If we reverse \eqref{eqn:sen2_ore_list}, we obtain a list equivalent to one with values $\mathcal{E}^R_{ORE}((1-\omega^{(x)})\tr(\mP_2))$ for each discretization step $x$. When the reversed list is decrypted and plotted over \eqref{eqn:sen1_ore_list} the intersection gives the solution to \eqref{eqn:secfci_2sen_intersect} and therefore, \eqref{eqn:fci_2sen_omega_sum_eq}. However, \eqref{eqn:sen1_ore_list} and reversed \eqref{eqn:sen2_ore_list} consist of $L$ and $R$ ORE encryptions respectively, and the intersection must be approximated by locating consecutive $\omega^{(x)}$ discretizations where the sign of comparisons changes. This can be seen in Fig. \ref{fig:2_sensor_sol}, and can be performed in $O(\log{p})$ ORE comparisons using a binary search.
 \begin{figure}[tb]
@@ -320,7 +320,7 @@ If we reverse \eqref{eqn:sen2_ore_list}, we obtain a list equivalent to one with
 \end{figure}
 Consecutive $\omega^{(x)}$ and $\omega^{(x+1)}$ for which list comparisons differ can be used to estimate the true intersection, and $\omega_1$, by
 \begin{equation}
-   \omega_1 \approx 0.5(\omega^{(x)} + \omega^{(x+1)})\,. \label{eqn:secfci_2sen_omega}
+   \omega_1 \approx 0.5(\omega^{(x)} + \omega^{(x+1)})\enspace. \label{eqn:secfci_2sen_omega}
 \end{equation}
 In the case a comparison returns equality, the exact value of $\omega^{(x)}$ can be taken to be $\omega_1$.
 
@@ -344,7 +344,7 @@ When computing the SecFCI fusion for $n$ sensors, we solve \eqref{eqn:ci_cov_est
 \end{equation}
 and
 \begin{equation}
-   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{\omega_1}\cdots\mathcal{E}(\mP^{-1}_n\mean{\vec{x}}_n)^{\omega_n}\,. \label{eqn:n_sen_paillier_ci_estimate}
+   \mathcal{E}(\mP^{-1}\mean{\vec{x}}) = \mathcal{E}(\mP^{-1}_1\mean{\vec{x}}_1)^{\omega_1}\cdots\mathcal{E}(\mP^{-1}_n\mean{\vec{x}}_n)^{\omega_n}\enspace. \label{eqn:n_sen_paillier_ci_estimate}
 \end{equation}
 As with the two sensor case, encoded results from \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate} contain exactly one multiplication factor to remove and can be decoded exactly with \eqref{eqn:qmn_mult_decode}. Again we are just left with the task of computing the plaintext weights $\omega_1,\dots,\omega_n$.
 
@@ -356,7 +356,7 @@ This can be visualized in the three sensor case, which requires solving partial 
 \end{equation}
 and
 \begin{equation}
-   \omega_2 \tr(\mP_2) - \omega_3 \tr(\mP_3) = 0,\ \omega_2+\omega_3=1-\omega_1\,. \label{eqn:3_sensor_partial_sol_2}
+   \omega_2 \tr(\mP_2) - \omega_3 \tr(\mP_3) = 0,\ \omega_2+\omega_3=1-\omega_1\enspace. \label{eqn:3_sensor_partial_sol_2}
 \end{equation}
 We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{eqn:3_sensor_partial_sol_1} exactly when $\omega_3=0$, and know that when $\omega_3=1$, then $\omega_1=\omega_2=0$. These two points are enough to define the two-dimensional partial solution \eqref{eqn:3_sensor_partial_sol_1} which can be seen plotted over the possible solution space in Fig. \ref{fig:3_sensor_partial_sol}. Fig. \ref{fig:3_sensor_partial_sols} shows both partial solutions \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2} plotted over the solution space.
 \begin{figure*}[tb]
@@ -397,7 +397,7 @@ The final solution from all partial solutions is computed by finding their inter
 
 To simplify computing the partial solution intersection, we define equivalent planes for each of the partial solutions, perpendicular to the solution space, in the form
 \begin{equation}
-   a_1\omega_1 + a_2\omega_2 +a_3\omega_3 + a_4 = 0\,, \label{eqn:3sen_plane_eq}
+   a_1\omega_1 + a_2\omega_2 +a_3\omega_3 + a_4 = 0\enspace, \label{eqn:3sen_plane_eq}
 \end{equation}
 and solve the resulting linear system for finding the intersection of all planes and the solution space. This is given by
 \begin{equation}
@@ -416,13 +416,13 @@ and solve the resulting linear system for finding the intersection of all planes
       a_3^{(1)} \\
       a_4^{(2)} \\
       1
-   \end{bmatrix}\,, \label{eqn:3sen_plane_sol_eq}
+   \end{bmatrix}\enspace, \label{eqn:3sen_plane_sol_eq}
 \end{equation}
 where $a_i^{(j)}$ denotes parameter $i$ of partial solution $j$, and has been shown visually in Fig. \ref{fig:3sen_planes}.
 
 In the $n$ sensor case, we can similarly solve partial solutions by first using the method from section \ref{sec:secfci} to solve equations with two parameters $\omega_k$ and $\omega_{k+1}$ when letting all $\omega_i=0,\ i\neq k,k+1$. For each equation we can then compute remaining partial solution points at $\omega_i=1,\ i\neq k,k+1$ with $\omega_j=0,\ j\neq i$. Perpendicular hyperplanes can then be similarly defined in the form 
 \begin{equation}
-   a_1\omega_1 + \dots +a_n\omega_n + a_{n+1} = 0\,. \label{eqn:nsen_plane_eq}
+   a_1\omega_1 + \dots +a_n\omega_n + a_{n+1} = 0\enspace. \label{eqn:nsen_plane_eq}
 \end{equation}
 Due to their inherent orthogonality, and that all meaningful covariance traces are strictly positive, the $n-1$ partial solution hyperplanes are guaranteed to intersect at exactly one point. The hyperplane intersection results in the linear system 
 \begin{equation}
@@ -446,7 +446,7 @@ Due to their inherent orthogonality, and that all meaningful covariance traces a
       \vdots \\
       a_{n+1}^{(n-1)} \\
       1
-   \end{bmatrix}\,, \label{eqn:hyperplane_sol_eq}
+   \end{bmatrix}\enspace, \label{eqn:hyperplane_sol_eq}
    \endgroup
 \end{equation}
 and gives the solution to the SecFCI $\omega_i$ weights.
@@ -455,7 +455,7 @@ As all $O(n\log{p})$ ORE comparisons are done between sequential sensors $i$ and
 \begin{equation}
    \begin{aligned} \label{eqn:sensor_lists}
       &[\mathcal{E}^L_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^L_{ORE}(\omega^{(p)}\tr(\mP_i))],\,i\text{ odd} \\
-      &[\mathcal{E}^R_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_i))],\,i\text{ even}.
+      &[\mathcal{E}^R_{ORE}(\omega^{(1)}\tr(\mP_i)),\dots,\mathcal{E}^R_{ORE}(\omega^{(p)}\tr(\mP_i))],\,i\text{ even}\enspace.
    \end{aligned}
 \end{equation}
 When combining \eqref{eqn:sensor_lists} with PHE encryptions of local information vectors and information matrices, SecFCI can be computed entirely homomorphically by \eqref{eqn:n_sen_paillier_ci_cov} and \eqref{eqn:n_sen_paillier_ci_estimate}.
@@ -535,13 +535,13 @@ We have implemented a simulation to demonstrate the accuracy of SecFCI approxima
 To derive an upper bound on the accuracy difference between SecFCI and FCI, we note the two factors which introduce inconsistency between the two methods: the encoding method from section \ref{subsec:complexity}, and the difference in fusion weights. Due to the possibility of choosing sufficiently large integer and fractional bit lengths $i$ and $f$, we will only consider the error caused by the difference in weights. We will treat this error as the distance between respective weight vectors
 \begin{equation}
    \begin{aligned}
-      &\vec{\omega}_{SecFCI} = (\omega_{1,SecFCI},\dots,\omega_{n,SecFCI})\,, \\
-      &\vec{\omega}_{FCI} = (\omega_{1,FCI},\dots,\omega_{n,FCI})
+      &\vec{\omega}_{SecFCI} = (\omega_{1,SecFCI},\dots,\omega_{n,SecFCI}) \\
+      &\vec{\omega}_{FCI} = (\omega_{1,FCI},\dots,\omega_{n,FCI})\enspace,
    \end{aligned}
 \end{equation}
 where $\omega_{i,s}$ denotes weight $\omega_i$ from algorithm $s$. From section \ref{sec:secfci} we see that the largest difference $|\omega_{i,FCI} - \omega_{i,SecFCI}|$ is strictly bounded by $s/2$. As shown in section \ref{sec:multi_secfci}, when more sensors are involved, a tighter bound on this difference is dependent on the value of $\vec{\omega}_{i,FCI}$, but will remain strictly bounded by $s/2$. Therefore, we can give a strict upper bound on the distance between weight vectors as
 \begin{equation}
-   |\vec{\omega}_{FCI} - \vec{\omega}_{SecFCI}| < 0.5\sqrt{ns^2}\,. \label{eqn:accuracy_error_bound}
+   |\vec{\omega}_{FCI} - \vec{\omega}_{SecFCI}| < 0.5\sqrt{ns^2}\enspace. \label{eqn:accuracy_error_bound}
 \end{equation}
 
 Finally, components of $\omega_{i,SecFCI}$, $\omega_{i,FCI}$ and the errors $|\vec{\omega}_{FCI} - \vec{\omega}_{SecFCI}|$, have been plotted over time in Fig. \ref{fig:fci_secfci_omegas}, and show the computed error bound when $n=3$ and $s=0.1$.
