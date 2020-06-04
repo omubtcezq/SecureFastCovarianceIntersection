@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DIF LATEXDIFF DIFFERENCE FILE
 %DIF DEL main_submitted_2.tex   Fri May 15 15:41:16 2020
-%DIF ADD main.tex               Thu Jun  4 14:17:18 2020
+%DIF ADD main.tex               Thu Jun  4 14:59:51 2020
 %2345678901234567890123456789012345678901234567890123456789012345678901234567890
 %        1         2         3         4         5         6         7         8
 
@@ -49,7 +49,11 @@
 %\usepackage{ISASmacros/isastextmacros} % errors?
 
 % Needed to display images generated with Matplotlib nicely
-\usepackage{pgf}
+%DIF 41c41
+%DIF < \usepackage{pgf}
+%DIF -------
+\usepackage{graphicx} %DIF > 
+%DIF -------
 
 % Used to make subfigures and fit 3 figures across the page. Command lets sub references be in parentheses
 \usepackage[labelformat=simple]{subcaption}
@@ -122,6 +126,47 @@ Secure Fast Covariance Intersection Using Partially Homomorphic and Order Reveal
 \providecommand{\DIFaddendFL}{} %DIF PREAMBLE
 \providecommand{\DIFdelbeginFL}{} %DIF PREAMBLE
 \providecommand{\DIFdelendFL}{} %DIF PREAMBLE
+\newcommand{\DIFscaledelfig}{0.5}
+%DIF HIGHLIGHTGRAPHICS PREAMBLE %DIF PREAMBLE
+\RequirePackage{settobox} %DIF PREAMBLE
+\RequirePackage{letltxmacro} %DIF PREAMBLE
+\newsavebox{\DIFdelgraphicsbox} %DIF PREAMBLE
+\newlength{\DIFdelgraphicswidth} %DIF PREAMBLE
+\newlength{\DIFdelgraphicsheight} %DIF PREAMBLE
+% store original definition of \includegraphics %DIF PREAMBLE
+\LetLtxMacro{\DIFOincludegraphics}{\includegraphics} %DIF PREAMBLE
+\newcommand{\DIFaddincludegraphics}[2][]{{\color{blue}\fbox{\DIFOincludegraphics[#1]{#2}}}} %DIF PREAMBLE
+\newcommand{\DIFdelincludegraphics}[2][]{% %DIF PREAMBLE
+\sbox{\DIFdelgraphicsbox}{\DIFOincludegraphics[#1]{#2}}% %DIF PREAMBLE
+\settoboxwidth{\DIFdelgraphicswidth}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\settoboxtotalheight{\DIFdelgraphicsheight}{\DIFdelgraphicsbox} %DIF PREAMBLE
+\scalebox{\DIFscaledelfig}{% %DIF PREAMBLE
+\parbox[b]{\DIFdelgraphicswidth}{\usebox{\DIFdelgraphicsbox}\\[-\baselineskip] \rule{\DIFdelgraphicswidth}{0em}}\llap{\resizebox{\DIFdelgraphicswidth}{\DIFdelgraphicsheight}{% %DIF PREAMBLE
+\setlength{\unitlength}{\DIFdelgraphicswidth}% %DIF PREAMBLE
+\begin{picture}(1,1)% %DIF PREAMBLE
+\thicklines\linethickness{2pt} %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\framebox(1,1){}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,0){\line( 1,1){1}}}% %DIF PREAMBLE
+{\color[rgb]{1,0,0}\put(0,1){\line(1,-1){1}}}% %DIF PREAMBLE
+\end{picture}% %DIF PREAMBLE
+}\hspace*{3pt}}} %DIF PREAMBLE
+} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbegin}{\DIFaddbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddend}{\DIFaddend} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbegin}{\DIFdelbegin} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelend}{\DIFdelend} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbegin}{\DIFOaddbegin \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbegin}{\DIFOdelbegin \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelend}{\DIFOaddend \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddbeginFL}{\DIFaddbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOaddendFL}{\DIFaddendFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelbeginFL}{\DIFdelbeginFL} %DIF PREAMBLE
+\LetLtxMacro{\DIFOdelendFL}{\DIFdelendFL} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddbeginFL}{\DIFOaddbeginFL \let\includegraphics\DIFaddincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFaddendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelbeginFL}{\DIFOdelbeginFL \let\includegraphics\DIFdelincludegraphics} %DIF PREAMBLE
+\DeclareRobustCommand{\DIFdelendFL}{\DIFOaddendFL \let\includegraphics\DIFOincludegraphics} %DIF PREAMBLE
 %DIF LISTINGS PREAMBLE %DIF PREAMBLE
 \RequirePackage{listings} %DIF PREAMBLE
 \RequirePackage{color} %DIF PREAMBLE
@@ -389,8 +434,10 @@ If we reverse \eqref{eqn:sen2_ore_list}, we obtain a list equivalent to one with
 \begin{figure}[tb]
    \vspace{-5pt}
    \begin{center}
-      \input{images/2_sensors.pgf}
-   \end{center}
+      \DIFdelbeginFL %DIFDELCMD < \input{images/2_sensors.pgf}
+%DIFDELCMD <    %%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics{images/2_sensors.pdf}
+   \DIFaddendFL \end{center}
    \vspace{-15pt}
    \caption{Approximation of $\omega_1$ with \DIFdelbeginFL \DIFdelFL{discretisation }\DIFdelendFL \DIFaddbeginFL \DIFaddFL{discretization }\DIFaddendFL step-size $s=0.1$. Only comparisons between line points are used.}
    \vspace{-\baselineskip}
@@ -441,8 +488,10 @@ We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{e
    \begin{subfigure}[t]{0.3\textwidth}
       \vspace{-5pt}
       \begin{center}
-         \input{images/partial_sol1.pgf}
-      \end{center}
+         \DIFdelbeginFL %DIFDELCMD < \input{images/partial_sol1.pgf}
+%DIFDELCMD <       %%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics{images/partial_sol1.pdf}
+      \DIFaddendFL \end{center}
       \vspace{-10pt}
       \caption{Partial solution to \eqref{eqn:3_sensor_partial_sol_1}.}
       \label{fig:3_sensor_partial_sol}
@@ -451,8 +500,10 @@ We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{e
    \begin{subfigure}[t]{0.3\textwidth}
       \vspace{-5pt}
       \begin{center}
-         \input{images/partial_sols.pgf}
-      \end{center}
+         \DIFdelbeginFL %DIFDELCMD < \input{images/partial_sols.pgf}
+%DIFDELCMD <       %%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics{images/partial_sols.pdf}
+      \DIFaddendFL \end{center}
       \vspace{-10pt}
       \caption{Partial solutions to \eqref{eqn:3_sensor_partial_sol_1} and \eqref{eqn:3_sensor_partial_sol_2}.}
       \label{fig:3_sensor_partial_sols}
@@ -461,8 +512,10 @@ We can use the two sensor method from section \ref{sec:secfci} to solve \eqref{e
    \begin{subfigure}[t]{0.3\textwidth}
       \vspace{-5pt}
       \begin{center}
-         \input{images/partial_sol_planes.pgf}
-      \end{center}
+         \DIFdelbeginFL %DIFDELCMD < \input{images/partial_sol_planes.pgf}
+%DIFDELCMD <       %%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics{images/partial_sol_planes.pdf}
+      \DIFaddendFL \end{center}
       \vspace{-10pt}
       \caption{Partial solutions as planes.}
       \label{fig:3sen_planes}
@@ -606,8 +659,10 @@ We have implemented a simulation to demonstrate the accuracy of SecFCI approxima
    %\vspace{-5pt}
    \vspace{-10pt}
    \begin{center}
-      \input{images/fci_secfci_cmp.pgf}
-   \end{center}
+      \DIFdelbeginFL %DIFDELCMD < \input{images/fci_secfci_cmp.pgf}
+%DIFDELCMD <    %%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics{images/fci_secfci_cmp.pdf}
+   \DIFaddendFL \end{center}
    \vspace{-15pt}
    \caption{Tracking simulation comparing SecFCI and FCI.}
    \vspace{-\baselineskip}
@@ -635,8 +690,10 @@ Finally, components of $\omega_{i,SecFCI}$, $\omega_{i,FCI}$ and the errors $|\v
    %\vspace{-5pt}
    %\vspace{-10pt}
    \begin{center}
-      \input{images/omegas_cmp.pgf}
-   \end{center}
+      \DIFdelbeginFL %DIFDELCMD < \input{images/omegas_cmp.pgf}
+%DIFDELCMD <    %%%
+\DIFdelendFL \DIFaddbeginFL \includegraphics{images/omegas_cmp.pdf}
+   \DIFaddendFL \end{center}
    \vspace{-15pt}
    \caption{$\vec{\omega}_{SecFCI}$ and $\vec{\omega}_{FCI}$ components.}
    \vspace{-\baselineskip}
